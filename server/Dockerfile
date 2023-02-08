@@ -1,9 +1,9 @@
 # Dockerfile
 FROM node:latest
 
-RUN mkdir /server
+RUN mkdir /app
 
-WORKDIR /server
+WORKDIR /app
 
 COPY package*.json ./
 COPY tsconfig.json ./
