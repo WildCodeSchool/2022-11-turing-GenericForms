@@ -75,3 +75,21 @@ export class UpdateUserInput implements Partial<User> {
     @Field({ nullable: true })
     role?: string;
 }
+
+@ObjectType()
+export class Login {
+  @Field()
+  success: boolean;
+
+  @Field()
+  token: string;
+}
+
+@InputType({ description: "login de l'utilisateur" })
+export class LoginInput implements Partial<User> {
+  @Field()
+  email: string;
+
+  @Field()
+  password: string;
+}

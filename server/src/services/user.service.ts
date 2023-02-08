@@ -3,6 +3,8 @@ import datasource from "../lib/datasource";
 import { ResponseMessage } from "./common.type";
 import { IService } from "./interfaces";
 import User, {CreateUserInput, UpdateUserInput} from "../entity/User";
+import bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
 
 
 class UserService implements IService {
@@ -36,13 +38,44 @@ class UserService implements IService {
           }
     }
 
-    async create(createUserInput: CreateUserInput): Promise<User> {
+    async readOneByEmail(email: string): Promise<User> {
         try {
-            return await this.db.save({createdAt: new Date() , ...createUserInput});
+          const user = await this.db.findOne({
+            where: {
+              email,
+            },
+          });
+          if (user === null) {
+            throw new Error("Cet utilisateur n'existe pas");
+          }
+          return user;
+        } catch (err) {
+          console.log(err);
+          throw new Error("Il y a eu une erreur");
+        }
+      }
+
+    async create({password, ...createUserInput}: CreateUserInput): Promise<User> {
+        try {
+            const passwordHash = bcrypt.hashSync(password, 10);
+            return await this.db.save({createdAt: new Date(), password: passwordHash , ...createUserInput});
         } catch (err) {
             console.log(err);
             throw new Error("There was an error saving the user")
         }
+    }
+
+    async generateToken(payload: any): Promise<any> {
+        const token = jwt.sign(payload, process.env.SECRET_KEY ?? '', {
+          expiresIn: "2h",
+        });
+        console.log("TOKEN", token);
+        return token;
+    }
+
+
+    async checkPassword(password: string, hash: string): Promise<any> {
+        return bcrypt.compareSync(password, hash); // true
     }
 
     async update({userId, ...updateUserInput}: UpdateUserInput): Promise<ResponseMessage> {
@@ -77,6 +110,8 @@ class UserService implements IService {
             throw new Error("There was an error deleting the user")
         }
     }
+
+
 }
 
 export default UserService;

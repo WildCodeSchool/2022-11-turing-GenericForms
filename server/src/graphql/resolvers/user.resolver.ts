@@ -1,10 +1,30 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import User, { CreateUserInput, UpdateUserInput } from "../../entity/User";
+import User, { CreateUserInput, Login, LoginInput, UpdateUserInput } from "../../entity/User";
 import { ResponseMessage } from "../../services/common.type";
 import UserService from "../../services/user.service";
 
 @Resolver(User)
 export default class UserResolver {
+
+    @Query(() => Login)
+    async login(@Arg("loginInput") loginInput: LoginInput ): Promise<any> {
+
+      const { email, password } = loginInput;
+      const user = await new UserService().readOneByEmail(email);
+      const checkPassword = await new UserService().checkPassword(password, user.password);
+
+        if (checkPassword === true) {
+            const token = await new UserService().generateToken({email: user.email, userId: user.userId});
+            console.log("token ===>", token);
+            return {
+                success: true,
+                token,
+            }
+        } else {
+            throw new Error("Wrong password");
+        }
+    
+    }
 
     @Query(() => [User])
     async readUsers(): Promise<User[]> {

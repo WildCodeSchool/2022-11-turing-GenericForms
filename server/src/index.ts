@@ -4,6 +4,8 @@ import { FormResolver, UserResolver } from './graphql/resolvers';
 import datasource from './lib/datasource';
 import "reflect-metadata";
 import { buildSchema } from 'type-graphql';
+import * as dotenv from 'dotenv' 
+dotenv.config()
 
 
 async function start(): Promise<void> {

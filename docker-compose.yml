@@ -19,6 +19,7 @@ services:
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=root
+      - SECRET_KEY=secret
   db:
     image: postgres
     restart: always

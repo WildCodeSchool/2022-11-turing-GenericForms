@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
 import Form, { CreateFormInput, UpdateFormInput } from "../../entity/Form";
 import { ResponseMessage } from "../../services/common.type";
 import FormService from "../../services/form.service";
