@@ -1,0 +1,40 @@
+services:
+  # front:
+  #   build: ./client
+  #   volumes:
+  #     - ./client/src:/app/src
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - WDS_SOCKET_PORT=3000
+  api:
+    build: ./server
+    volumes:
+      - ./server/src:/app/src
+    ports:
+      - 4000:4000
+    environment:
+      - DB_HOST=db
+      - DB_NAME=generic_forms
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=root
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: generic_forms
+    ports:
+      - 5433:5432
+    volumes:
+      - generic-forms-data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+volumes:
+  generic-forms-data:
+
