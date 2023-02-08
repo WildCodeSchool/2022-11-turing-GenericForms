@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { FormResolver } from './graphql/resolvers';
+import { FormResolver, UserResolver } from './graphql/resolvers';
 import datasource from './lib/datasource';
 import "reflect-metadata";
 import { buildSchema } from 'type-graphql';
@@ -9,7 +9,7 @@ import { buildSchema } from 'type-graphql';
 async function start(): Promise<void> {
     // Create the schema
   const schema = await buildSchema({
-    resolvers: [FormResolver],
+    resolvers: [FormResolver, UserResolver],
     validate: false,
   });
 
