@@ -1,5 +1,6 @@
 services:
   # front:
+  #   container_name: generic-forms-front
   #   build: ./client
   #   volumes:
   #     - ./client/src:/app/src
@@ -8,6 +9,7 @@ services:
   #   environment:
   #     - WDS_SOCKET_PORT=3000
   api:
+    container_name: generic-forms-api
     build: ./server
     volumes:
       - ./server/src:/app/src
@@ -19,7 +21,9 @@ services:
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=root
+      - SECRET_KEY=secret
   db:
+    container_name: generic-forms-db
     image: postgres
     restart: always
     environment:
@@ -31,6 +35,7 @@ services:
     volumes:
       - generic-forms-data:/var/lib/postgresql/data
   adminer:
+    container_name: generic-forms-adminer
     image: adminer
     restart: always
     ports:
