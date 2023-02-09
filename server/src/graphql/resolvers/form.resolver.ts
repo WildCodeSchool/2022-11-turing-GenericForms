@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from "type-graphql";
 import Form, { CreateFormInput, UpdateFormInput } from "../../entity/Form";
 import { ResponseMessage } from "../../services/common.type";
 import FormService from "../../services/form.service";
@@ -6,6 +6,7 @@ import FormService from "../../services/form.service";
 @Resolver(Form)
 export default class FormResolver {
 
+    @Authorized()
     @Query(() => [Form])
     async readForms(@Arg("nameContains", {nullable: true}) nameContains: string ): Promise<Form[]> {
         const forms = await new FormService().read(nameContains);

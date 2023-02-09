@@ -4,3 +4,7 @@ import Form from "../entity/Form";
 export interface IService {
     db: Repository<Form | User>;
 }
+
+export interface Context {
+    user: User | null;
+}
