@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { FormResolver, UserResolver } from './graphql/resolvers';
+import { AnswerResolver, FormResolver, UserResolver } from './graphql/resolvers';
 import datasource from './lib/datasource';
 import "reflect-metadata";
 import { buildSchema } from 'type-graphql';
@@ -13,7 +13,7 @@ dotenv.config()
 async function start(): Promise<void> {
     // Create the schema
   const schema = await buildSchema({
-    resolvers: [FormResolver, UserResolver],
+    resolvers: [FormResolver, UserResolver, AnswerResolver],
     validate: false,
     authChecker: customAuthChecker,
   });
