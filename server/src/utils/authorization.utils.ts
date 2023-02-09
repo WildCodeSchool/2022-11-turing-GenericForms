@@ -24,7 +24,7 @@ export const customAuthChecker: AuthChecker<Context> = (
     roles,
   ) => {
     // Utiliser roles pour vérifier si dans le context.user
-    console.log("Liste des roles ==>", roles);
+    // console.log("Liste des roles ==>", roles);
 
     // here we can read the user from context
     // and check his permission in the db against the `roles` argument

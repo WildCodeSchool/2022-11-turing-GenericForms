@@ -2,13 +2,17 @@ import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from "type-graphql";
 import Form, { CreateFormInput, UpdateFormInput } from "../../entity/Form";
 import { ResponseMessage } from "../../services/common.type";
 import FormService from "../../services/form.service";
+import { Context } from "../../services/interfaces";
 
 @Resolver(Form)
 export default class FormResolver {
 
     @Authorized()
     @Query(() => [Form])
-    async readForms(@Arg("nameContains", {nullable: true}) nameContains: string ): Promise<Form[]> {
+    async readForms(@Arg("nameContains", {nullable: true}) nameContains: string, @Ctx() ctx: Context ): Promise<Form[]> {
+        
+        console.log("user from ctx ==>", ctx.user)
+
         const forms = await new FormService().read(nameContains);
         return forms;
     }

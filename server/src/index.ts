@@ -37,7 +37,7 @@ async function start(): Promise<void> {
         const data: any = await getPayloadFromToken(token);
         data !== null && (user = await new UserService().readOneByEmail(data.email));
       }
-      console.log("user ==>", user);
+      // console.log("user ==>", user);
       return {user};
     }
 
