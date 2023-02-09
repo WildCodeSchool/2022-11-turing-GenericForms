@@ -12,7 +12,9 @@ class ThemeService implements IService {
 
     async read(): Promise<Theme[]> {
         try {
-            const themes = await this.db.find();
+            const themes = await this.db.find({
+                relations: ["forms"],
+            });
             return themes;
         } catch (err) {
             console.error(err);
@@ -60,7 +62,6 @@ class ThemeService implements IService {
             throw new Error("There was an error deleting the theme");
         }
     }
-
 
 }
 

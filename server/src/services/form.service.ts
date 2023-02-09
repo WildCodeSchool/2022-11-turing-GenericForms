@@ -19,8 +19,7 @@ class FormService implements IService {
                     ? Like(`%${titleContains}%`)
                     : undefined,
               },
-            // TODO must add relation to get the questions of the form ?
-            //   relations: { questions: { question: true } },
+              relations: ["theme"],
             });
             return forms;
           } catch (err) {

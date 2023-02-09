@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ObjectType, InputType, Field } from "type-graphql";
+import Form from "./Form";
 
 enum Style {
     LIGHT = "light-theme",
@@ -34,6 +35,15 @@ export default class Theme {
     @Field()
     @Column()
     secondaryColor: string;
+
+    @Field(() => [Form])
+    @OneToMany((_type) => Form, (form: Form) => form.theme)
+    forms: Form[];
+
+    // Add a many to one relationship with the Question entity
+    // @Field(() => [Grade])
+    // @OneToMany(() => Grade, (grade) => grade.wilder)
+    // grades: Grade[];
 
 }
 

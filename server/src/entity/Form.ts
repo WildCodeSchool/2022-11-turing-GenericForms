@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, InputType, Field } from "type-graphql";
+import Theme from "./Theme";
 
 @ObjectType()
 @Entity("forms")
@@ -13,9 +14,18 @@ export default class Form {
     @Column()
     title: string;
 
+    @Field()
+    @Column()
+    themeId: number;
+
     @Field({ nullable: true }) 
     @Column({ nullable: true }) 
     category?: string;
+
+    @Field(() => Theme)
+    @ManyToOne((_type) => Theme, (theme: Theme) => theme.themeId)
+    @JoinColumn({ name: "themeId" })
+    theme: Theme;
 
     // Add a many to one relationship with the Question entity
     // @Field(() => [Grade])
@@ -27,6 +37,9 @@ export default class Form {
 export class CreateFormInput implements Partial<Form> {
     @Field()
     title: string;
+
+    @Field()
+    themeId: number;
 
     @Field({ nullable: true })
     category?: string;
@@ -40,6 +53,9 @@ export class UpdateFormInput implements Partial<Form> {
     @Field({ nullable: true })
     title?: string;
 
+    @Field()
+    themeId: number;
+
     @Field({ nullable: true })
     category?: string;
 }
@@ -52,5 +68,6 @@ export class AddOrRemoveQuestionInput {
     @Field()
     questionId: number;
 }
+
 
 
