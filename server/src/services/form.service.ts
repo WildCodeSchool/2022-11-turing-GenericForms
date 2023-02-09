@@ -2,9 +2,8 @@ import { Like, Repository } from "typeorm";
 import Form, { CreateFormInput, UpdateFormInput } from "../entity/Form";
 import datasource from "../lib/datasource";
 import { ResponseMessage } from "./common.type";
-import { IService } from "./interfaces";
 
-class FormService implements IService {
+class FormService {
     db: Repository<Form>;
     constructor(){
         this.db = datasource.getRepository(Form);

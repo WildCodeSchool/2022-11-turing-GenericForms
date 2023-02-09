@@ -15,7 +15,6 @@ export default class UserResolver {
 
         if (checkPassword === true) {
             const token = await new UserService().generateToken({email: user.email, userId: user.userId});
-            console.log("token ===>", token);
             return {
                 success: true,
                 token,

@@ -2,12 +2,16 @@ import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
 import Form, { CreateFormInput, UpdateFormInput } from "../../entity/Form";
 import { ResponseMessage } from "../../services/common.type";
 import FormService from "../../services/form.service";
+import { Context } from "../../services/interfaces";
 
 @Resolver(Form)
 export default class FormResolver {
 
     @Query(() => [Form])
-    async readForms(@Arg("nameContains", {nullable: true}) nameContains: string ): Promise<Form[]> {
+    async readForms(@Arg("nameContains", {nullable: true}) nameContains: string, @Ctx() ctx: Context): Promise<Form[]> {
+        if(ctx.user === undefined) {
+            throw new Error("You must be logged in to get the forms");
+        }
         const forms = await new FormService().read(nameContains);
         return forms;
     }

@@ -1,13 +1,12 @@
 import { Repository } from "typeorm";
 import datasource from "../lib/datasource";
 import { ResponseMessage } from "./common.type";
-import { IService } from "./interfaces";
 import User, {CreateUserInput, UpdateUserInput} from "../entity/User";
 import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 
-class UserService implements IService {
+class UserService {
     db: Repository<User>;
     constructor(){
         this.db = datasource.getRepository(User);
@@ -69,7 +68,6 @@ class UserService implements IService {
         const token = jwt.sign(payload, process.env.SECRET_KEY ?? '', {
           expiresIn: "2h",
         });
-        console.log("TOKEN", token);
         return token;
     }
 

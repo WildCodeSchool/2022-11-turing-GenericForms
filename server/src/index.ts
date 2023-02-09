@@ -4,7 +4,9 @@ import { FormResolver, UserResolver } from './graphql/resolvers';
 import datasource from './lib/datasource';
 import "reflect-metadata";
 import { buildSchema } from 'type-graphql';
-import * as dotenv from 'dotenv' 
+import * as dotenv from 'dotenv'
+import { getPayloadFromToken } from './utils/authorization.utils';
+import UserService from './services/user.service'; 
 dotenv.config()
 
 
@@ -26,6 +28,17 @@ async function start(): Promise<void> {
       credentials: true, // true if you need cookies/authentication
       methods: ["GET", "POST", "OPTIONS"],
     },
+    context: async ({req}) => {
+      let user = null;
+      const { authorization } = req.headers;
+      if (authorization !== undefined) {
+        const token = authorization?.split(" ")[1];
+        const data: any = await getPayloadFromToken(token);
+        data !== null && (user = await new UserService().readOneByEmail(data.email));
+      }
+      console.log("user ==>", user);
+      return {user};
+    }
   });
 
   await server.listen().then(async ({ url }) => {
