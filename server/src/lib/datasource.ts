@@ -3,6 +3,8 @@ import Form from "../entity/Form";
 import * as dotenv from "dotenv";
 import User from "../entity/User";
 import Question from "../entity/Question";
+import Answer from "../entity/Answer";
+import Theme from "../entity/Theme";
 
 // You must add environment vars in docker-compose file (in the server container infos)
 dotenv.config();
@@ -21,6 +23,6 @@ export default new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-  entities: [Form, User, Question],
+  entities: [Form, User, Question, Answer, Theme],
   logging: ["query", "error"],
 });
