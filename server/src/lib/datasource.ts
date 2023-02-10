@@ -2,6 +2,7 @@ import {DataSource} from "typeorm";
 import Form from '../entity/Form';
 import * as dotenv from 'dotenv';
 import User from "../entity/User";
+import Answer from "../entity/Answer";
 import Theme from "../entity/Theme";
 
 // You must add environment vars in docker-compose file (in the server container infos)
@@ -22,6 +23,7 @@ export default new DataSource({
     database: process.env.DB_NAME,
     synchronize: true,
     entities: [Form, User, Theme],
+    entities: [Form, User, Answer],
     logging: ["query", "error"]
 });
 
