@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@apollo/client";
 
-export default function Home() {
+export default function Public() {
   // const [parent] = useAutoAnimate<HTMLUListElement>();
 
   // const [getAllWilders, { data, loading, error, refetch }] =

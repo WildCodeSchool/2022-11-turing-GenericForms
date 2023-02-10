@@ -19,7 +19,7 @@ function Login() {
     onCompleted(data) {
       console.log("DATA", data);
       localStorage.setItem("token", data.login.token);
-      navigate("/backoffice/dashboard");
+      navigate("/dashboard");
     },
     // onError(error) {
     //   console.log("ERROR", error.message);

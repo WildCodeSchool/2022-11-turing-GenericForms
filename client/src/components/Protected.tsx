@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { CHECK_TOKEN } from "../services/auth.query";
 
-function ProtectedArea({ children }: any) {
+function Protected({ children }: any) {
   const navigate = useNavigate();
   const [authorized, setAuthorized] = useState(false);
   const { refetch } = useQuery(CHECK_TOKEN, {
@@ -11,7 +11,7 @@ function ProtectedArea({ children }: any) {
       if (data.checkToken.valid) {
         return setAuthorized(true);
       }
-      navigate("/auth/login", { replace: true });
+      navigate("/dashboard", { replace: true });
     },
     onError(error) {
       console.log(error);
@@ -21,9 +21,11 @@ function ProtectedArea({ children }: any) {
   useEffect(() => {
     refetch();
   }, []);
+
   return (
     <div>{authorized ? children : <div>Vous n'êtes pas autorisé</div>}</div>
   );
+
 }
 
-export default ProtectedArea;
+export default Protected;
