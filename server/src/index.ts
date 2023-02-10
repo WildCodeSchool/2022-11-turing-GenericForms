@@ -1,21 +1,27 @@
-import { ApolloServer } from 'apollo-server';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { FormResolver, ThemeResolver, UserResolver } from './graphql/resolvers';
-import { AnswerResolver, FormResolver, UserResolver } from './graphql/resolvers';
-import datasource from './lib/datasource';
+import { ApolloServer } from "apollo-server";
+import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
+import {
+  FormResolver,
+  QuestionResolver,
+  UserResolver,
+  AnswerResolver,
+  ThemeResolver
+} from "./graphql/resolvers";
+import datasource from "./lib/datasource";
 import "reflect-metadata";
-import { buildSchema } from 'type-graphql';
-import * as dotenv from 'dotenv'
-import { customAuthChecker, getPayloadFromToken } from './utils/authorization.utils';
-import UserService from './services/user.service';
-dotenv.config()
-
+import { buildSchema } from "type-graphql";
+import * as dotenv from "dotenv";
+import {
+  customAuthChecker,
+  getPayloadFromToken,
+} from "./utils/authorization.utils";
+import UserService from "./services/user.service";
+dotenv.config();
 
 async function start(): Promise<void> {
-    // Create the schema
+  // Create the schema
   const schema = await buildSchema({
-    resolvers: [FormResolver, UserResolver, AnswerResolver],
-    resolvers: [FormResolver, UserResolver, ThemeResolver],
+    resolvers: [FormResolver, UserResolver, QuestionResolver, AnswerResolver, ThemeResolver],
     validate: false,
     authChecker: customAuthChecker,
   });
@@ -31,29 +37,30 @@ async function start(): Promise<void> {
       credentials: true, // true if you need cookies/authentication
       methods: ["GET", "POST", "OPTIONS"],
     },
-    context: async ({req}) => {
+    context: async ({ req }) => {
       let user = null;
       const { authorization } = req.headers;
       if (authorization !== undefined) {
         const token = authorization?.split(" ")[1];
         const data: any = await getPayloadFromToken(token);
-        data !== null && (user = await new UserService().readOneByEmail(data.email));
+        data !== null &&
+          (user = await new UserService().readOneByEmail(data.email));
       }
       // console.log("user ==>", user);
-      return {user};
-    }
-
+      return { user };
+    },
   });
 
   await server.listen().then(async ({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
-    await datasource.initialize()
+    await datasource
+      .initialize()
       .then(() => {
-        console.log("DB has been initialized!")
+        console.log("DB has been initialized!");
       })
       .catch((err) => {
-          console.error("Error DB initialization", err)
-      })
+        console.error("Error DB initialization", err);
+      });
   });
 }
 
