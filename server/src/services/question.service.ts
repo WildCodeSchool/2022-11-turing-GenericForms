@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import Question, {
-  CreatQuestionInput,
+  CreateQuestionInput,
   UpdateQuestionInput,
 } from "../entity/Question";
 import datasource from "../lib/datasource";
@@ -27,7 +27,7 @@ class QuestionService implements IService {
     }
   }
 
-  async create(createQuestionInput: CreatQuestionInput): Promise<Question> {
+  async create(createQuestionInput: CreateQuestionInput): Promise<Question> {
     try {
       return await this.db.save({ ...createQuestionInput });
     } catch (err) {

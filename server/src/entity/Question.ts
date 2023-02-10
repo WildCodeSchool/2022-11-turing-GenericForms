@@ -16,8 +16,8 @@ export default class Question {
   @Column()
   title: string;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   description: string;
 
   @Field()
@@ -25,8 +25,8 @@ export default class Question {
   type: string;
 }
 
-@InputType({ description: "creat a question input" })
-export class CreatQuestionInput implements Partial<Question> {
+@InputType({ description: "create a question input" })
+export class CreateQuestionInput implements Partial<Question> {
   @Field()
   formId: number;
 

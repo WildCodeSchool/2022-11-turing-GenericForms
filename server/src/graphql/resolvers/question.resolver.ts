@@ -1,6 +1,6 @@
 import { Query, Authorized, Arg, Resolver, Mutation } from "type-graphql";
 import Question, {
-  CreatQuestionInput,
+  CreateQuestionInput,
   UpdateQuestionInput,
 } from "../../entity/Question";
 import { ResponseMessage } from "../../services/common.type";
@@ -17,7 +17,7 @@ export default class QuestionResolver {
 
   @Mutation(() => Question)
   async createQuestion(
-    @Arg("createQuestionInput") createQuestionInput: CreatQuestionInput
+    @Arg("createQuestionInput") createQuestionInput: CreateQuestionInput
   ): Promise<Question> {
     if (createQuestionInput.formId == null) {
       throw new Error("formId require for create question error");
