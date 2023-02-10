@@ -1,5 +1,5 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import User, { CreateUserInput, Login, LoginInput, UpdateUserInput } from "../../entity/User";
+import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import User, { CreateUserInput, Login, LoginInput, UpdateUserInput, ValidationToken } from "../../entity/User";
 import { ResponseMessage } from "../../services/common.type";
 import UserService from "../../services/user.service";
 
@@ -26,6 +26,19 @@ export default class UserResolver {
     
     }
 
+    @Query(() => ValidationToken)
+    async checkToken(@Ctx() ctx: any): Promise<ValidationToken> {
+      console.log(ctx);
+      const authorization = {
+        valid: true,
+      };
+      if (ctx.user === undefined) {
+        authorization.valid = false;
+      }
+      console.log("Authorization", authorization);
+      return authorization;
+    }
+    
     @Query(() => [User])
     async readUsers(): Promise<User[]> {
         const users = await new UserService().read();
