@@ -93,3 +93,9 @@ export class LoginInput implements Partial<User> {
   @Field()
   password: string;
 }
+
+@ObjectType()
+export class ValidationToken {
+  @Field()
+  valid: boolean;
+}
