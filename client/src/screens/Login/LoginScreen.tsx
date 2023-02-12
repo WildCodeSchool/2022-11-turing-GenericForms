@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { gql, useLazyQuery } from "@apollo/client";
+import { Grid, Button, Container } from "@mui/material";
+import LoginForm from "../../components/LoginForm";
 
 const LOGIN = gql(`
 query Login($loginInput: LoginInput!) {
@@ -9,11 +11,19 @@ query Login($loginInput: LoginInput!) {
       token
     }
   }`);
+  
 function Login() {
-  const [form, setForm] = useState({
+
+  const [form, setForm] = useState<SigningForm>({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    console.log("FORM", form);
+  }, [form]);
+
+
   const navigate = useNavigate();
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
     onCompleted(data) {
@@ -37,13 +47,21 @@ function Login() {
       },
     });
   };
-  const handleChange = (e: any) => {
-    console.log(e);
-    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
-  };
+
 
   return (
-    <div>
+    <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+    <Grid container maxWidth='sm'>
+      <Grid item xs={8} />
+      <Grid item xs={4} >
+        <Button variant="contained" color="primary">
+          S'inscrire
+        </Button>
+      </Grid>
+    </Grid>
+    <LoginForm setForm={setForm} handleSubmit={handleSubmit} />
+
+    {/* <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -63,7 +81,10 @@ function Login() {
       </form>
 
       <Link to={"/auth/register"}>Pas encore inscrit?</Link>
-    </div>
+    </div> */}
+
+    </Container>
+    
   );
 }
 

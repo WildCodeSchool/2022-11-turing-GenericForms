@@ -2,9 +2,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "../Footer";
 import Header from "../Header";
-import Home from "../../screens/Public/Public";
+import Home from "../../screens/Public/PublicScreen";
 import { Toaster } from "react-hot-toast";
-import Login from "../../screens/Login/Login";
+import Login from "../../screens/Login/LoginScreen";
 import Register from "../../screens/Register/Register";
 import Dashboard from "../../screens/Dashboard/Dashboard";
 import Protected from "../Protected";
@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Toaster position="bottom-center" />
-      <Header />
+      {/* <Header /> */}
       <main className="container">
         <Routes>
           <Route path="/" element={<Login />} />
