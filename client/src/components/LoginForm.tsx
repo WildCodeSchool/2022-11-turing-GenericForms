@@ -1,4 +1,12 @@
 import { TextField, Stack, Button, Grid, Container, Link, Box, FormControlLabel, Typography, CssBaseline, Checkbox  } from '@mui/material';
+import { ButtonPropsColorOverrides } from "@mui/material";
+
+//? Module augmentation to add custom colors on element (Button, etc...)
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides{
+    custom: true;
+  }
+}
 
 interface LoginFormProps {
     setForm: React.Dispatch<React.SetStateAction<SigningForm>>;
@@ -60,6 +68,7 @@ function LoginForm({setForm, handleSubmit}: LoginFormProps) {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                color="custom"
             >
                 Se connecter
             </Button>
