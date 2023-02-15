@@ -32,7 +32,7 @@ function LoginForm({setForm, handleSubmit}: LoginFormProps) {
             alignItems: 'center',
             }}
         >
-            <Typography component="h1" variant="h5">
+            <Typography variant="h3">
             Bienvenue sur Generic Forms !
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

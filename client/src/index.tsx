@@ -12,7 +12,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import {theme} from "./styles/theme";
+import theme from "./styles/theme";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",

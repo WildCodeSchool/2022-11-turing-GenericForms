@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { themeConstants } from "./theme.constants";
 import green from '@mui/material/colors/blue';
 import { PaletteColorOptions } from "@mui/material";
@@ -10,8 +10,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-
-export const theme = createTheme({
+let theme = createTheme({
     palette: {
       mode: 'light', // can swith to 'dark'
       primary: green,
@@ -27,8 +26,33 @@ export const theme = createTheme({
     typography: {
       fontFamily: [
         themeConstants.fonts.primary,
-        themeConstants.fonts.secondary,
       ].join(','),
+      fontSize: 18,
     },
-
+    //? We can override the default styles of the components like this:
+    // components: {
+    //   MuiTypography: {
+    //     styleOverrides: {
+    //       h1: {
+    //         fontSize: themeConstants.fontSize.xl6,
+    //         fontWeight: themeConstants.fontWeight.bold,
+    //         lineHeight: 1.2,
+    //         letterSpacing: 0.5,
+    //         color: themeConstants.colors.primaryDark,
+    //       },
+          
+    //     }
+    //   },
+    // },
   });
+
+  //? Or we can override the default styles of the components like this:
+  // theme.typography.h1 = {
+  //   fontSize: themeConstants.fontSize.xl6,
+  //   fontWeight: themeConstants.fontWeight.bold,
+  //   lineHeight: 1.2,
+  //   letterSpacing: 0.5,
+  //   color: themeConstants.colors.lightGray,
+  // };
+
+  export default theme;

@@ -69,7 +69,6 @@ export const themeConstants = {
       disabled: 0.5 as const,
     },
     fonts: {
-      primary: 'Roboto' as const,
-      secondary: 'Segoe UI' as const,
+      primary: 'Lato' as const,
     },
   };
