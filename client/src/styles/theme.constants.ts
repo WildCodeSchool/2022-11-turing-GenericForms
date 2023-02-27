@@ -71,4 +71,7 @@ export const themeConstants = {
     fonts: {
       primary: 'Lato' as const,
     },
+    components: {
+      appBarHeight: 56 as const,
+    }
   };

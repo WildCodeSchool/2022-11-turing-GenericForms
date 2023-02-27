@@ -27,7 +27,7 @@ let theme = createTheme({
       fontFamily: [
         themeConstants.fonts.primary,
       ].join(','),
-      fontSize: 18,
+      fontSize: 12,
     },
     //? We can override the default styles of the components like this:
     // components: {
