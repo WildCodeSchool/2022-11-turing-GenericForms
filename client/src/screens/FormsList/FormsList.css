@@ -17,3 +17,9 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.forms-list-container {
+    border: 1px solid #000000;
+    height: 10vh;
+    width: 80%;
+}

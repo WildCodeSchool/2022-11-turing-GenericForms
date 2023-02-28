@@ -4,7 +4,7 @@ import { Toolbar, Typography, List, ListItem, ListItemText, Box, Container, Grid
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
 interface AppBarProps extends MuiAppBarProps {
-    user?: UserEntity;
+    user?: UserDTO;
 }
 
 const AppBar = ({user}: AppBarProps) => {

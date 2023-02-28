@@ -12,9 +12,9 @@ interface LayoutFormsListProps {};
 function LayoutFormsList({}: LayoutFormsListProps) {
 
   // TODO get user id from backend token return ? 
-  const {data: userData, loading, error, refetch} = useQuery<UserDTO>(READ_USER, {
+  const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
     variables: { readOneUserId: "1"},
-    onCompleted(data: UserDTO) {
+    onCompleted(data: ReadOneUserDTO) {
       console.log(data);
     },
     onError(error) {
