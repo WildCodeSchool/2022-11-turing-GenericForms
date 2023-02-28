@@ -3,15 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { gql, useLazyQuery } from "@apollo/client";
 import { Grid, Button, Container } from "@mui/material";
 import LoginForm from "../../components/LoginForm";
+import { LOGIN } from "../../services/auth.query";
 
-const LOGIN = gql(`
-query Login($loginInput: LoginInput!) {
-    login(loginInput: $loginInput) {
-      success
-      token
-    }
-  }`);
-  
 function Login() {
 
   const [form, setForm] = useState<SigningForm>({
@@ -29,6 +22,7 @@ function Login() {
     onCompleted(data) {
       console.log("DATA", data);
       localStorage.setItem("token", data.login.token);
+      localStorage.setItem("userId", data.login.userId);
       navigate("/dashboard");
     },
     // onError(error) {

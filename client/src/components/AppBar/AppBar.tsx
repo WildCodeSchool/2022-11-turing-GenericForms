@@ -2,17 +2,18 @@ import React from 'react';
 import './AppBar.css';
 import { Toolbar, Typography, List, ListItem, ListItemText, Box, Container, Grid } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 
-interface AppBarProps extends MuiAppBarProps {}
+interface AppBarProps extends MuiAppBarProps {
+    user?: UserEntity;
+}
 
-const AppBar = ({}: AppBarProps) => {
+const AppBar = ({user}: AppBarProps) => {
     return (
         <Grid item xs={12} className='appbar-container'>
             <MuiAppBar position="relative" elevation={1} color="primary">
                 <Toolbar>
                     <Typography>
-                        Aujourd'hui vous avez 3 formulaires Michel               
+                        Hello {user?.firstName || ''} ! Vous avez 3 formulaires en cours             
                     </Typography>
                 </Toolbar>
             </MuiAppBar>
