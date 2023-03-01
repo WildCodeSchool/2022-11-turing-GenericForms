@@ -8,12 +8,6 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 interface FormsListHeaderProps {};
 
 function FormsListHeader({}: FormsListHeaderProps) {
-    const navigate = useNavigate();
-
-    const handleLogOut = () => {
-        localStorage.removeItem("token");
-        navigate("/");
-      };
 
     return (
         <>
@@ -28,10 +22,7 @@ function FormsListHeader({}: FormsListHeaderProps) {
                 />
             </Grid>          
             <Grid xs={8} className='' />
-            <Grid xs={3} className='dashboard-header-row2'>
-                <Button onClick={handleLogOut} variant='contained' >Se déconnecter</Button>
-            </Grid>
-            <Grid xs={6} />             
+            <Grid xs={9} />             
             <Grid xs={3} className='dashboard-header-row2'>
                 <Typography variant="h5">Order by</Typography>
             </Grid>

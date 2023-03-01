@@ -1,21 +1,30 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { themeConstants } from "./theme.constants";
-import green from '@mui/material/colors/blue';
 import { PaletteColorOptions } from "@mui/material";
 
 // Need to add module augmentation for the `custom` value
 declare module "@mui/material/styles" {
   interface PaletteOptions {
     custom: PaletteColorOptions;
+    paper: PaletteColorOptions;
   }
 }
 
 let theme = createTheme({
     palette: {
       mode: 'light', // can swith to 'dark'
-      primary: green,
+      primary: {
+        main: themeConstants.colors.primaryMain,
+        light: themeConstants.colors.primaryLight,
+        dark: themeConstants.colors.primaryDark,
+        contrastText: themeConstants.colors.primaryContrast,
+      },
       // can provide custom color tokens (light, main, dark, and contrastText)
-      // We can use them as props like this: `<Button color="custom.main">`
+      paper: {
+        main: '#fff1e6',
+        light: '#f0efeb',
+        dark: '#f2e9e4',
+      },
       custom: {
         light: '#ffa726',
         main: '#f57c00',
