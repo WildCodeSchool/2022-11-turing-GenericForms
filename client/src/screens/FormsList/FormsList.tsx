@@ -6,35 +6,11 @@ import { READ_FORMS } from '../../services/forms.query';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-// const formsMock = [
-//     {
-//         id: 1,
-//         title: 'Formulaire 1',
-//         questions: 5,
-//         answers: 10,
-//         createdAt: '2021-10-10',
-//         lastUpdate: '2021-10-10',
-//         isActive: true
-//     },
-//     {
-//         id: 2,
-//         title: 'Formulaire 2',
-//         questions: 3,
-//         answers: 6,
-//         createdAt: '2021-10-10',
-//         lastUpdate: '2021-10-10',
-//         isActive: true
-//     },
-//     {
-//         id: 3,
-//         title: 'Formulaire 3',
-//         questions: 8,
-//         answers: 7,
-//         createdAt: '2021-10-10',
-//         lastUpdate: '2021-10-10',
-//         isActive: true
-//     },
-// ]
+declare module "@mui/material/Typography" {
+    interface TypographyPropsVariantOverrides{
+      label: true;
+    }
+}
 
 interface FormsListProps {};
 
@@ -67,16 +43,16 @@ function FormsList({}: FormsListProps) {
             <Grid container className='dashboard-header-row3' >
                 <Grid item xs={6} />
                 <Grid item xs={1} className=''>
-                    <Typography variant="body1" align='center' >Questions</Typography>
+                    <Typography variant="label" >Questions</Typography>
                 </Grid>
                 <Grid item xs={1} className=''>
-                    <Typography variant="body1">Réponses</Typography>
+                    <Typography variant="label" >Réponses</Typography>
                 </Grid>
                 <Grid item xs={2} className=''>
-                    <Typography variant="body1">Modifié le</Typography>
+                    <Typography variant="label"  >Modifié le</Typography>
                 </Grid>
                 <Grid item xs={1} className=''>
-                    <Typography variant="body1">Actif</Typography>
+                    <Typography variant="label" >Actif</Typography>
                 </Grid>
                 <Grid item xs={1} className='' />
             </Grid>

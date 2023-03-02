@@ -8,6 +8,15 @@ declare module "@mui/material/styles" {
     custom: PaletteColorOptions;
     paper: PaletteColorOptions;
   }
+  interface TypographyVariantsOptions {
+    label: {
+      fontSize: number;
+      fontWeight: string;
+      lineHeight: number;
+      letterSpacing: number;
+      color: string;
+    };
+  }
 }
 
 let theme = createTheme({
@@ -37,6 +46,13 @@ let theme = createTheme({
         themeConstants.fonts.primary,
       ].join(','),
       fontSize: 12,
+      label: {
+        fontSize: themeConstants.fontSize.xxs,
+        fontWeight: themeConstants.fontWeight.bold,
+        lineHeight: 1,
+        letterSpacing: 1,
+        color: themeConstants.colors.primaryDark,
+      },
     },
     //? We can override the default styles of the components like this:
     // components: {
