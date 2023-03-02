@@ -23,7 +23,7 @@ function LayoutFormsList({}: LayoutFormsListProps) {
   });
   
     return (
-        <Grid container className='layout-forms-list'>
+        <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userData?.readOneUser}/>
           <DashboardSidebar/>
           <DashboardMain/>

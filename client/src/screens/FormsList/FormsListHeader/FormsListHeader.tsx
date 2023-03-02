@@ -11,21 +11,18 @@ function FormsListHeader({}: FormsListHeaderProps) {
 
     return (
         <>
-            <Grid xs={3} className='dashboard-header-row1'>
-                <Typography variant="h5">Dashboard</Typography>
+            <Grid xs={2} className='dashboard-header-row1'>
+                <Typography variant="h5" sx={{}} >Dashboard</Typography>
             </Grid>
             <Grid xs={1} className='dashboard-header-row1'>
                 <Button
                     variant="contained"
                     onClick={() => null}
-                    startIcon={<PersonAddAlt1Icon fontSize="large" />}
+                    startIcon={<PersonAddAlt1Icon fontSize="small" />}
+                    sx={{minWidth: 10, minHeight: 10 }}
                 />
             </Grid>          
-            <Grid xs={8} className='' />
-            <Grid xs={9} />             
-            <Grid xs={3} className='dashboard-header-row2'>
-                <Typography variant="h5">Order by</Typography>
-            </Grid>
+            <Grid item xs={9} className='' />
         </>
     )
 }

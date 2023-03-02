@@ -15,11 +15,6 @@ function Dashboard() {
     }
   }, [navigate]);
 
-  const handleLogOut = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
   return (
     <Grid item xs={10} className='dashboard-container'>
       <Grid container direction={'row'}>

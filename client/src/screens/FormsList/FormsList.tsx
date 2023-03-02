@@ -1,6 +1,6 @@
 import React from 'react';
 import './FormsList.css';
-import { Grid, List, ListItem, ListItemText, Typography  } from '@mui/material';
+import { Box, Button, Grid, List, ListItem, ListItemText, Typography  } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { READ_FORMS } from '../../services/forms.query';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
@@ -54,25 +54,33 @@ function FormsList({}: FormsListProps) {
 
     return (
         <>
-            <Grid item xs={12} className=''>
-                <Typography variant="h5">
-                    Liste de vos formulaires
-                </Typography>
+            <Grid container className='dashboard-header-row2' >
+                <Grid item xs={9} >
+                    <Button variant='contained'>
+                        + Créer un formulaire
+                    </Button>
+                </Grid>
+                <Grid item xs={3} >
+                    <Typography variant="h5">Order by</Typography>
+                </Grid>
             </Grid>
-            <Grid item xs={6} className='' />
-            <Grid item xs={1} className=''>
-                <Typography variant="body1">Questions</Typography>
+            <Grid container className='dashboard-header-row3' >
+                <Grid item xs={6} />
+                <Grid item xs={1} className=''>
+                    <Typography variant="body1" align='center' >Questions</Typography>
+                </Grid>
+                <Grid item xs={1} className=''>
+                    <Typography variant="body1">Réponses</Typography>
+                </Grid>
+                <Grid item xs={2} className=''>
+                    <Typography variant="body1">Modifié le</Typography>
+                </Grid>
+                <Grid item xs={1} className=''>
+                    <Typography variant="body1">Actif</Typography>
+                </Grid>
+                <Grid item xs={1} className='' />
             </Grid>
-            <Grid item xs={1} className=''>
-                <Typography variant="body1">Réponses</Typography>
-            </Grid>
-            <Grid item xs={2} className=''>
-                <Typography variant="body1">Modifié le</Typography>
-            </Grid>
-            <Grid item xs={1} className=''>
-                <Typography variant="body1">Actif</Typography>
-            </Grid>
-            <Grid item xs={1} className='' />
+            
             {
                 formsData?.readForms.map((form) => (
                     <Grid container key={form.formId} className='forms-list-container'>

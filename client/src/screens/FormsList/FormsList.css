@@ -1,25 +1,22 @@
 
-.dashboard-list-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.dashboard-header-row1 {
+.dashboard-header-row2 {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    padding-left: 4vw;
+    height: 10vh;
 }
 
-.dashboard-header-row2 {
+.dashboard-header-row3 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    height: 10vh;
 }
 
 .forms-list-container {
     border: 1px solid #000000;
-    height: 10vh;
-    width: 80%;
+    height: 5vh;
 }
