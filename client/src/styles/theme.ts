@@ -26,6 +26,9 @@ declare module "@mui/material/styles" {
 let theme = createTheme({
     palette: {
       mode: 'light', // can swith to 'dark'
+      background: {
+        default: themeConstants.colors.paperWhite,
+      },
       primary: {
         main: themeConstants.colors.primaryMain,
         light: themeConstants.colors.primaryLight,

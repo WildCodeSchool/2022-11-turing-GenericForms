@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './DashboardMain.css';
 import { useNavigate } from "react-router-dom";
 import { Grid  } from '@mui/material';
 import FormsListHeader from '../../FormsList/FormsListHeader/FormsListHeader';
@@ -16,7 +15,7 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <Grid item xs={10} className='dashboard-container'>
+    <Grid item xs={10}>
       <Grid container direction={'row'}>
         <FormsListHeader/>
         <FormsList />

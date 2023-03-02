@@ -1,6 +1,5 @@
 .App {
     min-height: 100vh;
     height: 100%;
-    background-color: rgb(255, 253, 233);
     justify-content: flex-start;
 }
