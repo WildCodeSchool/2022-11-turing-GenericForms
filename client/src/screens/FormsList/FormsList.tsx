@@ -1,10 +1,12 @@
 import React from 'react';
 import './FormsList.css';
-import { Box, Button, Grid, List, ListItem, ListItemText, Typography  } from '@mui/material';
+import { Button, Grid, Typography  } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { useQuery } from '@apollo/client';
 import { READ_FORMS } from '../../services/forms.query';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { styles } from './FormsListStyles';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -14,7 +16,11 @@ declare module "@mui/material/Typography" {
 
 interface FormsListProps {};
 
+const useStyles = makeStyles(styles);
+
 function FormsList({}: FormsListProps) {
+
+    const classes = useStyles();
 
     //TODO get user form's data with Apollo Client
 
@@ -63,7 +69,7 @@ function FormsList({}: FormsListProps) {
                         <Grid item xs={2} className=''>
                             <LocalPostOfficeIcon fontSize='large' color='secondary'/>
                         </Grid>
-                        <Grid item xs={2} className=''>
+                        <Grid item xs={2} className={classes.title}>
                             <Typography variant="body1">{form.title}</Typography>
                         </Grid>
                         <Grid item xs={2} className=''>

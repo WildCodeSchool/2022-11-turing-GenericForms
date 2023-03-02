@@ -4,6 +4,10 @@ import { PaletteColorOptions } from "@mui/material";
 
 // Need to add module augmentation for the `custom` value
 declare module "@mui/material/styles" {
+  interface Palette {
+    custom: Palette['primary'];
+    paper: Palette['primary'];
+  }
   interface PaletteOptions {
     custom: PaletteColorOptions;
     paper: PaletteColorOptions;
