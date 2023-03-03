@@ -2,9 +2,6 @@ import { Theme  } from '@mui/material';
 import { themeConstants } from '../../styles/theme.constants';
 
 export const styles = ((theme: Theme) => ({
-    title: {
-        color: theme.palette.custom.main,
-    },
     paper: {
         borderRadius: 12,
         marginTop: 8
@@ -29,17 +26,5 @@ export const styles = ((theme: Theme) => ({
             background: theme.palette.primary.light,
             color: theme.palette.primary.main,
         }
-    },
-    select: {
-        minWidth: 80,
-        height: 40,
-        backgroundColor: themeConstants.colors.paperWhite,
-        color: theme.palette.primary.main,
-        fontWeight: 400,
-        borderStyle: 'none',
-        borderWidth: 2,
-        borderRadius: 1,
-        padding: 1,
-        boxShadow: '0px 5px 8px -3px rgba(0,0,0,0.14)',
     },
 }));

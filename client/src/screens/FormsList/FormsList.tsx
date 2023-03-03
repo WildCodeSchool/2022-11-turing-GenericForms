@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { Button, FormControl, Grid, MenuItem, Select, Theme, Typography  } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import React from 'react';
+import { Button, Grid, Theme, Typography  } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { READ_FORMS } from '../../services/forms.query';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styles } from './FormsListStyles';
 import theme from '../../styles/theme';
-import { themeConstants } from '../../styles/theme.constants';
 import FormItem from '../../components/FormItem';
+import SelectListDrop from '../../components/common/SelectListDrop';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -17,14 +14,7 @@ declare module "@mui/material/Typography" {
 
 interface FormsListProps {};
 
-const useStyles = makeStyles(styles);
-
 const useCss = (theme: Theme) => ({
-    formsListContainer: {
-        border: '1px solid #000000',
-        height: '8vh',
-        margin: '1vh 1vw',
-    },
     centerTxt: {
         textAlign: 'center',
     },
@@ -43,52 +33,18 @@ const useCss = (theme: Theme) => ({
         alignItems: 'center',
         height: '5vh',
     },
-    formsRow:{
-        justifyContent: 'center',
-    },
-    icon:{
-        color: theme.palette.primary.main,
-        right: 12,
-        position: 'absolute',
-        userSelect: 'none',
-        pointerEvents: 'none'
-    },
-    select: {
-        minWidth: 80,
-        height: 40,
-        backgroundColor: themeConstants.colors.paperWhite,
-        color: theme.palette.primary.main,
-        fontWeight: 400,
-        borderStyle: 'none',
-        borderWidth: 2,
-        borderRadius: 1,
-        padding: 1,
-        boxShadow: '0px 5px 8px -3px rgba(0,0,0,0.14)',
-    },
-    
 });
 
-function FormsList({}: FormsListProps) {
-    const classes = useStyles();
+const menuItemsArray = [
+    {value: 0, label: 'Questions'},
+    {value: 1, label: 'Modifié le'},
+    {value: 2, label: 'Réponses'},
+    {value: 3, label: 'Actif'},
+];
 
+function FormsList({}: FormsListProps) {
     const css = useCss(theme);
 
-    //Pass custom props to redesign the Menu elements used in the Select component : mui.com/material-ui/api/menu/
-    //It inherits props from Popover : mui.com/material-ui/api/popover/
-    const menuProps = {
-        classes: {
-            paper: classes.paper,
-            list: classes.list,
-        },
-       anchorOrigin: {
-        horizontal: 10,
-        vertical: 10,
-        },
-        transformOrigin: {
-            horizontal: 10,
-            vertical: 10,
-        }
-    };
     const {data: formsData, loading, error, refetch} = useQuery<ReadFormsDTO>(READ_FORMS, {
         //authorization token in header set automatically ? 
         onCompleted(data: ReadFormsDTO) {
@@ -99,17 +55,6 @@ function FormsList({}: FormsListProps) {
         }
     });
 
-    const [val,setVal] = useState(1);
-
-    const handleChange = (event: any) => {
-      setVal(event.target.value);
-    };
-    
-    const iconComponent = (props: any) => {
-      return (
-        <ExpandMoreIcon sx={css.icon}/>
-      )};
-
     return (
         <>
             <Grid container sx={css.row2} >
@@ -119,21 +64,7 @@ function FormsList({}: FormsListProps) {
                     </Button>
                 </Grid>
                 <Grid item xs={3} >
-                    <FormControl>
-                        <Select
-                            disableUnderline
-                            sx={css.select}
-                            MenuProps={menuProps}
-                            IconComponent={iconComponent}
-                            value={val}
-                            onChange={handleChange}
-                        >
-                            <MenuItem value={0}>Questions</MenuItem>
-                            <MenuItem value={1}>Modifié le</MenuItem>
-                            <MenuItem value={2}>Réponses</MenuItem>
-                            <MenuItem value={3}>Actif</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <SelectListDrop menuItems={menuItemsArray} />
                 </Grid>
             </Grid>
             <Grid container sx={css.row3} >
