@@ -27,7 +27,7 @@ const AppBar = ({user}: AppBarProps) => {
 
     return (
         <Grid item xs={12} className='appbar-container'>
-            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "paper.light"}} title="Appbar" >
+            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "paper.light", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
                 <Toolbar>
                     <Button
                         variant="contained"
