@@ -3,12 +3,11 @@ import { Button, FormControl, Grid, MenuItem, Select, Theme, Typography  } from 
 import { makeStyles } from '@mui/styles';
 import { useQuery } from '@apollo/client';
 import { READ_FORMS } from '../../services/forms.query';
-import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styles } from './FormsListStyles';
 import theme from '../../styles/theme';
 import { themeConstants } from '../../styles/theme.constants';
+import FormItem from '../../components/FormItem';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -153,39 +152,11 @@ function FormsList({}: FormsListProps) {
                 </Grid>
                 <Grid item xs={1}  />
             </Grid>
-            
             {
                 formsData?.readForms.map((form) => (
-                    <Grid container key={form.formId} sx={css.formsListContainer} alignContent="center" alignItems="center" >
-                        <Grid item xs={2} display="flex" justifyContent="center">
-                            <LocalPostOfficeIcon fontSize='large' color='secondary'/>
-                        </Grid>
-                        <Grid item xs={2} className={classes.title}>
-                            <Typography variant="body1" sx={css.centerTxt}>{form.title}</Typography>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Typography variant="body1" sx={css.centerTxt}>{form.category}</Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Typography variant="body1" sx={css.centerTxt}>55</Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Typography variant="body1" sx={css.centerTxt}>55</Typography>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Typography variant="body1" sx={css.centerTxt}>{form.themeId}</Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Typography variant="body1" sx={css.centerTxt}>Oui</Typography>
-                        </Grid>
-                        <Grid item xs={1} display="flex" justifyContent="center">
-                            <MoreVertIcon fontSize='large' color='disabled' />
-                        </Grid>
-                    </Grid>
+                    <FormItem key={form.formId} form={form} />
                 ))
-            }
-            
-                
+            }    
         </>
     )
 }
