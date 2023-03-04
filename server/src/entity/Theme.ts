@@ -40,11 +40,6 @@ export default class Theme {
     @OneToMany((_type) => Form, (form: Form) => form.theme)
     forms: Form[];
 
-    // Add a many to one relationship with the Question entity
-    // @Field(() => [Grade])
-    // @OneToMany(() => Grade, (grade) => grade.wilder)
-    // grades: Grade[];
-
 }
 
 @InputType({description: "create a theme input"})

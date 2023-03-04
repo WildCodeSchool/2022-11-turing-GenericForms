@@ -19,7 +19,7 @@ class FormService implements IService {
                     ? Like(`%${titleContains}%`)
                     : undefined,
               },
-              relations: ["theme"],
+              relations: ["theme", "questions"],
             });
             return forms;
           } catch (err) {

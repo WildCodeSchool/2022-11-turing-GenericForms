@@ -8,7 +8,14 @@ import QuestionService from "../../services/question.service";
 
 @Resolver(Question)
 export default class QuestionResolver {
-  @Authorized()
+
+  // ? Query to get all questions : debug purpose only
+  @Query(() => [Question])
+  async readQuestions(): Promise<Question[]> {
+    const questions = await new QuestionService().readQuestions();
+    return questions;
+  }
+
   @Query(() => [Question])
   async readQuestionByForm(@Arg("formId") formId: number): Promise<Question[]> {
     const questions = await new QuestionService().readQuestionByForm(formId);
@@ -20,7 +27,7 @@ export default class QuestionResolver {
     @Arg("createQuestionInput") createQuestionInput: CreateQuestionInput
   ): Promise<Question> {
     if (createQuestionInput.formId == null) {
-      throw new Error("formId require for create question error");
+      throw new Error("formId is required to create question");
     }
     return await new QuestionService().create({ ...createQuestionInput });
   }
