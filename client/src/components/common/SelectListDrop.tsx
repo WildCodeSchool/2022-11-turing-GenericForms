@@ -71,7 +71,6 @@ const SelectListDrop = ({menuItems}: SelectListDropProps) => {
     return (
         <FormControl>
             <Select
-                disableUnderline
                 sx={css.select}
                 MenuProps={menuProps}
                 IconComponent={iconComponent}
@@ -80,7 +79,7 @@ const SelectListDrop = ({menuItems}: SelectListDropProps) => {
             >
                 {menuItems.map((item) => {
                     return (
-                        <MenuItem value={item.value}>{item.label}</MenuItem>
+                        <MenuItem value={item.value} key={item.id}>{item.label}</MenuItem>
                     )
                 })
                 }

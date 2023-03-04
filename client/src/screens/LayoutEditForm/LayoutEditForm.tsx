@@ -27,7 +27,7 @@ function LayoutEditForm({}: LayoutEditFormProps) {
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userData?.readOneUser}/>
-          <EditFormSidebar/>
+          <EditFormSidebar formId={formId}/>
           <EditFormMain formId={formId} />
         </Grid>
     )

@@ -36,10 +36,10 @@ const useCss = (theme: Theme) => ({
 });
 
 const menuItemsArray = [
-    {value: 0, label: 'Questions'},
-    {value: 1, label: 'Modifié le'},
-    {value: 2, label: 'Réponses'},
-    {value: 3, label: 'Actif'},
+    {id: 32, value: 0, label: 'Questions'},
+    {id: 12, value: 1, label: 'Modifié le'},
+    {id: 23, value: 2, label: 'Réponses'},
+    {id: 35, value: 3, label: 'Actif'},
 ];
 
 function FormsList({}: FormsListProps) {

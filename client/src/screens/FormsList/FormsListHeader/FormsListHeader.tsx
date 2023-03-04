@@ -11,10 +11,10 @@ function FormsListHeader({}: FormsListHeaderProps) {
 
     return (
         <>
-            <Grid xs={2} className='dashboard-header-row1'>
+            <Grid item xs={2} className='dashboard-header-row1'>
                 <Typography variant="h5" sx={{}} >Dashboard</Typography>
             </Grid>
-            <Grid xs={1} className='dashboard-header-row1'>
+            <Grid item xs={1} className='dashboard-header-row1'>
                 <Button
                     variant="contained"
                     onClick={() => null}
