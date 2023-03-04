@@ -11,6 +11,7 @@ import Dashboard from "../../screens/LayoutDashboard/DashboardMain/DashboardMain
 import Protected from "../Protected";
 import LayoutFormsList from "../../screens/LayoutDashboard/LayoutDashboard";
 import { CssBaseline } from "@mui/material";
+import LayoutEditForm from "../../screens/LayoutEditForm/LayoutEditForm";
 
 
 function App() {
@@ -26,6 +27,14 @@ function App() {
           element={
             <Protected>
               <LayoutFormsList />
+            </Protected>
+          }
+        />
+        <Route
+          path="edit/:formId"
+          element={
+            <Protected>
+              <LayoutEditForm />
             </Protected>
           }
         />

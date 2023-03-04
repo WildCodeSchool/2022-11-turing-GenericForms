@@ -1,8 +1,9 @@
 import React from 'react';
-import { Grid, Theme, Typography  } from '@mui/material';
+import { Grid, IconButton, Theme, Typography  } from '@mui/material';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import theme from '../styles/theme';
+import { useNavigate } from 'react-router-dom';
 
 interface FormItemProps {
     form: FormDTO;
@@ -25,6 +26,13 @@ const useCss = (theme: Theme) => ({
 
 const FormItem = ({form}: FormItemProps) => {
     const css = useCss(theme);
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        console.log('click');
+        navigate(`/edit/${form.formId}`);
+
+    };
 
     return (
         <Grid container key={form.formId} sx={css.formsListContainer} alignContent="center" alignItems="center" >
@@ -50,7 +58,9 @@ const FormItem = ({form}: FormItemProps) => {
                 <Typography variant="body1" sx={css.centerTxt}>Oui</Typography>
             </Grid>
             <Grid item xs={1} display="flex" justifyContent="center">
-                <MoreVertIcon fontSize='large' color='disabled' />
+                <IconButton onClick={handleClick}>
+                    <MoreVertIcon fontSize='large' color='action' />
+                </IconButton>
             </Grid>
         </Grid>
     )
