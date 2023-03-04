@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { ObjectType, InputType, Field } from "type-graphql";
 import Theme from "./Theme";
+import Question from "./Question";
 
 @ObjectType()
 @Entity("forms")
@@ -27,10 +28,9 @@ export default class Form {
     @JoinColumn({ name: "themeId" })
     theme: Theme;
 
-    // Add a many to one relationship with the Question entity
-    // @Field(() => [Grade])
-    // @OneToMany(() => Grade, (grade) => grade.wilder)
-    // grades: Grade[];
+    @Field(() => [Question])
+    @OneToMany((_type) => Question, (question: Question) => question.form)
+    questions: Question[];
 }
 
 @InputType({description: "create a form input"})
