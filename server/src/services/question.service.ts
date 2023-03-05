@@ -38,6 +38,24 @@ class QuestionService implements IService {
     }
   }
 
+  async readQuestionById(questionId: number): Promise<Question> {
+    try {
+      const question = await this.db.findOne({
+        where: {
+          questionId,
+        },
+        relations: ["form"],
+      });
+      if(question === null) {
+        throw new Error("No form with this ID");
+    }
+      return question;
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Error while getting question with ID ${questionId}`);
+    }
+  }
+
   async create(createQuestionInput: CreateQuestionInput): Promise<Question> {
     try {
       return await this.db.save({ ...createQuestionInput });

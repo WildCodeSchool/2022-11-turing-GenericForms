@@ -4,4 +4,10 @@ export interface QuestionDTO {
     title: string;
     description: string;
     type: string;
+    formId: number;
+    form: FormDTO;
+}
+
+export interface ReadOneQuestionDTO {
+    readQuestionById: QuestionDTO;
 }

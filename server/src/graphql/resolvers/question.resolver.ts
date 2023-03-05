@@ -22,6 +22,12 @@ export default class QuestionResolver {
     return questions;
   }
 
+  @Query(() => Question )
+  async readQuestionById(@Arg("questionId") questionId: number): Promise<Question> {
+    const question = await new QuestionService().readQuestionById(questionId);
+    return question;
+  }
+
   @Mutation(() => Question)
   async createQuestion(
     @Arg("createQuestionInput") createQuestionInput: CreateQuestionInput
