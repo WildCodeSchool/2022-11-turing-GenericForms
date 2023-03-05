@@ -1,9 +1,7 @@
 export enum QuestionType {
+    TEXT = 'text',
     SHORTTEXT = 'shortText',
     LONGTEXT = 'longText',
     NUMBER = 'number',
-    DATE = 'date',
-    RADIO = 'radio',
-    CHECKBOX = 'checkbox',
-    DROPDOWN = 'dropdown',
+    SELECT = 'select',
 }
