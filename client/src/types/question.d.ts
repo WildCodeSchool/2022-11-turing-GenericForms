@@ -1,9 +1,10 @@
+import {QuestionType} from './questionEnum';
 
 export interface QuestionDTO {
     questionId: number;
     title: string;
     description: string;
-    type: string;
+    type: QuestionType;
     formId: number;
     form: FormDTO;
 }

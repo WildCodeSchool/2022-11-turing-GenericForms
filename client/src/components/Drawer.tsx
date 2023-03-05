@@ -9,8 +9,9 @@ import ShortTextIcon from '@mui/icons-material/ShortText';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import { menuItems } from '../types/commonComponents';
 import { QuestionDTO } from '../types/question';
+import { QuestionType } from '../types/questionEnum';
 
-//TODO Create a switch to choose icons based on question types
+//TODO Create a switch to choose icons based on question types (to insert around line 132 )
 
 interface DrawerProps {
   title?: string;
@@ -129,7 +130,7 @@ const Drawer = ({title, menuItems, questions, handleClick}: DrawerProps) => {
                         justifyContent: 'center',
                       }}
                     >
-                      {type === 'text' ? <ShortTextIcon /> : <PlusOneIcon />}
+                      {type === QuestionType.SHORTTEXT ? <ShortTextIcon /> : <PlusOneIcon />}
                     </ListItemIcon>
                     <ListItemText primary={title} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>
