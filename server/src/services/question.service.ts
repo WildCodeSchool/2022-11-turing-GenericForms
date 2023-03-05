@@ -15,7 +15,7 @@ class QuestionService implements IService {
 
   async readQuestions(): Promise<Question[]> {
     try {
-      const question = await this.db.find();
+      const question = await this.db.find({ relations: ["form"]});
       return question;
     } catch (err) {
       console.error(err);

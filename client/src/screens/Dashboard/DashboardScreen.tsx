@@ -6,9 +6,9 @@ import DashboardSidebar from './DashboardSidebar/DashboardSidebar';
 import { useQuery } from '@apollo/client';
 import { READ_USER } from '../../services/user.query';
 
-interface LayoutFormsListProps {};
+interface DashboardScreenProps {};
 
-function LayoutFormsList({}: LayoutFormsListProps) {
+function DashboardScreen({}: DashboardScreenProps) {
 
   // TODO get user id from backend token return ? 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
@@ -30,4 +30,4 @@ function LayoutFormsList({}: LayoutFormsListProps) {
     )
 }
 
-export default LayoutFormsList;
+export default DashboardScreen;

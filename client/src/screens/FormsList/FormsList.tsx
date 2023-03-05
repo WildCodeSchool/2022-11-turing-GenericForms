@@ -5,6 +5,7 @@ import { READ_FORMS } from '../../services/forms.query';
 import theme from '../../styles/theme';
 import FormItem from '../../components/FormItem';
 import SelectListDrop from '../../components/common/SelectListDrop';
+import { ReadFormsDTO } from '../../types/form';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{

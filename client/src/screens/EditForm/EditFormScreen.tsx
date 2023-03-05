@@ -6,10 +6,15 @@ import { READ_USER } from '../../services/user.query';
 import EditFormMain from './EditFormMain/EditFormMain';
 import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
 import { useParams } from 'react-router-dom';
+import { READ_FORM } from '../../services/forms.query';
+import { ReadOneFormDTO } from '../../types/form';
 
-interface LayoutEditFormProps {};
+interface EditFormScreenProps {};
 
-function LayoutEditForm({}: LayoutEditFormProps) {
+    //TODO - pass formId from props
+    //TODO - get form data from server => access questions
+
+function EditFormScreen({}: EditFormScreenProps) {
 
   const {formId} = useParams();
 
@@ -23,14 +28,24 @@ function LayoutEditForm({}: LayoutEditFormProps) {
         console.log(error);
     }
   });
-  
+
+  const {data: form, loading: formLoading, error: formError} = useQuery<ReadOneFormDTO>(READ_FORM, {
+    variables: { readOneFormId: formId},
+    onCompleted(data: ReadOneFormDTO) {
+      console.log(data);
+    },
+    onError(error) {
+        console.log(error);
+    }
+  });
+
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userData?.readOneUser}/>
-          <EditFormSidebar formId={formId}/>
+          <EditFormSidebar formId={formId} questions={form?.readOneForm.questions}/>
           <EditFormMain formId={formId} />
         </Grid>
     )
 }
 
-export default LayoutEditForm;
+export default EditFormScreen;

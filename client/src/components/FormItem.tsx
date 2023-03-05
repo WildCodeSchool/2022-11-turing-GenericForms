@@ -4,6 +4,7 @@ import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import theme from '../styles/theme';
 import { useNavigate } from 'react-router-dom';
+import { FormDTO } from '../types/form';
 
 interface FormItemProps {
     form: FormDTO;

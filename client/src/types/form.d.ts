@@ -1,18 +1,19 @@
+import { ThemeDTO } from "./theme";
+import { QuestionDTO } from "./question";
+
 interface FormDTO {
     formId: number;
     title: string;
     category: string;
     themeId: number;
+    theme: ThemeDTO;
+    questions: QuestionDTO[];
 }
-
-interface ThemeDTO {
-    themeId: number;
-    name: string;
-    style: string;
-}
-
-type FormsDTO = FormDTO & { theme: ThemeDTO };
 
 interface ReadFormsDTO {
-    readForms: FormsDTO[];
+    readForms: FormDTO[];
+}
+
+interface ReadOneFormDTO {
+    readOneForm: FormDTO;
 }
