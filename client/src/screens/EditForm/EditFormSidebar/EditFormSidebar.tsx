@@ -12,13 +12,20 @@ import { QuestionDTO } from '../../../types/question';
 interface EditFormSidebarProps {
     formId?: string;
     questions?: QuestionDTO[];
+    setQuestionId: (questionId: number) => void;
 }
 
-const EditFormSidebar = ({formId, questions}: EditFormSidebarProps) => {
-    //TODO - create menuItems from questions => adapt Drawer component to accept questions as menuItems : custom icon + title
+const EditFormSidebar = ({formId, questions, setQuestionId}: EditFormSidebarProps) => {
 
+    const handleClick = (questionId: number) => {
+        console.log('clicked on question #', questionId);
+        setQuestionId(questionId);
+    };
+    
+    //TODO : handle case where no questions are passed or empty questions array
+    // => display drawer with no items and a message "Vite, créer votre première question !"
     return (
-        <Drawer title='Notifications' questions={questions} />
+        <Drawer title='Notifications' questions={questions} handleClick={handleClick} />
     )
 }
 

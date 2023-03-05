@@ -16,6 +16,7 @@ interface DrawerProps {
   title?: string;
   menuItems?: menuItems;
   questions?: QuestionDTO[];
+  handleClick?: (questionId: number) => void;
 }
 
 const drawerWidth = 150;
@@ -64,7 +65,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     }),
   );
 
-const Drawer = ({title, menuItems, questions}: DrawerProps) => {
+const Drawer = ({title, menuItems, questions, handleClick}: DrawerProps) => {
     const theme = useTheme();
     const [open, setOpen] = useState(true);
 
@@ -111,7 +112,7 @@ const Drawer = ({title, menuItems, questions}: DrawerProps) => {
                   </ListItemButton>
                 </ListItem>
               ))}
-               {questions && questions.map(({title, description, type}, index) => (
+               {questions && handleClick && questions.map(({title, description, type, questionId}, index) => (
                 <ListItem key={title} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                     sx={{
@@ -119,6 +120,7 @@ const Drawer = ({title, menuItems, questions}: DrawerProps) => {
                       justifyContent: open ? 'initial' : 'center',
                       px: 2.5,
                     }}
+                    onClick={() => handleClick(questionId)}
                   >
                     <ListItemIcon
                       sx={{

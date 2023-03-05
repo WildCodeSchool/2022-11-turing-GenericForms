@@ -11,12 +11,9 @@ import { ReadOneFormDTO } from '../../types/form';
 
 interface EditFormScreenProps {};
 
-    //TODO - pass formId from props
-    //TODO - get form data from server => access questions
-
 function EditFormScreen({}: EditFormScreenProps) {
-
   const {formId} = useParams();
+  const [questionId, setQuestionId] = React.useState<number | null>(null);
 
   // TODO get user id from backend token return ? 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
@@ -39,11 +36,15 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
   });
 
+    if (!formId) {
+      return <div>Erreur : Pas de formulaire à afficher...</div>
+    }
+
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userData?.readOneUser}/>
-          <EditFormSidebar formId={formId} questions={form?.readOneForm.questions}/>
-          <EditFormMain formId={formId} />
+          <EditFormSidebar formId={formId} questions={form?.readOneForm.questions} setQuestionId={setQuestionId}/>
+          <EditFormMain formId={formId} questionId={questionId} />
         </Grid>
     )
 }

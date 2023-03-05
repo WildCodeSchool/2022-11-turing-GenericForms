@@ -4,10 +4,13 @@ import { Grid, Typography  } from '@mui/material';
 
 interface EditFormMainProps {
   formId?: string;
+  questionId: number | null;
 }
 
-function EditFormMain({formId}: EditFormMainProps) {
+function EditFormMain({formId, questionId}: EditFormMainProps) {
   const navigate = useNavigate();
+
+  //TODO make query tio get question data and display based on their type and details
 
   useEffect(()  => {
     const token = localStorage.getItem("token");
@@ -20,7 +23,7 @@ function EditFormMain({formId}: EditFormMainProps) {
     <Grid item xs={10}>
       <Grid container direction={'row'}>
         <Typography variant="h4">
-            Edit Form #{formId}
+            Edit question #{questionId} in Form #{formId}
         </Typography>
       </Grid>
     </Grid>
