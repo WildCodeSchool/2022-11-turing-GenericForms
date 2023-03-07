@@ -8,32 +8,29 @@ import { READ_QUESTION } from '../../../services/question.query';
 import TextQuestionPreview from '../../../components/QuestionPreview/TextQuestionPreview';
 import SelectQuestionPreview from '../../../components/QuestionPreview/SelectQuestionPreview';
 import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQuestionPreview';
+import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
 
 interface EditFormMainProps {
   formId?: string;
   questionId: number | undefined;
+  questions: QuestionDTO[] | undefined;
+  setQuestions: React.Dispatch<React.SetStateAction<QuestionDTO[]>>;
 }
 
-// const QUESTION_PREVIEW = {
-//     text: <TextQuestionPreview question={data}/>,
-//     number: <NumberQuestionPreview />,
-//     select: <SelectQuestionPreview />,
-// };
-
-const questionPreview = (question: QuestionDTO) => {
+const questionPreview = (question: QuestionDTO, setQuestions: React.Dispatch<React.SetStateAction<QuestionDTO[]>>) => {
   switch (question.type) {
     case QuestionType.TEXT:
-      return <TextQuestionPreview question={question}/>;
+      return <TextQuestionPreview question={question} setQuestions={setQuestions} />;
     case QuestionType.NUMBER:
       return <NumberQuestionPreview />;
     case QuestionType.SELECT:
       return <SelectQuestionPreview />;
     default:
-      return <TextQuestionPreview question={question}/>;
+      return <NoQuestionPreview />;
   };
 };
 
-function EditFormMain({formId, questionId}: EditFormMainProps) {
+function EditFormMain({formId, questionId, questions, setQuestions}: EditFormMainProps) {
   const navigate = useNavigate();
 
   useEffect(()  => {
@@ -42,24 +39,29 @@ function EditFormMain({formId, questionId}: EditFormMainProps) {
       navigate("/");
     }
   }, [navigate]);
-  
-  const {data, loading: questionLoading, error: questionError} = useQuery<ReadOneQuestionDTO>(READ_QUESTION, {
-    variables: { questionId},
-    onCompleted(data: ReadOneQuestionDTO) {
-      console.log(data);
-    },
-    onError(error: any) {
-        console.log(error);
-    }
-  });
+
+  // const {data: question, loading: questionLoading, error: questionError} = useQuery<ReadOneQuestionDTO>(READ_QUESTION, {
+  //   variables: { questionId},
+  //   onCompleted(data: ReadOneQuestionDTO) {
+  //     console.log(data);
+  //   },
+  //   onError(error: any) {
+  //       console.log(error);
+  //   }
+  // });
+  //! try to get the question using questionId from the form data
+  let question = {} as QuestionDTO | undefined;
+  if(questions && questionId) {
+    question = questions.find((question) => question.questionId === questionId);
+  }
 
   //TODO get form data information and pass it to questionPreview
   //? => access form theme colors customization
 
-  if(data?.readQuestionById ) {
+  if(question ) {
     return (
       <Grid item xs={10}>
-            {questionPreview(data?.readQuestionById)}
+            {questionPreview(question, setQuestions)}
             {/* <Typography variant="h4">
                 Edit question #{questionId} in Form #{formId}
             </Typography>

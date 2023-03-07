@@ -8,6 +8,7 @@ import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { ReadOneFormDTO } from '../../types/form';
+import { QuestionDTO } from '../../types/question';
 
 interface EditFormScreenProps {};
 
@@ -25,7 +26,7 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
   });
 
-  const {data: form, loading: formLoading, error: formError} = useQuery<ReadOneFormDTO>(READ_FORM, {
+  const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
     onCompleted(data: ReadOneFormDTO) {
       console.log(data);
@@ -35,9 +36,27 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
   });
   const [questionId, setQuestionId] = React.useState<number | undefined>(form?.readOneForm.questions[0].questionId);
+  const [questions, setQuestions] = React.useState<QuestionDTO[]>(form?.readOneForm.questions || []);
+
+  const handleSave = () => {
+    console.log("save");
+    questions.forEach((question) => {
+      console.log(question);
+    });
+    refetchQuestions();
+  };
 
   //TODO save questions when save button (from Appbar) is clicked => useMutation
   //? to handle save : store questions in a state and update when button clicked ?
+
+  //? to refetch can use the Query name ? 
+  //? Example : refetches two queries after mutation completes
+  // const [addTodo, { data, loading, error }] = useMutation(ADD_TODO, {
+  //   refetchQueries: [
+  //     {query: GET_POST}, // DocumentNode object parsed with gql
+  //     'GetComments' // Query name
+  //   ],
+  // });
 
     if (!formId) {
       return <div>Erreur : Pas de formulaire à afficher...</div>
@@ -45,9 +64,9 @@ function EditFormScreen({}: EditFormScreenProps) {
 
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
-          <AppBar user={userData?.readOneUser} editForm={true}/>
-          <EditFormSidebar formId={formId} questions={form?.readOneForm.questions} setQuestionId={setQuestionId}/>
-          <EditFormMain formId={formId} questionId={questionId} />
+          <AppBar user={userData?.readOneUser} editForm={true} handleSave={handleSave} />
+          <EditFormSidebar formId={formId} questions={questions} setQuestionId={setQuestionId}/>
+          <EditFormMain formId={formId} questions={questions} questionId={questionId} setQuestions={setQuestions} />
         </Grid>
     )
 }
