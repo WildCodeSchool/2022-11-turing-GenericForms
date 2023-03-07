@@ -13,7 +13,6 @@ interface EditFormScreenProps {};
 
 function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
-  const [questionId, setQuestionId] = React.useState<number | null>(null);
 
   // TODO get user id from backend token return ? 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
@@ -35,6 +34,10 @@ function EditFormScreen({}: EditFormScreenProps) {
         console.log(error);
     }
   });
+  const [questionId, setQuestionId] = React.useState<number | undefined>(form?.readOneForm.questions[0].questionId);
+
+  //TODO save questions when save button (from Appbar) is clicked => useMutation
+  //? to handle save : store questions in a state and update when button clicked ?
 
     if (!formId) {
       return <div>Erreur : Pas de formulaire à afficher...</div>
@@ -42,7 +45,7 @@ function EditFormScreen({}: EditFormScreenProps) {
 
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
-          <AppBar user={userData?.readOneUser}/>
+          <AppBar user={userData?.readOneUser} editForm={true}/>
           <EditFormSidebar formId={formId} questions={form?.readOneForm.questions} setQuestionId={setQuestionId}/>
           <EditFormMain formId={formId} questionId={questionId} />
         </Grid>

@@ -130,7 +130,7 @@ const Drawer = ({title, menuItems, questions, handleClick}: DrawerProps) => {
                         justifyContent: 'center',
                       }}
                     >
-                      {type === QuestionType.SHORTTEXT ? <ShortTextIcon /> : <PlusOneIcon />}
+                      {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
                     </ListItemIcon>
                     <ListItemText primary={title} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>

@@ -14,9 +14,11 @@ declare module "@mui/material/AppBar" {
 
 interface AppBarProps extends MuiAppBarProps {
     user?: UserDTO;
+    editForm?: boolean;
+    handleSave?: () => void;
 }
 
-const AppBar = ({user}: AppBarProps) => {
+const AppBar = ({user, editForm, handleSave}: AppBarProps) => {
     const navigate = useNavigate();
 
     const handleLogOut = () => {
@@ -39,7 +41,13 @@ const AppBar = ({user}: AppBarProps) => {
                     <Typography color='primary' sx={{ flexGrow: 1 }}>
                         Hello {user?.firstName || ''} ! Vous avez 3 formulaires en cours             
                     </Typography>
-                    <Button onClick={handleLogOut} variant='contained' >Se déconnecter</Button>
+                    {editForm ? 
+                        <Button variant='contained' sx={{ mr: 2, minWidth: 20, minHeight: 40, borderRadius: 2 }} onClick={handleSave}>Enregistrer</Button>
+                        :
+                        <Button onClick={handleLogOut} variant='contained' >Se déconnecter</Button>
+                    }
+                   
+
                 </Toolbar>
             </MuiAppBar>
         </Grid>
