@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { Grid  } from '@mui/material';
 import AppBar from '../../components/AppBar/AppBar';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { READ_USER } from '../../services/user.query';
 import EditFormMain from './EditFormMain/EditFormMain';
 import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
+import { UPDATE_QUESTION } from '../../services/question.mutation';
 import { FormDTO, ReadOneFormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
+import { ResponseMessageDTO } from '../../types/commonComponents';
 
 interface EditFormScreenProps {};
 
@@ -38,17 +40,33 @@ function EditFormScreen({}: EditFormScreenProps) {
   });
   const [questionId, setQuestionId] = React.useState<number | undefined>();
 
+  const [updateQuestion, { data: updateQuestionResponse, loading: loadingQuestionUpdate, error: errorQuestionUpdate }] = useMutation(UPDATE_QUESTION, {
+    onCompleted(data: ResponseMessageDTO) {
+      console.log(data);
+    },
+    onError(error: any) {
+        console.log(error);
+    }
+  });
+
   useEffect(() => {
     setFormContext(form?.readOneForm);
-    setQuestionId(form?.readOneForm.questions[0].questionId);
   }, [form]);
 
   const handleSave = () => {
     console.log("save");
-    // questions.forEach((question) => {
-    //   console.log(question);
-    //   //call mutation to update each question and form settings here ?
-    // });
+    formContext.questions.forEach((question: QuestionDTO) => {
+      console.log(question);
+      //call mutation to update each question and form settings here ?
+      updateQuestion({variables: {updateQuestionInput: {
+        questionId: question.questionId,
+        title: question.title,
+        description: question.description,
+        type: question.type,
+        formId: question.formId,
+      }}});
+      console.log("update question response: ", updateQuestionResponse);
+    });
     refetchQuestions();
   };
 

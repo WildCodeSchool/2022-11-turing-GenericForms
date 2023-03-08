@@ -44,7 +44,7 @@ function EditFormMain({questionId, questions, setFormContext}: EditFormMainProps
     question = questions.find((question) => question.questionId === questionId);
   }
 
-  if(question ) {
+  if(question && questionId) {
     return (
       <Grid item xs={10}>
             {questionPreview(question, setFormContext)}

@@ -6,3 +6,8 @@ type menuItem = {
 };
 
 type menuItems = menuItem[];
+
+interface ResponseMessageDTO {
+    message: string;
+    success: boolean;
+};

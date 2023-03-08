@@ -6,9 +6,16 @@ export interface QuestionDTO {
     description: string;
     type: QuestionType;
     formId: number;
-    form: FormDTO;
 }
 
 export interface ReadOneQuestionDTO {
     readQuestionById: QuestionDTO;
+}
+
+export interface UpdateQuestionInput {
+    questionId: number;
+    title: string;
+    description: string;
+    type: QuestionType;
+    formId: number;
 }

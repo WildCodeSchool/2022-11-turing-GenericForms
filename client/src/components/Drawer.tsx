@@ -114,7 +114,7 @@ const Drawer = ({title, menuItems, questions, handleClick}: DrawerProps) => {
                 </ListItem>
               ))}
                {questions && handleClick && questions.map(({title, description, type, questionId}, index) => (
-                <ListItem key={title} disablePadding sx={{ display: 'block' }}>
+                <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                     sx={{
                       minHeight: 48,
