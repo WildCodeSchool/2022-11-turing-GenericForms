@@ -10,12 +10,11 @@ import { menuItems } from '../../../types/commonComponents';
 import { QuestionDTO } from '../../../types/question';
 
 interface EditFormSidebarProps {
-    formId?: string;
     questions?: QuestionDTO[];
     setQuestionId: (questionId: number) => void;
 }
 
-const EditFormSidebar = ({formId, questions, setQuestionId}: EditFormSidebarProps) => {
+const EditFormSidebar = ({questions, setQuestionId}: EditFormSidebarProps) => {
 
     const handleClick = (questionId: number) => {
         console.log('clicked on question #', questionId);

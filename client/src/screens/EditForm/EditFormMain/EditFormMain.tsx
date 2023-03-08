@@ -11,16 +11,15 @@ import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQue
 import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
 
 interface EditFormMainProps {
-  formId?: string;
   questionId: number | undefined;
-  questions: QuestionDTO[] | undefined;
-  setQuestions: React.Dispatch<React.SetStateAction<QuestionDTO[]>>;
+  questions: QuestionDTO[] | undefined; //? proviennent du FormContext
+  setFormContext: any;
 }
 
-const questionPreview = (question: QuestionDTO, setQuestions: React.Dispatch<React.SetStateAction<QuestionDTO[]>>) => {
+const questionPreview = (question: QuestionDTO, setFormContext: any) => {
   switch (question.type) {
     case QuestionType.TEXT:
-      return <TextQuestionPreview question={question} setQuestions={setQuestions} />;
+      return <TextQuestionPreview question={question} setFormContext={setFormContext} />;
     case QuestionType.NUMBER:
       return <NumberQuestionPreview />;
     case QuestionType.SELECT:
@@ -30,7 +29,7 @@ const questionPreview = (question: QuestionDTO, setQuestions: React.Dispatch<Rea
   };
 };
 
-function EditFormMain({formId, questionId, questions, setQuestions}: EditFormMainProps) {
+function EditFormMain({questionId, questions, setFormContext}: EditFormMainProps) {
   const navigate = useNavigate();
 
   useEffect(()  => {
@@ -40,40 +39,15 @@ function EditFormMain({formId, questionId, questions, setQuestions}: EditFormMai
     }
   }, [navigate]);
 
-  // const {data: question, loading: questionLoading, error: questionError} = useQuery<ReadOneQuestionDTO>(READ_QUESTION, {
-  //   variables: { questionId},
-  //   onCompleted(data: ReadOneQuestionDTO) {
-  //     console.log(data);
-  //   },
-  //   onError(error: any) {
-  //       console.log(error);
-  //   }
-  // });
-  //! try to get the question using questionId from the form data
   let question = {} as QuestionDTO | undefined;
   if(questions && questionId) {
     question = questions.find((question) => question.questionId === questionId);
   }
 
-  //TODO get form data information and pass it to questionPreview
-  //? => access form theme colors customization
-
   if(question ) {
     return (
       <Grid item xs={10}>
-            {questionPreview(question, setQuestions)}
-            {/* <Typography variant="h4">
-                Edit question #{questionId} in Form #{formId}
-            </Typography>
-            <Typography variant="h6">
-                Question : {data?.readQuestionById.title}
-            </Typography>
-            <Typography variant="h6">
-                Description : {data?.readQuestionById.description}
-            </Typography>
-            <Typography variant="h6">
-                Type : {data?.readQuestionById.type}
-            </Typography> */}
+            {questionPreview(question, setFormContext)}
       </Grid>
     )
   }

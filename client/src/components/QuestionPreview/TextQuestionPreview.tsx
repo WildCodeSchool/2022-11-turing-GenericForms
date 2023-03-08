@@ -1,40 +1,40 @@
 import { Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
+import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
 
 interface TextQuestionPreviewProps {
-    question: QuestionDTO;
-    setQuestions: React.Dispatch<React.SetStateAction<QuestionDTO[]>>;
+    question: QuestionDTO; //? provient du FormContext
+    setFormContext: any;
 }
 
-const TextQuestionPreview = ({question, setQuestions}: TextQuestionPreviewProps) => {
-    const [localQuestion, setLocalQuestion] = React.useState<QuestionDTO>(question);
-
-    useEffect(() => {
-        setLocalQuestion(question);
-    }, [question]);
+const TextQuestionPreview = ({question, setFormContext}: TextQuestionPreviewProps) => {    
 
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalQuestion({...localQuestion, title: event.target.value});
-        //Add local change question in the questions array from EditFormScreen
-        setQuestions((questions) => questions.map((question) => question.questionId === localQuestion.questionId ? localQuestion : question));
+        setFormContext((formContext: FormDTO) => {
+            return {
+                ...formContext,
+                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, title: event.target.value} : questionCtx)
+            }
+        });
     };
 
     const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalQuestion({...localQuestion, description: event.target.value});
-        setQuestions((questions) => questions.map((question) => question.questionId === localQuestion.questionId ? localQuestion : question));
+        setFormContext((formContext: FormDTO) => {
+            return {
+                ...formContext,
+                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, description: event.target.value} : questionCtx)
+            }
+        });
     };
-
-    //! prefer using onBlur false to call setQuestion when user change question text ? 
-
 
     return (
         <Grid container direction={'column'}>
             <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={localQuestion.title} onChange={handleChangeTitle} />
+                <TextField id="standard-basic" variant="standard" value={question.title} onChange={handleChangeTitle} />
             </Grid>
             <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={localQuestion.description} onChange={handleChangeDescription} />
+                <TextField id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
             </Grid>
         </Grid>
     )

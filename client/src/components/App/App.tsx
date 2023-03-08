@@ -7,32 +7,35 @@ import Register from "../../screens/Register/Register";
 import Protected from "../Protected";
 import DashboardScreen from "../../screens/Dashboard/DashboardScreen";
 import EditFormScreen from "../../screens/EditForm/EditFormScreen";
+import { EditFormProvider } from "../../providers/formState";
 
 
 function App() {
   return (
     <div className="App">
       <Toaster position="bottom-center" />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route
-          path="dashboard"
-          element={
-            <Protected>
-              <DashboardScreen />
-            </Protected>
-          }
-        />
-        <Route
-          path="edit/:formId"
-          element={
-            <Protected>
-              <EditFormScreen />
-            </Protected>
-          }
-        />
-      </Routes>
+      <EditFormProvider>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="register" element={<Register />} />
+            <Route
+              path="dashboard"
+              element={
+                <Protected>
+                  <DashboardScreen />
+                </Protected>
+              }
+            />
+            <Route
+              path="edit/:formId"
+              element={
+                <Protected>
+                  <EditFormScreen />
+                </Protected>
+              }
+            />
+        </Routes>
+      </EditFormProvider>
     </div>
   );
 }
