@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import Form from "./Form";
 
 @ObjectType()
 @Entity("questions")
@@ -23,6 +24,11 @@ export default class Question {
   @Field()
   @Column()
   type: string;
+
+  @Field(() => Form)
+  @ManyToOne((_type) => Form, (form: Form) => form.formId)
+  @JoinColumn({ name: "formId" })
+  form: Form;
 }
 
 @InputType({ description: "create a question input" })

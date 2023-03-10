@@ -13,12 +13,23 @@ class QuestionService implements IService {
     this.db = datasource.getRepository(Question);
   }
 
+  async readQuestions(): Promise<Question[]> {
+    try {
+      const question = await this.db.find();
+      return question;
+    } catch (err) {
+      console.error(err);
+      throw new Error("error question");
+    }
+  }
+
   async readQuestionByForm(formId: number): Promise<Question[]> {
     try {
       const question = await this.db.find({
         where: {
           formId,
         },
+        relations: ["form"],
       });
       return question;
     } catch (err) {
