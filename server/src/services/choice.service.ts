@@ -12,7 +12,9 @@ class ChoiceService implements IService {
   
     async readChoices(): Promise<Choice[]> {
       try {
-        const choices = await this.db.find();
+        const choices = await this.db.find({
+          relations: ["question"],
+        });
         return choices;
       } catch (err) {
         console.error(err);

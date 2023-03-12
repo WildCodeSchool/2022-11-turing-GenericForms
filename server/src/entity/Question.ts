@@ -26,7 +26,7 @@ export default class Question {
   @Column()
   type: string;
 
-  @Field(() => Form, { nullable: true })
+  @Field(() => Form)
   @ManyToOne((_type) => Form, (form: Form) => form.formId)
   @JoinColumn({ name: "formId" })
   form: Form;

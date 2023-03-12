@@ -31,7 +31,8 @@ class FormService implements IService {
     async readOne(formId: number): Promise<Form> {
         try {
             const form = await this.db.findOne({
-              where: { formId}
+              where: { formId},
+              relations: ["theme", "questions"],
             });
             if(form === null) {
                 throw new Error("No form with this ID");
