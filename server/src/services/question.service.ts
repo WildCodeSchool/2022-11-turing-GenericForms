@@ -15,7 +15,9 @@ class QuestionService implements IService {
 
   async readQuestions(): Promise<Question[]> {
     try {
-      const question = await this.db.find({ relations: ["form"]});
+      const question = await this.db.find({
+        relations: ["form", "choices"],
+      });
       return question;
     } catch (err) {
       console.error(err);
@@ -29,7 +31,7 @@ class QuestionService implements IService {
         where: {
           formId,
         },
-        relations: ["form"],
+        relations: ["form", "choices"],
       });
       return question;
     } catch (err) {

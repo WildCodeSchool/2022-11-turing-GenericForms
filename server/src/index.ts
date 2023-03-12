@@ -5,7 +5,8 @@ import {
   QuestionResolver,
   UserResolver,
   AnswerResolver,
-  ThemeResolver
+  ThemeResolver,
+  ChoiceResolver
 } from "./graphql/resolvers";
 import datasource from "./lib/datasource";
 import "reflect-metadata";
@@ -21,7 +22,7 @@ dotenv.config();
 async function start(): Promise<void> {
   // Create the schema
   const schema = await buildSchema({
-    resolvers: [FormResolver, UserResolver, QuestionResolver, AnswerResolver, ThemeResolver],
+    resolvers: [FormResolver, UserResolver, QuestionResolver, AnswerResolver, ThemeResolver, ChoiceResolver],
     validate: false,
     authChecker: customAuthChecker,
   });
