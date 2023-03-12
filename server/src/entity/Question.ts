@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType } from "type-graphql";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Choice from "./Choice";
 import Form from "./Form";
 
 @ObjectType()
@@ -19,16 +20,21 @@ export default class Question {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  description: string;
+  description?: string;
 
   @Field()
   @Column()
   type: string;
 
-  @Field(() => Form)
+  @Field(() => Form, { nullable: true })
   @ManyToOne((_type) => Form, (form: Form) => form.formId)
   @JoinColumn({ name: "formId" })
   form: Form;
+
+  // TODO fix relation with choice
+  @Field(() => [Choice])
+  @OneToMany((_type) => Choice, (choice: Choice) => choice.question)
+  choices: Choice[];
 }
 
 @InputType({ description: "create a question input" })
@@ -39,8 +45,8 @@ export class CreateQuestionInput implements Partial<Question> {
   @Field()
   title: string;
 
-  @Field()
-  description: string;
+  @Field({ nullable: true })
+  description?: string;
 
   @Field()
   type: string;
@@ -57,8 +63,8 @@ export class UpdateQuestionInput implements Partial<Question> {
   @Field()
   title: string;
 
-  @Field()
-  description: string;
+  @Field({ nullable: true })
+  description?: string;
 
   @Field()
   type: string;
