@@ -7,7 +7,7 @@ import { Context } from "../../services/interfaces";
 @Resolver(Form)
 export default class FormResolver {
 
-    @Authorized()
+    // @Authorized()
     @Query(() => [Form])
     async readForms(@Arg("nameContains", {nullable: true}) nameContains: string, @Ctx() ctx: Context ): Promise<Form[]> {
         
