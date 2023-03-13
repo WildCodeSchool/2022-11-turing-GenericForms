@@ -1,9 +1,9 @@
 import { Grid, IconButton, List, ListItem, TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
+import AddListItem from './AddListItem';
 
 
 interface SelectQuestionPreviewProps {
@@ -13,6 +13,10 @@ interface SelectQuestionPreviewProps {
 
 const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreviewProps) => {
     const [choiceValue, setChoiceValue] = React.useState<string>("");
+
+    useEffect(() => {
+        setChoiceValue("");
+    }, [question]);
     
     //TODO add a debouncer wrapper to avoid too many calls to the server
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,11 +61,6 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
             </Grid>
             <Grid item xs={12}>
                 <List key={question.questionId}>
-                {question.choices.length === 0 && 
-                    <ListItem key="no-choice">
-                        <TextField id="standard-basic" variant="standard" placeholder='Choix 1'/>
-                    </ListItem>
-                }
                 {question.choices && question.choices.map((choice, index) => {
                     return (
                         <ListItem>
@@ -73,19 +72,13 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                     )
                 })
                 }
-                    {/*TODO complete the feature to add a choice */}
-                    <ListItem key={"add-choice"} >
-                        <IconButton onClick={handleAddChoice}>
-                            <AddCircleRoundedIcon />
-                        </IconButton>
-                        <TextField 
-                                id="standard-basic" 
-                                variant="standard" 
-                                value={choiceValue} 
-                                placeholder={"Ajouter un choix"}
-                                onChange={handleChangeNewChoice}
-                        />
-                    </ListItem>
+                {/*TODO complete the feature to add a choice */}
+                    <AddListItem 
+                        choices={question.choices}
+                        handleAddChoice={handleAddChoice}
+                        choiceValue={choiceValue}
+                        handleChangeNewChoice={handleChangeNewChoice}
+                    />
                  </List>
             </Grid>
         </Grid>
