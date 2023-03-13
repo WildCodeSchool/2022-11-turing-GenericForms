@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Grid, Typography  } from '@mui/material';
 import { QuestionDTO, ReadOneQuestionDTO } from '../../../types/question';
 import { QuestionType } from '../../../types/questionEnum';
-import { useQuery } from '@apollo/client';
-import { READ_QUESTION } from '../../../services/question.query';
 import TextQuestionPreview from '../../../components/QuestionPreview/TextQuestionPreview';
 import SelectQuestionPreview from '../../../components/QuestionPreview/SelectQuestionPreview';
 import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQuestionPreview';
@@ -23,7 +21,7 @@ const questionPreview = (question: QuestionDTO, setFormContext: any) => {
     case QuestionType.NUMBER:
       return <NumberQuestionPreview />;
     case QuestionType.SELECT:
-      return <SelectQuestionPreview />;
+      return <SelectQuestionPreview question={question} setFormContext={setFormContext} />;
     default:
       return <NoQuestionPreview />;
   };
