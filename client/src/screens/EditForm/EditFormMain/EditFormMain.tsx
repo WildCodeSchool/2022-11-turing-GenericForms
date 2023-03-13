@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography  } from '@mui/material';
-import { QuestionDTO, ReadOneQuestionDTO } from '../../../types/question';
+import { QuestionDTO } from '../../../types/question';
 import { QuestionType } from '../../../types/questionEnum';
 import TextQuestionPreview from '../../../components/QuestionPreview/TextQuestionPreview';
 import SelectQuestionPreview from '../../../components/QuestionPreview/SelectQuestionPreview';

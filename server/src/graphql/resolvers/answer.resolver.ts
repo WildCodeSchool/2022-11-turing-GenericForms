@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from "type-graphql";
 import Answer, { CreateAnswerInput, UpdateAnswerInput } from "../../entity/Answer";
 import AnswerService from "../../services/answer.service";

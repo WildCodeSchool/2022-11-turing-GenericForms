@@ -1,4 +1,4 @@
-import { Grid, List, TextField } from '@mui/material';
+import { Grid, List, ListItem, TextField } from '@mui/material';
 import React from 'react';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
@@ -39,8 +39,16 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                 <TextField id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
             </Grid>
             <Grid item xs={12}>
-                {/* map on question choices to display them in a select format  */}
-
+                <List key={question.questionId}>
+                {question.choices && question.choices.map((choice, index) => {
+                    return (
+                        <ListItem>
+                            <TextField id="standard-basic" variant="standard" value={choice.text} key={choice.text+index}/>
+                        </ListItem>
+                    )
+                })
+                }
+                 </List>
                 {/* add a feature to add a choice */}
             </Grid>
         </Grid>
