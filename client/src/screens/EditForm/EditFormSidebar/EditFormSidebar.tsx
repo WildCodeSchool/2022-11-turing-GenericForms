@@ -7,9 +7,10 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '../../../components/Drawer';
 import { menuItems } from '../../../types/commonComponents';
-import { QuestionDTO } from '../../../types/question';
+import { CreateQuestionInput, QuestionDTO } from '../../../types/question';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { FormDTO } from '../../../types/form';
+import { QuestionType } from '../../../types/questionEnum';
 
 interface EditFormSidebarProps {
     questions?: QuestionDTO[];
@@ -23,8 +24,22 @@ const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditForm
         setQuestionIndex(questionIndex);
     };
 
+    //TODO replace type by a variable type (depends on user selected type in a future dropdown select)
     const handleAddQuestion = () => {
         console.log("Add question");
+       
+        setFormContext((formContext: FormDTO) => {
+            const createQuestionInput: CreateQuestionInput = {
+                title: 'Nouvelle question',
+                description: '',
+                type: QuestionType.TEXT,
+                formId: formContext.formId,
+            };
+            return {
+                ...formContext,
+                questions: [...formContext.questions, createQuestionInput]
+            }
+        });
     }
 
     //TODO : handle case where no questions are passed or empty questions array

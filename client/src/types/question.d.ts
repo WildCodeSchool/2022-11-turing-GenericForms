@@ -21,3 +21,10 @@ export interface UpdateQuestionInput {
     type: QuestionType;
     formId: number;
 }
+
+export interface CreateQuestionInput {
+    title: string;
+    description: string;
+    type: QuestionType;
+    formId: number;
+}
