@@ -7,9 +7,9 @@ import EditFormMain from './EditFormMain/EditFormMain';
 import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
-import { UPDATE_QUESTION } from '../../services/question.mutation';
+import { CREATE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
 import { FormDTO, ReadOneFormDTO } from '../../types/form';
-import { QuestionDTO } from '../../types/question';
+import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
 
@@ -49,6 +49,16 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
   });
 
+  const [createQuestion, { data: createQuestionResponse, loading: loadingQuestionCreate, error: errorQuestionCreate }] = useMutation(CREATE_QUESTION, {
+    onCompleted(data: CreateQuestionResponse) {
+      console.log(data);
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+   });
+
+
   useEffect(() => {
     setFormContext(form?.readOneForm);
   }, [form]);
@@ -57,15 +67,25 @@ function EditFormScreen({}: EditFormScreenProps) {
   //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
     console.log("save");
-    formContext.questions.forEach((question: Partial<QuestionDTO>) => {
-      const updateQuestionVariables = {
+    formContext.questions.forEach((question: QuestionDTO) => {
+      if(question.questionId === undefined) {
+        const createQuestionInput: CreateQuestionInput = {
+          title: question.title,
+          description: question.description,
+          type: question.type,
+          formId: question.formId,
+        };
+        return createQuestion({variables: {createQuestionInput}});
+      };
+      const updateQuestionInput = {
         questionId: question.questionId,
         title: question.title,
         description: question.description,
         type: question.type,
         formId: question.formId,
       };
-      updateQuestion({variables: {updateQuestionInput: updateQuestionVariables }});
+      updateQuestion({variables: {updateQuestionInput}});
+
       //TODO add another call on Choices array to save choices if question.choices.length > 0
       //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);

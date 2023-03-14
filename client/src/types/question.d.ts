@@ -28,3 +28,7 @@ export interface CreateQuestionInput {
     type: QuestionType;
     formId: number;
 }
+
+export interface CreateQuestionResponse {
+    createQuestion: Partial<QuestionDTO>;
+}
