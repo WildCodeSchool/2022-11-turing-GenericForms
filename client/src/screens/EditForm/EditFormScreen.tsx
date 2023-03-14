@@ -38,7 +38,7 @@ function EditFormScreen({}: EditFormScreenProps) {
         console.log(error);
     }
   });
-  const [questionId, setQuestionId] = React.useState<number | undefined>();
+  const [questionIndex, setQuestionIndex] = React.useState<number | undefined>();
 
   const [updateQuestion, { data: updateQuestionResponse, loading: loadingQuestionUpdate, error: errorQuestionUpdate }] = useMutation(UPDATE_QUESTION, {
     onCompleted(data: ResponseMessageDTO) {
@@ -53,18 +53,21 @@ function EditFormScreen({}: EditFormScreenProps) {
     setFormContext(form?.readOneForm);
   }, [form]);
 
+  //? Is forEach the best solution ? What if one server call fails ? 
+  //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
     console.log("save");
-    formContext.questions.forEach((question: QuestionDTO) => {
-      console.log(question);
-      //call mutation to update each question and form settings here ?
-      updateQuestion({variables: {updateQuestionInput: {
+    formContext.questions.forEach((question: Partial<QuestionDTO>) => {
+      const updateQuestionVariables = {
         questionId: question.questionId,
         title: question.title,
         description: question.description,
         type: question.type,
         formId: question.formId,
-      }}});
+      };
+      updateQuestion({variables: {updateQuestionInput: updateQuestionVariables }});
+      //TODO add another call on Choices array to save choices if question.choices.length > 0
+      //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);
     });
     refetchQuestions();
@@ -79,8 +82,8 @@ function EditFormScreen({}: EditFormScreenProps) {
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userData?.readOneUser} editForm={true} handleSave={handleSave} />
-          <EditFormSidebar questions={formContext?.questions} setQuestionId={setQuestionId}/>
-          <EditFormMain questions={formContext?.questions} questionId={questionId} setFormContext={setFormContext} />
+          <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
+          <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
         </Grid>
     )
 }

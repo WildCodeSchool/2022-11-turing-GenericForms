@@ -9,7 +9,7 @@ import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQue
 import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
 
 interface EditFormMainProps {
-  questionId: number | undefined;
+  questionIndex: number | undefined;
   questions: QuestionDTO[] | undefined; //? proviennent du FormContext
   setFormContext: any;
 }
@@ -27,7 +27,7 @@ const questionPreview = (question: QuestionDTO, setFormContext: any) => {
   };
 };
 
-function EditFormMain({questionId, questions, setFormContext}: EditFormMainProps) {
+function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainProps) {
   const navigate = useNavigate();
 
   useEffect(()  => {
@@ -38,11 +38,11 @@ function EditFormMain({questionId, questions, setFormContext}: EditFormMainProps
   }, [navigate]);
 
   let question = {} as QuestionDTO | undefined;
-  if(questions && questionId) {
-    question = questions.find((question) => question.questionId === questionId);
+  if(questions && typeof questionIndex !== 'undefined') {
+    question = questions[questionIndex];
   }
 
-  if(question && questionId) {
+  if(question) {
     return (
       <Grid item xs={10}>
             {questionPreview(question, setFormContext)}

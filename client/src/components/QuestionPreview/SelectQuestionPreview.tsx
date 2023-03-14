@@ -11,6 +11,9 @@ interface SelectQuestionPreviewProps {
     setFormContext: any;
 };
 
+//TODO créer mutation pour ajouter une question : relier appel dans handleAddChoice
+//TODO créer mutation pour supprimer une question : relier appel dans handleRemoveChoice
+
 const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreviewProps) => {
     const [choiceValue, setChoiceValue] = React.useState<string>("");
 

@@ -8,23 +8,33 @@ import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '../../../components/Drawer';
 import { menuItems } from '../../../types/commonComponents';
 import { QuestionDTO } from '../../../types/question';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { FormDTO } from '../../../types/form';
 
 interface EditFormSidebarProps {
     questions?: QuestionDTO[];
-    setQuestionId: (questionId: number) => void;
+    setQuestionIndex: (questionIndex: number) => void;
+    setFormContext: any;
 }
 
-const EditFormSidebar = ({questions, setQuestionId}: EditFormSidebarProps) => {
+const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditFormSidebarProps) => {
 
-    const handleClick = (questionId: number) => {
-        console.log('clicked on question #', questionId);
-        setQuestionId(questionId);
+    const handleClick = (questionIndex: number) => {
+        setQuestionIndex(questionIndex);
     };
-    
+
+    const handleAddQuestion = () => {
+        console.log("Add question");
+    }
+
     //TODO : handle case where no questions are passed or empty questions array
     // => display drawer with no items and a message "Vite, créer votre première question !"
     return (
-        <Drawer title='Notifications' questions={questions} handleClick={handleClick} />
+        <Drawer title='Questions' questions={questions} handleClick={handleClick}>
+            <IconButton onClick={handleAddQuestion}>
+                <AddCircleRoundedIcon />
+            </IconButton>
+        </Drawer>
     )
 }
 
