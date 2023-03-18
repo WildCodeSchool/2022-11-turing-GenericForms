@@ -9,10 +9,11 @@ import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { CREATE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
 import { FormDTO, ReadOneFormDTO } from '../../types/form';
-import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO } from '../../types/question';
+import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
+import { UpdateChoiceInput } from '../../types/choice';
 
 interface EditFormScreenProps {};
 
@@ -88,7 +89,7 @@ function EditFormScreen({}: EditFormScreenProps) {
         createQuestion({variables: {createQuestionInput}});
         return;
       };
-      const updateQuestionInput = {
+      const updateQuestionInput: UpdateQuestionInput = {
         questionId: question.questionId,
         title: question.title,
         description: question.description,
@@ -99,9 +100,9 @@ function EditFormScreen({}: EditFormScreenProps) {
 
       if(question.choices.length > 0) {
         question.choices.forEach((choice) => {
-          const updateChoiceInput = {
+          const updateChoiceInput: UpdateChoiceInput = {
             choiceId: choice.choiceId,
-            title: choice.text,
+            text: choice.text,
           };
           updateChoice({variables: {updateChoiceInput}});
         });
