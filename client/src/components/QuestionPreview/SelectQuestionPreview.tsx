@@ -54,6 +54,9 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
         setNewChoiceValue(event.target.value);
     };
 
+    let questionOrderedChoices = [...question.choices];
+    questionOrderedChoices = questionOrderedChoices.sort((a, b) => a.choiceId - b.choiceId);
+
     return (
         <Grid container direction={'column'}>
             <Grid item xs={12}>
@@ -65,7 +68,9 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
             <Grid item xs={12}>
                 <List key={question.questionId}>
                 {
-                    question.choices && question.choices.map((choice) => {
+                    question.choices 
+                    && questionOrderedChoices
+                        .map((choice) => {
                         return <ChoiceInput choice={choice} question={question} handleRemoveChoice={handleRemoveChoice} setFormContext={setFormContext} />
                     })
                 }
