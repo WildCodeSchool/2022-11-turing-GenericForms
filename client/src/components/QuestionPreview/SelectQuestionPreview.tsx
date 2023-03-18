@@ -3,10 +3,9 @@ import FormControl, { useFormControl } from '@mui/material/FormControl';
 import React, { useEffect } from 'react';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddListItem from '../common/AddListItem';
 import { ChoiceDTO } from '../../types/choice';
-import { DebounceInput } from 'react-debounce-input';
+import ChoiceInput from '../common/ChoiceInput';
 
 
 interface SelectQuestionPreviewProps {
@@ -19,7 +18,6 @@ interface SelectQuestionPreviewProps {
 
 const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreviewProps) => {
     const [newChoiceValue, setNewChoiceValue] = React.useState<string>("");
-    const [changeChoiceValue, setChangeChoiceValue] = React.useState<string>("");
 
     useEffect(() => {
         setNewChoiceValue("");
@@ -56,30 +54,6 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
         setNewChoiceValue(event.target.value);
     };
 
-    const handleChangeChoice = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, choice: ChoiceDTO) => {
-
-        //TODO update choice value in question choices array 
-            //? find question index in formContext.questions array
-            //? target choice in choices array => use choice id ?
-            //? update choice text
-        setFormContext((formContext: FormDTO) => {
-            const newChoices = question.choices.map((choiceCtx) => choiceCtx.choiceId === choice.choiceId ? {...choice, text: changeChoiceValue} : choiceCtx);
-            console.log("newChoices: ", newChoices);
-            const newFormContext = {
-                ...formContext,
-                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, choices: newChoices} : questionCtx)
-            };
-            
-            return newFormContext;
-          
-        });
-    };
-
-    const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChangeChoiceValue(event.target.value);
-    };
-
-
     return (
         <Grid container direction={'column'}>
             <Grid item xs={12}>
@@ -90,19 +64,10 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
             </Grid>
             <Grid item xs={12}>
                 <List key={question.questionId}>
-                {question.choices && question.choices.map((choice, index) => {
-                    return (
-                        <ListItem>
-                            {/* <DebounceInput id="standard-basic" variant="standard" value={choice.text} key={choice.text+index} onChange={e => handleChangeChoice(e, choice)} minLength={1} debounceTimeout={500} placeholder="Choix 1"/> */}
-                            <FormControl >
-                                <TextField id="standard-basic" variant="standard" value={changeChoiceValue} key={choice.text+index} onBlur={e => handleChangeChoice(e, choice)} onChange={handleChangeValue} />
-                            </FormControl>
-                            <IconButton onClick={handleRemoveChoice}>
-                                <RemoveCircleRoundedIcon />
-                            </IconButton>
-                        </ListItem>
-                    )
-                })
+                {
+                    question.choices && question.choices.map((choice) => {
+                        return <ChoiceInput choice={choice} question={question} handleRemoveChoice={handleRemoveChoice} setFormContext={setFormContext} />
+                    })
                 }
                 {/*TODO complete the feature to add a choice */}
                     <AddListItem 
