@@ -1,9 +1,12 @@
-import { Grid, IconButton, List, ListItem, TextField } from '@mui/material';
+import { Grid, IconButton, List, ListItem, TextField, FormHelperText } from '@mui/material';
+import FormControl, { useFormControl } from '@mui/material/FormControl';
 import React, { useEffect } from 'react';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
-import AddListItem from './AddListItem';
+import AddListItem from '../common/AddListItem';
+import { ChoiceDTO } from '../../types/choice';
+import { DebounceInput } from 'react-debounce-input';
 
 
 interface SelectQuestionPreviewProps {
@@ -15,10 +18,11 @@ interface SelectQuestionPreviewProps {
 //TODO créer mutation pour supprimer une question : relier appel dans handleRemoveChoice
 
 const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreviewProps) => {
-    const [choiceValue, setChoiceValue] = React.useState<string>("");
+    const [newChoiceValue, setNewChoiceValue] = React.useState<string>("");
+    const [changeChoiceValue, setChangeChoiceValue] = React.useState<string>("");
 
     useEffect(() => {
-        setChoiceValue("");
+        setNewChoiceValue("");
     }, [question]);
     
     //TODO add a debouncer wrapper to avoid too many calls to the server
@@ -41,7 +45,7 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
     };
 
     const handleAddChoice = () => {
-        console.log("add choice with text: ", choiceValue);
+        console.log("add choice with text: ", newChoiceValue);
     };
 
     const handleRemoveChoice = () => {
@@ -49,9 +53,31 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
     };
 
     const handleChangeNewChoice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChoiceValue(event.target.value);
+        setNewChoiceValue(event.target.value);
     };
 
+    const handleChangeChoice = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, choice: ChoiceDTO) => {
+
+        //TODO update choice value in question choices array 
+            //? find question index in formContext.questions array
+            //? target choice in choices array => use choice id ?
+            //? update choice text
+        setFormContext((formContext: FormDTO) => {
+            const newChoices = question.choices.map((choiceCtx) => choiceCtx.choiceId === choice.choiceId ? {...choice, text: changeChoiceValue} : choiceCtx);
+            console.log("newChoices: ", newChoices);
+            const newFormContext = {
+                ...formContext,
+                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, choices: newChoices} : questionCtx)
+            };
+            
+            return newFormContext;
+          
+        });
+    };
+
+    const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChangeChoiceValue(event.target.value);
+    };
 
 
     return (
@@ -67,7 +93,10 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                 {question.choices && question.choices.map((choice, index) => {
                     return (
                         <ListItem>
-                            <TextField id="standard-basic" variant="standard" value={choice.text} key={choice.text+index}/>
+                            {/* <DebounceInput id="standard-basic" variant="standard" value={choice.text} key={choice.text+index} onChange={e => handleChangeChoice(e, choice)} minLength={1} debounceTimeout={500} placeholder="Choix 1"/> */}
+                            <FormControl >
+                                <TextField id="standard-basic" variant="standard" value={changeChoiceValue} key={choice.text+index} onBlur={e => handleChangeChoice(e, choice)} onChange={handleChangeValue} />
+                            </FormControl>
                             <IconButton onClick={handleRemoveChoice}>
                                 <RemoveCircleRoundedIcon />
                             </IconButton>
@@ -79,7 +108,7 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                     <AddListItem 
                         choices={question.choices}
                         handleAddChoice={handleAddChoice}
-                        choiceValue={choiceValue}
+                        choiceValue={newChoiceValue}
                         handleChangeNewChoice={handleChangeNewChoice}
                     />
                  </List>

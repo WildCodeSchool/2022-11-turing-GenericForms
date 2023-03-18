@@ -12,6 +12,7 @@ import { FormDTO, ReadOneFormDTO } from '../../types/form';
 import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
+import { UPDATE_CHOICE } from '../../services/choice.mutation';
 
 interface EditFormScreenProps {};
 
@@ -58,6 +59,15 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
    });
 
+   const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
+      onCompleted(data: ResponseMessageDTO) {
+        console.log(data);
+      },
+      onError(error: any) {
+        console.log(error);
+      }
+    });
+
 
   useEffect(() => {
     setFormContext(form?.readOneForm);
@@ -75,7 +85,8 @@ function EditFormScreen({}: EditFormScreenProps) {
           type: question.type,
           formId: question.formId,
         };
-        return createQuestion({variables: {createQuestionInput}});
+        createQuestion({variables: {createQuestionInput}});
+        return;
       };
       const updateQuestionInput = {
         questionId: question.questionId,
@@ -86,7 +97,20 @@ function EditFormScreen({}: EditFormScreenProps) {
       };
       updateQuestion({variables: {updateQuestionInput}});
 
+      if(question.choices.length > 0) {
+        question.choices.forEach((choice) => {
+          const updateChoiceInput = {
+            choiceId: choice.choiceId,
+            title: choice.text,
+          };
+          updateChoice({variables: {updateChoiceInput}});
+        });
+      }
+
       //TODO add another call on Choices array to save choices if question.choices.length > 0
+
+
+      
       //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);
     });
