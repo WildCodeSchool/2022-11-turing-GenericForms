@@ -5,6 +5,7 @@ interface FormDTO {
     formId: number;
     title: string;
     category: string;
+    visbilility: boolean;
     themeId: number;
     theme: ThemeDTO;
     questions: QuestionDTO[];
