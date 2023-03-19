@@ -19,6 +19,10 @@ export default class Form {
     @Column()
     themeId: number;
 
+    @Field() 
+    @Column() 
+    visibility: boolean;
+
     @Field({ nullable: true }) 
     @Column({ nullable: true }) 
     category?: string;
@@ -41,6 +45,9 @@ export class CreateFormInput implements Partial<Form> {
     @Field()
     themeId: number;
 
+    @Field() 
+    visibility?: boolean;
+
     @Field({ nullable: true })
     category?: string;
 }
@@ -55,6 +62,9 @@ export class UpdateFormInput implements Partial<Form> {
 
     @Field()
     themeId: number;
+
+    @Field() 
+    visibility?: boolean;
 
     @Field({ nullable: true })
     category?: string;
