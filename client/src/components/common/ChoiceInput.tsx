@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid, IconButton, List, ListItem, TextField } from '@mui/material';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import { IconButton, ListItem, TextField } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
-import { DebounceInput } from 'react-debounce-input';
 import { ChoiceDTO } from '../../types/choice';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
@@ -36,7 +35,6 @@ const ChoiceInput = ({choice, handleRemoveChoice, setFormContext, question}: Cho
 
     return (
         <ListItem>
-            {/* <DebounceInput id="standard-basic" variant="standard" value={choice.text} key={choice.text+index} onChange={e => handleChangeChoice(e, choice)} minLength={1} debounceTimeout={500} placeholder="Choix 1"/> */}
             <FormControl >
                 <TextField id="standard-basic" variant="standard" value={changeChoiceValue} key={choice.text} onBlur={e => handleChangeChoice(choice)} onChange={handleChangeValue} />
             </FormControl>
