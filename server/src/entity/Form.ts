@@ -17,6 +17,10 @@ export default class Form {
 
     @Field()
     @Column()
+    userId: number;
+
+    @Field()
+    @Column()
     themeId: number;
 
     @Field() 
@@ -41,6 +45,9 @@ export default class Form {
 export class CreateFormInput implements Partial<Form> {
     @Field()
     title: string;
+
+    @Field()
+    userId: number;
 
     @Field()
     themeId: number;
