@@ -9,10 +9,11 @@ import { READ_USER } from '../../services/user.query';
 interface DashboardScreenProps {};
 
 function DashboardScreen({}: DashboardScreenProps) {
+  const userId = localStorage.getItem("userId");
 
   // TODO get user id from backend token return ? 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
-    variables: { readOneUserId: "1"},
+    variables: { readOneUserId: userId},
     onCompleted(data: ReadOneUserDTO) {
       console.log(data);
     },
