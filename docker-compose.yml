@@ -22,6 +22,9 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=root
       - SECRET_KEY=secret
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     container_name: generic-forms-db
     image: postgres
@@ -34,6 +37,11 @@ services:
       - 5433:5432
     volumes:
       - generic-forms-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d generic_forms -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
   adminer:
     container_name: generic-forms-adminer
     image: adminer
