@@ -55,29 +55,6 @@ function Login() {
       </Grid>
     </Grid>
     <LoginForm setForm={setForm} handleSubmit={handleSubmit} />
-
-    {/* <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="email"
-          value={form.email}
-          name={"email"}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="password"
-          value={form.password}
-          name={"password"}
-          onChange={handleChange}
-        />
-        <button disabled={loading}>Se connecter</button>
-        {error && <p>{error.message}</p>}
-      </form>
-
-      <Link to={"/auth/register"}>Pas encore inscrit?</Link>
-    </div> */}
-
     </Container>
     
   );

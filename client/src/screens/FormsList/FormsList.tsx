@@ -47,7 +47,6 @@ function FormsList({}: FormsListProps) {
     const css = useCss(theme);
 
     const {data: formsData, loading, error, refetch} = useQuery<ReadFormsDTO>(READ_FORMS, {
-        //authorization token in header set automatically ? 
         onCompleted(data: ReadFormsDTO) {
             console.log(data);
         },
