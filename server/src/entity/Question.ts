@@ -31,9 +31,8 @@ export default class Question {
   @JoinColumn({ name: "formId" })
   form: Form;
 
-  // TODO fix relation with choice
   @Field(() => [Choice])
-  @OneToMany((_type) => Choice, (choice: Choice) => choice.question)
+  @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true})
   choices: Choice[];
 }
 

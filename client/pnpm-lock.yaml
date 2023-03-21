@@ -4,6 +4,7 @@ specifiers:
   '@apollo/client': ^3.7.7
   '@emotion/react': ^11.10.5
   '@emotion/styled': ^11.10.5
+  '@fontsource/roboto': ^4.5.8
   '@mui/material': ^5.11.8
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
@@ -25,6 +26,7 @@ dependencies:
   '@apollo/client': 3.7.7_gdcq4dv6opitr3wbfwyjmanyra
   '@emotion/react': 11.10.5_3stiutgnnbnfnf3uowm5cip22i
   '@emotion/styled': 11.10.5_jrh5enlbqfbnumycmktdqgd6se
+  '@fontsource/roboto': 4.5.8
   '@mui/material': 5.11.8_rqh7qj4464ntrqrt6banhaqg4q
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -1777,6 +1779,10 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@fontsource/roboto/4.5.8:
+    resolution: {integrity: sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==}
     dev: false
 
   /@graphql-typed-document-node/core/3.1.1_graphql@16.6.0:

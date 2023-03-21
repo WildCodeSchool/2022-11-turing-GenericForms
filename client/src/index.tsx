@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./components/App/App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from '@mui/material/CssBaseline';
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,7 +12,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import {theme} from "./styles/theme";
+import theme from "./styles/theme";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -43,6 +44,8 @@ root.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <ApolloProvider client={client}>
+          {/* CssBaseline kickstart a simple baseline to build upon (like CSS reset) */}
+          <CssBaseline />
           <App />
         </ApolloProvider>
       </ThemeProvider>
