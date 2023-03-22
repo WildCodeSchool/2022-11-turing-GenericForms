@@ -33,7 +33,7 @@ export default class Form {
     category?: string;
 
     @Field(() => Theme)
-    @ManyToOne((_type) => Theme, (theme: Theme) => theme.themeId)
+    @ManyToOne((_type) => Theme, (theme: Theme) => theme.themeId, {eager: true})
     @JoinColumn({ name: "themeId" })
     theme: Theme;
 
