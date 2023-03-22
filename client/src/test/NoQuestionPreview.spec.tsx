@@ -4,12 +4,12 @@ import NoQuestionPreview from '../components/QuestionPreview/NoQuestionPreview';
 
 let documentBody: RenderResult;
 
-describe('<NotFound />', () => {
+describe('<NoQuestionPreview />', () => {
   beforeEach(() => {
     documentBody = render(<NoQuestionPreview />);
   });
 
-  it('shows not found message', () => {
+  it('Correct text is shown', () => {
     expect(documentBody.getByText('No question selected.')).toBeInTheDocument();
   });
 });  
