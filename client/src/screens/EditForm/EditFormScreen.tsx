@@ -14,6 +14,7 @@ import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
+import { useUserState } from '../../providers/userState';
 
 interface EditFormScreenProps {};
 
@@ -21,21 +22,13 @@ function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
   const [formContext, setFormContext] = useEditFormState();
   const userId = localStorage.getItem("userId");
-
-  const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
-    variables: { readOneUserId: userId},
-    onCompleted(data: ReadOneUserDTO) {
-      console.log(data);
-    },
-    onError(error) {
-        console.log(error);
-    }
-  });
+  const [userContext, setUserContext] = useUserState();
 
   const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
     onCompleted(data: ReadOneFormDTO) {
       console.log(data);
+      setFormContext(form?.readOneFormByFormId);
     },
     onError(error) {
         console.log(error);
@@ -70,9 +63,9 @@ function EditFormScreen({}: EditFormScreenProps) {
       }
     });
 
-  useEffect(() => {    
-    setFormContext(form?.readOneFormByFormId);
-  }, [form]);
+  // useEffect(() => {    
+  //   setFormContext(form?.readOneFormByFormId);
+  // }, [form]);
 
   //? Is forEach the best solution ? What if one server call fails ? 
   //? Should we use concept like a Promise.all() instead ?
@@ -126,7 +119,7 @@ function EditFormScreen({}: EditFormScreenProps) {
 
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
-          <AppBar user={userData?.readOneUser} editForm={true} handleSave={handleSave} />
+          <AppBar user={userContext} editForm={true} handleSave={handleSave} />
           <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
           <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
         </Grid>
