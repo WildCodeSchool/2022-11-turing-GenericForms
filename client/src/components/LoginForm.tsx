@@ -19,7 +19,7 @@ function LoginForm({setForm, handleSubmit}: LoginFormProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((form: SigningForm) => ({ ...form, [e.target.name]: e.target.value }));
-      };
+    };
 
     return (
         <Container component="main" maxWidth="xs">

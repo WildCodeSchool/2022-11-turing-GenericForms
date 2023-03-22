@@ -8,6 +8,7 @@ interface FormDTO {
     visbilility: boolean;
     themeId: number;
     theme: ThemeDTO;
+    user: Partial<UserDTO>;
     questions: QuestionDTO[];
 }
 
@@ -16,5 +17,5 @@ interface ReadFormsDTO {
 }
 
 interface ReadOneFormDTO {
-    readOneForm: FormDTO;
+    readOneFormByFormId: FormDTO;
 }

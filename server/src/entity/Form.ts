@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { ObjectType, InputType, Field } from "type-graphql";
 import Theme from "./Theme";
 import Question from "./Question";
+import User from "./User";
 
 @ObjectType()
 @Entity("forms")
@@ -17,6 +18,10 @@ export default class Form {
 
     @Field()
     @Column()
+    userId: number;
+
+    @Field()
+    @Column()
     themeId: number;
 
     @Field() 
@@ -28,19 +33,27 @@ export default class Form {
     category?: string;
 
     @Field(() => Theme)
-    @ManyToOne((_type) => Theme, (theme: Theme) => theme.themeId)
+    @ManyToOne((_type) => Theme, (theme: Theme) => theme.themeId, {eager: true})
     @JoinColumn({ name: "themeId" })
     theme: Theme;
 
     @Field(() => [Question])
-    @OneToMany((_type) => Question, (question: Question) => question.form)
+    @OneToMany((_type) => Question, (question: Question) => question.form, {eager: true})
     questions: Question[];
+
+    @Field(() => User)
+    @ManyToOne((_type) => User, (user: User) => user.userId)
+    @JoinColumn({ name: "userId" })
+    user: User;
 }
 
 @InputType({description: "create a form input"})
 export class CreateFormInput implements Partial<Form> {
     @Field()
     title: string;
+
+    @Field()
+    userId: number;
 
     @Field()
     themeId: number;

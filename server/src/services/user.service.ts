@@ -15,7 +15,9 @@ class UserService implements IService {
     
     async read(): Promise<User[]> {
         try {
-            const users = await this.db.find();
+            const users = await this.db.find({
+              relations: ["forms"],
+            });
             return users;
           } catch (err) {
             console.error(err);
@@ -27,6 +29,7 @@ class UserService implements IService {
         try {
             const user = await this.db.findOne({
               where: { userId},
+              relations: ["forms"],
             });
             if(user === null) {
                 throw new Error("No user with this ID");

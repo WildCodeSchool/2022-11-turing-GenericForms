@@ -4,13 +4,24 @@ export const READ_FORMS = gql(`
   query readForms {
     readForms {
       formId
+      userId
       title
       category
+      visibility
       themeId
       theme {
         themeId
         name
         style
+      }
+      user {
+        userId
+      }
+      questions {
+        questionId
+        type
+        title
+        description
       }
     }
   }
@@ -18,11 +29,10 @@ export const READ_FORMS = gql(`
 
 export const READ_FORM = gql(`
   query ReadOneForm($readOneFormId: String!) {
-    readOneForm(id: $readOneFormId) {
+    readOneFormByFormId(formId: $readOneFormId) {
       formId
       title
       category
-      visibility
       themeId
       theme {
         themeId
@@ -32,12 +42,14 @@ export const READ_FORM = gql(`
         secondaryColor
         backgroundColor
       }
+      user {
+        userId
+      }
       questions {
         questionId
         title
         description
         type
-        formId
         choices {
           choiceId
           text

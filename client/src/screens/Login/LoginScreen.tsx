@@ -4,6 +4,11 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { Grid, Button, Container } from "@mui/material";
 import LoginForm from "../../components/LoginForm";
 import { LOGIN } from "../../services/auth.query";
+import jwt_decode from "jwt-decode";
+
+type JwtToken = {
+  userId: number;
+};
 
 function Login() {
 
@@ -12,17 +17,13 @@ function Login() {
     password: "",
   });
 
-  useEffect(() => {
-    console.log("FORM", form);
-  }, [form]);
-
-
   const navigate = useNavigate();
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
     onCompleted(data) {
-      console.log("DATA", data);
       localStorage.setItem("token", data.login.token);
-      localStorage.setItem("userId", data.login.userId);
+      let decodedToken: JwtToken = jwt_decode(data.login.token);
+      console.log("DECODED TOKEN", decodedToken);
+      localStorage.setItem("userId", `${decodedToken.userId}`);
       navigate("/dashboard");
     },
     // onError(error) {
@@ -54,29 +55,6 @@ function Login() {
       </Grid>
     </Grid>
     <LoginForm setForm={setForm} handleSubmit={handleSubmit} />
-
-    {/* <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="email"
-          value={form.email}
-          name={"email"}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="password"
-          value={form.password}
-          name={"password"}
-          onChange={handleChange}
-        />
-        <button disabled={loading}>Se connecter</button>
-        {error && <p>{error.message}</p>}
-      </form>
-
-      <Link to={"/auth/register"}>Pas encore inscrit?</Link>
-    </div> */}
-
     </Container>
     
   );

@@ -18,7 +18,6 @@ export default class Choice {
     @Column()
     questionId: number;
 
-    // TODO fix relation with question
     @Field(() => Question)
     @ManyToOne((_type) => Question, (question: Question) => question.questionId)
     @JoinColumn({ name: "questionId" })
