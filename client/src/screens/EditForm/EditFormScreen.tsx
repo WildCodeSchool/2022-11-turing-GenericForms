@@ -20,9 +20,10 @@ interface EditFormScreenProps {};
 function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
   const [formContext, setFormContext] = useEditFormState();
+  const userId = localStorage.getItem("userId");
 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
-    variables: { readOneUserId: "1"},
+    variables: { readOneUserId: userId},
     onCompleted(data: ReadOneUserDTO) {
       console.log(data);
     },
@@ -69,8 +70,7 @@ function EditFormScreen({}: EditFormScreenProps) {
       }
     });
 
-
-  useEffect(() => {
+  useEffect(() => {    
     setFormContext(form?.readOneFormByFormId);
   }, [form]);
 

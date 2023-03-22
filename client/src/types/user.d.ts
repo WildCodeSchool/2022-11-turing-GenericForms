@@ -6,6 +6,7 @@ interface UserDTO {
     role: string;
     createdAt: string;
     updatedAt: string;
+    forms: FormDTO[];
 }
 
 interface ReadOneUserDTO {

@@ -5,7 +5,9 @@ import { READ_FORMS } from '../../services/forms.query';
 import theme from '../../styles/theme';
 import FormItem from '../../components/FormItem';
 import SelectListDrop from '../../components/common/SelectListDrop';
-import { ReadFormsDTO } from '../../types/form';
+import { FormDTO, ReadFormsDTO } from '../../types/form';
+import { useUserState } from '../../providers/userState';
+import { Error } from '@mui/icons-material';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -13,7 +15,9 @@ declare module "@mui/material/Typography" {
     }
 }
 
-interface FormsListProps {};
+interface FormsListProps {
+    forms: FormDTO[] | undefined;
+};
 
 const useCss = (theme: Theme) => ({
     centerTxt: {
@@ -43,17 +47,13 @@ const menuItemsArray = [
     {id: 35, value: 3, label: 'Actif'},
 ];
 
-function FormsList({}: FormsListProps) {
+function FormsList({forms}: FormsListProps) {
     const css = useCss(theme);
 
-    const {data: formsData, loading, error, refetch} = useQuery<ReadFormsDTO>(READ_FORMS, {
-        onCompleted(data: ReadFormsDTO) {
-            console.log(data);
-        },
-        onError(error) {
-            console.log(error);
-        }
-    });
+    if(forms === undefined) {
+        return <Error>Erreur lors du chargement des formulaires</Error>
+    }
+    forms?.length === 0 && <div>Aucun formulaire n'a été créé</div>
 
     return (
         <>
@@ -67,24 +67,28 @@ function FormsList({}: FormsListProps) {
                     <SelectListDrop menuItems={menuItemsArray} />
                 </Grid>
             </Grid>
-            <Grid container sx={css.row3} >
-                <Grid item xs={6} />
-                <Grid item xs={1} >
-                    <Typography variant="label" component={'p'} sx={css.centerTxt} >Questions</Typography>
+            {forms?.length === 0 ? 
+                <Typography>Auncun formulaire en cours. Créer en un !</Typography>
+            :   
+                <Grid container sx={css.row3} >
+                    <Grid item xs={6} />
+                    <Grid item xs={1} >
+                        <Typography variant="label" component={'p'} sx={css.centerTxt} >Questions</Typography>
+                    </Grid>
+                    <Grid item xs={1} >
+                        <Typography variant="label" component={'p'} sx={css.centerTxt} >Réponses</Typography>
+                    </Grid>
+                    <Grid item xs={2} >
+                        <Typography variant="label" component={'p'} sx={css.centerTxt} >Modifié le</Typography>
+                    </Grid>
+                    <Grid item xs={1} >
+                        <Typography variant="label" component={'p'} sx={css.centerTxt} >Actif</Typography>
+                    </Grid>
+                    <Grid item xs={1}  />
                 </Grid>
-                <Grid item xs={1} >
-                    <Typography variant="label" component={'p'} sx={css.centerTxt} >Réponses</Typography>
-                </Grid>
-                <Grid item xs={2} >
-                    <Typography variant="label" component={'p'} sx={css.centerTxt} >Modifié le</Typography>
-                </Grid>
-                <Grid item xs={1} >
-                    <Typography variant="label" component={'p'} sx={css.centerTxt} >Actif</Typography>
-                </Grid>
-                <Grid item xs={1}  />
-            </Grid>
+            }
             {
-                formsData?.readForms.map((form) => (
+                forms.map((form) => (
                     <FormItem key={form.formId} form={form} />
                 ))
             }    
