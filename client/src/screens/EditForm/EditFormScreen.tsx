@@ -71,7 +71,7 @@ function EditFormScreen({}: EditFormScreenProps) {
 
 
   useEffect(() => {
-    setFormContext(form?.readOneForm);
+    setFormContext(form?.readOneFormByFormId);
   }, [form]);
 
   //? Is forEach the best solution ? What if one server call fails ? 
