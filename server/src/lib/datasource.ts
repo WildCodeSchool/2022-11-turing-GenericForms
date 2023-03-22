@@ -18,7 +18,7 @@ if (port !== undefined) {
 
 export default new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
+  host: process.argv.includes("--local") ? 'localhost' : process.env.DB_HOST,
   port,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
