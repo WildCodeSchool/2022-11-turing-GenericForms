@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { ObjectType, InputType, Field } from "type-graphql";
 import Theme from "./Theme";
 import Question from "./Question";
+import User from "./User";
 
 @ObjectType()
 @Entity("forms")
@@ -39,6 +40,11 @@ export default class Form {
     @Field(() => [Question])
     @OneToMany((_type) => Question, (question: Question) => question.form)
     questions: Question[];
+
+    @Field(() => User)
+    @ManyToOne((_type) => User, (user: User) => user.userId)
+    @JoinColumn({ name: "userId" })
+    user: User;
 }
 
 @InputType({description: "create a form input"})

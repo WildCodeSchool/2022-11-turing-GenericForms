@@ -15,7 +15,9 @@ class UserService implements IService {
     
     async read(): Promise<User[]> {
         try {
-            const users = await this.db.find();
+            const users = await this.db.find({
+              relations: ["forms"],
+            });
             return users;
           } catch (err) {
             console.error(err);

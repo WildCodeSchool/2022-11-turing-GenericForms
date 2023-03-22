@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ObjectType, InputType, Field } from "type-graphql";
+import Form from "./Form";
 
 @ObjectType()
 @Entity("users")
@@ -36,6 +37,10 @@ export default class User {
     @Field({ nullable: true })
     @Column({ nullable: true})
     updatedAt: Date;
+
+    @Field(() => [Form])
+    @OneToMany((_type) => Form, (form: Form) => form.user)
+    forms: Form[];
 
 }
 

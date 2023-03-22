@@ -19,7 +19,7 @@ class FormService implements IService {
                     ? Like(`%${titleContains}%`)
                     : undefined,
               },
-              relations: ["theme", "questions"],
+              relations: ["theme", "questions", "user"],
             });
             return forms;
           } catch (err) {
@@ -32,7 +32,7 @@ class FormService implements IService {
         try {
             const form = await this.db.findOne({
               where: { formId},
-              relations: ["theme", "questions"],
+              relations: ["theme", "questions", "user"],
             });
             if(form === null) {
                 throw new Error("No form with this ID");
