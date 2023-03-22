@@ -39,7 +39,7 @@ export default class User {
     updatedAt: Date;
 
     @Field(() => [Form])
-    @OneToMany((_type) => Form, (form: Form) => form.user)
+    @OneToMany((_type) => Form, (form: Form) => form.user, {eager: true})
     forms: Form[];
 
 }

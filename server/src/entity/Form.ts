@@ -38,7 +38,7 @@ export default class Form {
     theme: Theme;
 
     @Field(() => [Question])
-    @OneToMany((_type) => Question, (question: Question) => question.form)
+    @OneToMany((_type) => Question, (question: Question) => question.form, {eager: true})
     questions: Question[];
 
     @Field(() => User)

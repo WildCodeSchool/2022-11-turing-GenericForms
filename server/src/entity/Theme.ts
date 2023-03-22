@@ -37,7 +37,7 @@ export default class Theme {
     secondaryColor: string;
 
     @Field(() => [Form])
-    @OneToMany((_type) => Form, (form: Form) => form.theme)
+    @OneToMany((_type) => Form, (form: Form) => form.theme, {eager: true})
     forms: Form[];
 
 }
