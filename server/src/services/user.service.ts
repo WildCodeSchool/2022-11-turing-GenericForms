@@ -29,6 +29,7 @@ class UserService implements IService {
         try {
             const user = await this.db.findOne({
               where: { userId},
+              relations: ["forms"],
             });
             if(user === null) {
                 throw new Error("No user with this ID");
