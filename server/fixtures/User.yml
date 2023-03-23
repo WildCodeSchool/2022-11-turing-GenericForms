@@ -1,0 +1,12 @@
+entity: User
+processor: ./processor/UserProcessor
+items:
+  user{1..10}:
+    userId: '($current)'
+    email: '{{internet.email}}'
+    password: '{{internet.password}}'
+    firstName: '{{name.firstName}}'
+    lastName: '{{name.lastName}}'
+    role: 'user'
+    createdAt: '1900-01-01 00:00:00'
+    updatedAt: '1900-01-01 00:00:00'
