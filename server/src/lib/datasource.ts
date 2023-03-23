@@ -16,9 +16,19 @@ if (port !== undefined) {
   port = +port;
 }
 
+const getHost = (): string | undefined => {
+  if(process.argv.includes("--local")) {
+    return "localhost";
+  };
+  if (process.env.SCRIPT === "startWithTest") {
+    return process.env.DB_HOST_TEST;
+  };
+  return process.env.DB_HOST;
+};
+
 export default new DataSource({
   type: "postgres",
-  host: process.argv.includes("--local") ? 'localhost' : process.env.DB_HOST,
+  host: getHost(),
   port,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
