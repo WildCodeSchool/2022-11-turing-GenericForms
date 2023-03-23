@@ -3,8 +3,8 @@ interface SigningForm {
   password: string;
 }
 interface RegisterForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  firstName: string | undefined;
+  lastName: stringstring | undefined;
+  email: string | undefined;
+  password: string | undefined;
 }

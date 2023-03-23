@@ -6,17 +6,17 @@ import { CREATE_USER } from "../../services/user.mutation";
 
 function Register() {
   const [form, setForm] = useState<RegisterForm>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    password: undefined,
   });
 
   const navigate = useNavigate();
   const [register, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted(data) {
       console.log("DATA", data);
-      navigate("/auth/login");
+      navigate("/");
     },
   });
 
