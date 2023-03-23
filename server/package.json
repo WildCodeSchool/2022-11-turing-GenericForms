@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "localStart": "ts-node-dev src/index.ts --local",
-    "test": "jest --watchAll",
-    "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts"
+    "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
+    "test": "jest --config ./jest.config.js --watchAll"
   },
   "author": "kim",
   "license": "ISC",
