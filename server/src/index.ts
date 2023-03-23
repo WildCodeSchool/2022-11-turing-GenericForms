@@ -17,6 +17,8 @@ import {
   getPayloadFromToken,
 } from "./utils/authorization.utils";
 import UserService from "./services/user.service";
+import * as nStatic from 'node-static';
+import * as http from 'http';
 dotenv.config();
 
 async function start(): Promise<void> {
@@ -47,7 +49,6 @@ async function start(): Promise<void> {
         data !== null &&
           (user = await new UserService().readOneByEmail(data.email));
       }
-      // console.log("user ==>", user);
       return { user };
     },
   });
@@ -63,6 +64,14 @@ async function start(): Promise<void> {
         console.error("Error DB initialization", err);
       });
   });
+
+  const fileServer = new nStatic.Server('./fixtures/results', { cache: false });
+
+  http.createServer(function (req, res) {
+
+    fileServer.serve(req, res);
+
+  }).listen(4567);
 }
 
 start().catch(console.error);
