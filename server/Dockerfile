@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY tsconfig.json ./
+COPY jest.config.js ./
 
 RUN npm i
 ARG SCRIPT
@@ -14,6 +15,7 @@ ARG SCRIPT
 ENV SCRIPT=${SCRIPT}
 
 COPY src src
+COPY fixtures fixtures
 
 CMD npm start
 

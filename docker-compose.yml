@@ -15,6 +15,7 @@ services:
       - ./server/src:/app/src
     ports:
       - 4000:4000
+      - 4567:4567
     environment:
       - DB_HOST=db
       - DB_NAME=generic_forms
@@ -55,7 +56,7 @@ services:
     volumes:
       - generic-forms-test-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d generic_forms -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -d generic_forms -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -71,4 +72,5 @@ services:
 volumes:
   generic-forms-data:
   generic-forms-test-data:
+
 
