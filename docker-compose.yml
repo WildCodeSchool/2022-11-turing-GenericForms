@@ -25,6 +25,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      dbtest:
+        condition: service_healthy
   db:
     container_name: generic-forms-db
     image: postgres
@@ -42,12 +44,37 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+  dbtest:
+    container_name: generic-forms-dbtest
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: generic_forms
+    ports:
+      - 5434:5432
+    expose: 
+      - 5434
+    volumes:
+      - generic-forms-test-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d generic_forms -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
   adminer:
     container_name: generic-forms-adminer
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+      dbtest:
+        condition: service_healthy
 volumes:
   generic-forms-data:
+  generic-forms-test-data:
 
