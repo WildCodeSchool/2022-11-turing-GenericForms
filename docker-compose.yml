@@ -15,7 +15,6 @@ services:
       - ./server/src:/app/src
     ports:
       - 4000:4000
-      - 4567:4567
     environment:
       - DB_HOST=db
       - DB_NAME=generic_forms
