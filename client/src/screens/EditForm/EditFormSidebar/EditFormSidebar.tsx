@@ -16,9 +16,10 @@ interface EditFormSidebarProps {
     questions?: QuestionDTO[];
     setQuestionIndex: (questionIndex: number) => void;
     setFormContext: any;
+    formContext: FormDTO;
 }
 
-const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditFormSidebarProps) => {
+const EditFormSidebar = ({questions, setQuestionIndex, setFormContext, formContext}: EditFormSidebarProps) => {
 
     const handleClick = (questionIndex: number) => {
         setQuestionIndex(questionIndex);
@@ -27,8 +28,9 @@ const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditForm
     //TODO replace type by a variable type (depends on user selected type in a future dropdown select)
     const handleAddQuestion = () => {
         console.log("Add question");
+        console.log(formContext);
        
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((ctx: FormDTO) => {
             const createQuestionInput: CreateQuestionInput = {
                 title: 'Nouvelle question',
                 description: '',

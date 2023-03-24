@@ -7,7 +7,7 @@ import { customAuthChecker } from '../../utils/authorization.utils';
 
 beforeEach(async () => {
     await datasource.initialize();
-    await datasource.dropDatabase();
+    // await datasource.dropDatabase();
     await datasource.synchronize();
 });
 afterEach(async () => {
