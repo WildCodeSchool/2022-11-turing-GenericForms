@@ -31,7 +31,7 @@ function Protected({ children }: any) {
         <>
           <div>Vous n'êtes pas autorisé</div>
           <Button>
-            <Link to="/">Se connecter</Link>
+            <Link to="/login">Se connecter</Link>
           </Button>
         </>
       }
