@@ -21,14 +21,13 @@ interface EditFormScreenProps {};
 function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
   const [formContext, setFormContext] = useEditFormState();
-  const userId = localStorage.getItem("userId");
+  // const userId = localStorage.getItem("userId");
   const [userContext, setUserContext] = useUserState();
 
   const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
     onCompleted(data: ReadOneFormDTO) {
-      console.log(data);
-      setFormContext(form?.readOneFormByFormId);
+      // setFormContext(form?.readOneFormByFormId);
     },
     onError(error) {
         console.log(error);
@@ -38,7 +37,7 @@ function EditFormScreen({}: EditFormScreenProps) {
 
   const [updateQuestion, { data: updateQuestionResponse, loading: loadingQuestionUpdate, error: errorQuestionUpdate }] = useMutation(UPDATE_QUESTION, {
     onCompleted(data: ResponseMessageDTO) {
-      console.log(data);
+        console.log("updateQuestion completed");
     },
     onError(error: any) {
         console.log(error);
@@ -47,7 +46,7 @@ function EditFormScreen({}: EditFormScreenProps) {
 
   const [createQuestion, { data: createQuestionResponse, loading: loadingQuestionCreate, error: errorQuestionCreate }] = useMutation(CREATE_QUESTION, {
     onCompleted(data: CreateQuestionResponse) {
-      console.log(data);
+      console.log("createQuestion completed");
     },
     onError(error: any) {
       console.log(error);
@@ -56,16 +55,16 @@ function EditFormScreen({}: EditFormScreenProps) {
 
    const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
       onCompleted(data: ResponseMessageDTO) {
-        console.log(data);
+        console.log("updateQuestion completed");
       },
       onError(error: any) {
         console.log(error);
       }
     });
 
-  // useEffect(() => {    
-  //   setFormContext(form?.readOneFormByFormId);
-  // }, [form]);
+  useEffect(() => {    
+    setFormContext(form?.readOneFormByFormId);
+  }, [form]);
 
   //? Is forEach the best solution ? What if one server call fails ? 
   //? Should we use concept like a Promise.all() instead ?
@@ -120,7 +119,7 @@ function EditFormScreen({}: EditFormScreenProps) {
     return (
         <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
           <AppBar user={userContext} editForm={true} handleSave={handleSave} />
-          <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} formContext={formContext} />
+          <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
           <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
         </Grid>
     )

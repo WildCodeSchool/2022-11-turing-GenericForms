@@ -16,7 +16,7 @@ function DashboardScreen({}: DashboardScreenProps) {
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
     variables: { readOneUserId: userId},
     onCompleted(data: ReadOneUserDTO) {
-      console.log(data);
+      console.log("get user data completed");
       setUserContext(data.readOneUser);
     },
     onError(error) {
