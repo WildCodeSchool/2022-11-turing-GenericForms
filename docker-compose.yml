@@ -18,6 +18,8 @@ services:
     depends_on:
       dbtest:
         condition: service_healthy
+      db:
+        condition: service_healthy
   db:
     container_name: generic-forms-db
     image: postgres
@@ -59,6 +61,8 @@ services:
     ports:
       - 8080:8080
     depends_on:
+      db:
+        condition: service_healthy
       dbtest:
         condition: service_healthy
 volumes:
