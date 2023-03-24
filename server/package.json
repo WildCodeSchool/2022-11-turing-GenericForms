@@ -4,31 +4,42 @@
   "description": "generic forms project for wcs",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev --watch --poll --respawn src/index.ts",
+    "startWithTest": "npm run start && npm run test",
+    "hello": "echo \"hello world\"",
+    "localStart": "ts-node-dev src/index.ts --local",
+    "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
+    "test": "jest --config ./jest.config.js --watchAll"
   },
   "author": "kim",
   "license": "ISC",
   "dependencies": {
+    "@apollo/client": "^3.7.10",
+    "@types/isomorphic-fetch": "^0.0.36",
     "apollo-server": "^3.11.1",
     "apollo-server-core": "^3.11.1",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
+    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^15.8.0",
+    "isomorphic-fetch": "^3.0.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.8.0",
+    "react-scripts": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
+    "@types/jest": "^29.5.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
@@ -39,9 +50,12 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.5",
     "eslint-plugin-promise": "^6.0.1",
+    "jest": "^29.5.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
+    "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.8.2"
+    "typeorm-fixtures-cli": "^3.0.2",
+    "typescript": "^5.0.2"
   }
 }

@@ -17,6 +17,7 @@ import {
   getPayloadFromToken,
 } from "./utils/authorization.utils";
 import UserService from "./services/user.service";
+
 dotenv.config();
 
 async function start(): Promise<void> {
@@ -47,7 +48,6 @@ async function start(): Promise<void> {
         data !== null &&
           (user = await new UserService().readOneByEmail(data.email));
       }
-      // console.log("user ==>", user);
       return { user };
     },
   });
@@ -63,6 +63,7 @@ async function start(): Promise<void> {
         console.error("Error DB initialization", err);
       });
   });
+  
 }
 
 start().catch(console.error);

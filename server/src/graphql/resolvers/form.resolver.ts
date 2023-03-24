@@ -18,8 +18,8 @@ export default class FormResolver {
     }
 
     @Query(() => Form) 
-    async readOneForm(@Arg("id") id: string): Promise<Form> {
-        const Forms = await new FormService().readOne(+id);
+    async readOneFormByFormId(@Arg("formId") formId: string): Promise<Form> {
+        const Forms = await new FormService().readOne(+formId);
         return Forms;
     }
 

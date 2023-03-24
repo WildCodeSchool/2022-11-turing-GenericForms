@@ -7,18 +7,25 @@ import Answer from "../entity/Answer";
 import Theme from "../entity/Theme";
 import Choice from "../entity/Choice";
 
-// You must add environment vars in docker-compose file (in the server container infos)
 dotenv.config();
 
-let port: string | number | undefined = process.env.PORT;
+let port: number | undefined;
 
-if (port !== undefined) {
-  port = +port;
-}
+const getHost = (): string | undefined => {
+  if(process.argv.includes("--local")) {
+    port = 5432;
+    return process.env.DB_HOST_LOCAL;
+  };
+  if (process.env.SCRIPT === "startWithTest") {
+    port = 5432;
+    return process.env.DB_HOST_TEST;
+  };
+  return process.env.DB_HOST;
+};
 
 export default new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
+  host: getHost(),
   port,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

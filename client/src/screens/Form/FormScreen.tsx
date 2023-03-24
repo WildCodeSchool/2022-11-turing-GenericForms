@@ -25,7 +25,7 @@ const FormScreen = ({}: FormScreenProps) => {
       });
       
       useEffect(() => {
-        setFormContext(form?.readOneForm);
+        setFormContext(form?.readOneFormByFormId);
       }, [form]);
 
     formLoading && <Typography>Loading...</Typography>;

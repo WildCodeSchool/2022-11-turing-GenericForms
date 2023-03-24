@@ -29,6 +29,7 @@ const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditForm
         console.log("Add question");
        
         setFormContext((formContext: FormDTO) => {
+            console.log("formContext ===> ", formContext);
             const createQuestionInput: CreateQuestionInput = {
                 title: 'Nouvelle question',
                 description: '',
