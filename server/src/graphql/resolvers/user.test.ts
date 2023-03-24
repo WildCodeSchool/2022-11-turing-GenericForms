@@ -2,6 +2,7 @@ import {gql, ApolloServer} from 'apollo-server-express';
 import {buildSchema} from 'type-graphql';
 import {UserResolver} from './index';
 import datasource from '../../lib/datasource';
+import { customAuthChecker } from '../../utils/authorization.utils';
 
 
 beforeEach(async () => {
@@ -9,11 +10,16 @@ beforeEach(async () => {
     await datasource.dropDatabase();
     await datasource.synchronize();
 });
+afterEach(async () => {
+    await datasource.destroy();
+});
+  
 
 let apolloServer = async () =>  {
     const schema = await buildSchema({
         resolvers: [UserResolver],
         validate: false,
+        authChecker: customAuthChecker,
     });
     const server = new ApolloServer({
         schema,
@@ -54,8 +60,6 @@ test("Insert user", async () => {
     const server = await apolloServer();
     server.start();
 
-    console.log("server démarré ==>", server);
-
     await server.executeOperation({
         query: CREATE_USER,
         variables: {
@@ -67,10 +71,10 @@ test("Insert user", async () => {
             },
         },
     });
-    // let result = await server.executeOperation({query: READ_USERS});
-    // let users = result?.data?.readUsers;
+    let result = await server.executeOperation({query: READ_USERS});
+    let users = result?.data?.readUsers;
     
-    // expect(users.length).toBe(1);
-    // expect(users[0].email).toEqual("test@test.fr");
+    expect(users.length).toBe(1);
+    expect(users[0].email).toEqual("test@test.fr");
     
 });

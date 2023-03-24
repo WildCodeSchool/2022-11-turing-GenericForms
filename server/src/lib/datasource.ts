@@ -8,6 +8,7 @@ import Theme from "../entity/Theme";
 import Choice from "../entity/Choice";
 
 // You must add environment vars in docker-compose file (in the server container infos)
+//TODO try to remove them from the docker-compose file and add them in the .env file only
 dotenv.config();
 
 let port: number | undefined;
@@ -15,11 +16,11 @@ let port: number | undefined;
 const getHost = (): string | undefined => {
   if(process.argv.includes("--local")) {
     port = 5432;
-    return "localhost";
+    return process.env.DB_HOST_LOCAL;
   };
   if (process.env.SCRIPT === "startWithTest") {
     port = 5432;
-    return "dbtest";
+    return process.env.DB_HOST_TEST;
   };
   return process.env.DB_HOST;
 };

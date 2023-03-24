@@ -15,7 +15,6 @@ services:
       - ./server/src:/app/src
     ports:
       - 4000:4000
-      - 4567:4567
     environment:
       - DB_HOST=db
       - DB_NAME=generic_forms
@@ -26,23 +25,23 @@ services:
     depends_on:
       dbtest:
         condition: service_healthy
-  # db:
-  #   container_name: generic-forms-db
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: root
-  #     POSTGRES_DB: generic_forms
-  #   ports:
-  #     - 5433:5432
-  #   volumes:
-  #     - generic-forms-data:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -d generic_forms -U postgres"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 10
+  db:
+    container_name: generic-forms-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: generic_forms
+    ports:
+      - 5431:5432
+    volumes:
+      - generic-forms-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d generic_forms -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
   dbtest:
     container_name: generic-forms-dbtest
     image: postgres
