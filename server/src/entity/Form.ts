@@ -22,12 +22,12 @@ export default class Form {
   @Column()
   title: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field()
+  @Column()
   themeId: number;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field()
+  @Column()
   visibility: boolean;
   
   @Field()
