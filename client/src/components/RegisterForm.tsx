@@ -1,11 +1,8 @@
-import React, { FC } from "react";
+import React from "react";
 import {
   TextField,
-  Stack,
   Button,
-  Grid,
   Container,
-  //  Link,
   Box,
   FormControlLabel,
   Typography,
@@ -14,7 +11,6 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-//? Module augmentation to add custom colors on element (Button, etc...)
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     custom: true;
