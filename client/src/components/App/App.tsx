@@ -1,16 +1,15 @@
 import React from "react";
-import './App.css';
+import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Login from "../../screens/Login/LoginScreen";
-import Register from "../../screens/Register/Register";
+import Register from "../../screens/Register/RegisterScreen";
 import Protected from "../Protected";
 import DashboardScreen from "../../screens/Dashboard/DashboardScreen";
 import EditFormScreen from "../../screens/EditForm/EditFormScreen";
 import { EditFormProvider } from "../../providers/formState";
 import FormScreen from "../../screens/Form/FormScreen";
 import { UserProvider } from "../../providers/userState";
-
 
 function App() {
   return (
