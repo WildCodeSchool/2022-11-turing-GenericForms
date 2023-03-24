@@ -15,13 +15,6 @@ services:
       - ./server/src:/app/src
     ports:
       - 4000:4000
-    environment:
-      - DB_HOST=db
-      - DB_NAME=generic_forms
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=root
-      - SECRET_KEY=secret
     depends_on:
       dbtest:
         condition: service_healthy

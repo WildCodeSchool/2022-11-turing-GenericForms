@@ -7,8 +7,6 @@ import Answer from "../entity/Answer";
 import Theme from "../entity/Theme";
 import Choice from "../entity/Choice";
 
-// You must add environment vars in docker-compose file (in the server container infos)
-//TODO try to remove them from the docker-compose file and add them in the .env file only
 dotenv.config();
 
 let port: number | undefined;
