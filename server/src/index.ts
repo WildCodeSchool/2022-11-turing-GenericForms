@@ -63,7 +63,7 @@ async function start(): Promise<void> {
         console.error("Error DB initialization", err);
       });
   });
-
+  
 }
 
 start().catch(console.error);

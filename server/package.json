@@ -4,7 +4,9 @@
   "description": "generic forms project for wcs",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "ts-node-dev --watch --poll --respawn src/index.ts",
+    "startWithTest": "npm run start && npm run test",
+    "hello": "echo \"hello world\"",
     "localStart": "ts-node-dev src/index.ts --local",
     "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
     "test": "jest --config ./jest.config.js --watchAll"
@@ -12,6 +14,7 @@
   "author": "kim",
   "license": "ISC",
   "dependencies": {
+    "@apollo/client": "^3.7.10",
     "@types/isomorphic-fetch": "^0.0.36",
     "apollo-server": "^3.11.1",
     "apollo-server-core": "^3.11.1",
@@ -19,6 +22,7 @@
     "body-parser": "^1.20.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
+    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^15.8.0",
@@ -52,6 +56,6 @@
     "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0",
     "typeorm-fixtures-cli": "^3.0.2",
-    "typescript": "^4.8.2"
+    "typescript": "^5.0.2"
   }
 }
