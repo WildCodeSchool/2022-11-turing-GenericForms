@@ -8,6 +8,8 @@ import jwt_decode from "jwt-decode";
 
 type JwtToken = {
   userId: number;
+  exp: number;
+  iat: number;
 };
 
 function Login() {
@@ -30,19 +32,12 @@ function Login() {
     },
   });
 
-  const { refetch } = useQuery(CHECK_TOKEN, {
-    onCompleted(data) {
-      console.log("CHECK TOKEN", data.checkToken.valid);
-    },
-    onError(error) {
-      console.log(error);
-    },
-  });
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if(token) {
-      refetch();
+      let decodedToken: JwtToken = jwt_decode(token);
+      decodedToken.exp > Date.now() / 1000 && navigate("/dashboard");
+      console.log("token not expired")
     }
   }, []);
 
@@ -50,7 +45,7 @@ function Login() {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if(token) {
-      localStorage.removeItem("token");
+      localStorage.clear();
     }
     login({
       variables: {
