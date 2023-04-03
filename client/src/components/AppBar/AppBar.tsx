@@ -24,7 +24,7 @@ const AppBar = ({user, editForm, handleSave}: AppBarProps) => {
     const handleLogOut = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
-        navigate("/");
+        navigate("/login");
       };
 
     return (

@@ -19,26 +19,20 @@ function Login() {
 
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
     onCompleted(data) {
-      const token = localStorage.getItem("token");
-      if(token) {
-        localStorage.removeItem("token");
-      }
       localStorage.setItem("token", data.login.token);
       let decodedToken: JwtToken = jwt_decode(data.login.token);
       console.log("DECODED TOKEN", decodedToken);
       localStorage.setItem("userId", `${decodedToken.userId}`);
       navigate("/dashboard");
     },
-    // onError(error) {
-    //   console.log("ERROR", error.message);
-    // },
+    onError(error) {
+      console.log("ERROR LOGIN ", error.message);
+    },
   });
 
   const { refetch } = useQuery(CHECK_TOKEN, {
     onCompleted(data) {
-      if (data.checkToken.valid) {
-        navigate("/dashboard", { replace: true });
-      }
+      console.log("CHECK TOKEN", data.checkToken.valid);
     },
     onError(error) {
       console.log(error);
@@ -46,11 +40,18 @@ function Login() {
   });
 
   useEffect(() => {
-    refetch();
+    const token = localStorage.getItem("token");
+    if(token) {
+      refetch();
+    }
   }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
+    if(token) {
+      localStorage.removeItem("token");
+    }
     login({
       variables: {
         loginInput: {
