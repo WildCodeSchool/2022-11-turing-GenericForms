@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 import { QuestionDTO } from "../../types/question";
+import QuestionView from "./QuestionView/QuestionView";
 
 interface QuestionListProps {
     questions: QuestionDTO[];
@@ -14,9 +15,7 @@ const QuestionList = ({questions}: QuestionListProps) => {
             {   
                 questions?.map((question: QuestionDTO, index: number) => {
                     return (
-                        <ListItem key={index}>
-                            <ListItemText>{question.title}</ListItemText>
-                        </ListItem>
+                        <QuestionView question={question} key={index} />
                     )
                 }
             )}
