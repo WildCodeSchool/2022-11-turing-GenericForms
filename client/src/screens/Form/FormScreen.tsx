@@ -1,12 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { formGroupClasses, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useEditFormState } from "../../providers/formState";
 import { READ_FORM } from "../../services/forms.query";
 import { FormDTO, ReadOneFormDTO } from "../../types/form";
-import { QuestionDTO } from "../../types/question";
-import QuestionList from "./QuestionList";
+import Questions from "./Questions/Questions";
 
 interface FormScreenProps {};
 
@@ -38,7 +37,7 @@ const FormScreen = ({}: FormScreenProps) => {
     return (
         <>
             <Typography variant="h2">{formContext?.title}</Typography>
-            <QuestionList questions={formContext?.questions} />
+            <Questions />
         </>
     );
 };
