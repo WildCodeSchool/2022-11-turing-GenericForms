@@ -44,7 +44,7 @@ function Questions({initialFormState} : Props) {
     >
         <Stepper questionNumber={questionsNumber} />
         <div>Formulaire #1</div>
-        <QuestionView />
+        <QuestionView questionNumber={questionsNumber}/>
     </FormContext.Provider>
 
     )

@@ -10,6 +10,7 @@ interface StepperProps {
 
 const Stepper = ({questionNumber}: StepperProps) => {
   const { activeStepIndex, setActiveStepIndex } = useContext(FormContext);
+  const maxSteps = (questionNumber || 0) + 1;
 
   const handleNext = () => {
     setActiveStepIndex((prevActiveStep) => prevActiveStep + 1);
@@ -21,12 +22,12 @@ const Stepper = ({questionNumber}: StepperProps) => {
   return (
     <MobileStepper
       variant="progress"
-      steps={questionNumber || 0}
+      steps={maxSteps}
       position="static"
       activeStep={activeStepIndex}
       sx={{ maxWidth: 400, flexGrow: 1 }}
       nextButton={
-        <Button size="small" onClick={handleNext} disabled={activeStepIndex === ((questionNumber || 1) - 1)}>
+        <Button size="small" onClick={handleNext} disabled={activeStepIndex === maxSteps - 1}>
           Suivant
           {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />
