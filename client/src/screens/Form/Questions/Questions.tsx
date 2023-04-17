@@ -1,29 +1,39 @@
 import Stepper from '../Stepper';
 import React, { createContext, useState } from 'react';
-import { QuestionDTO } from '../../../types/question';
-import QuestionItem from './QuestionView';
+import QuestionView from './QuestionView';
 import { Typography } from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
-export const FormContext = createContext<FormContext>({
-    activeStepIndex: undefined,
-    setActiveStepIndex: () => {},
-    formData: {},
-    setFormData: () => {},
-});
+import { InitialFormState } from '../FormScreen';
 
-interface Props {};
+interface Props {
+    initialFormState: InitialFormState;
+};
 
 type FormContext = {
     activeStepIndex: number | undefined;
     setActiveStepIndex: React.Dispatch<React.SetStateAction<number>>;
-    formData: any;
+    formData: InitialFormState;
     setFormData: React.Dispatch<React.SetStateAction<any>>;
 };
 
-function Questions({} : Props) {
+export const FormContext = createContext<FormContext>({
+    activeStepIndex: undefined,
+    setActiveStepIndex: () => {},
+    formData: [],
+    setFormData: () => {},
+});
+
+function Questions({initialFormState} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
-    const [formData, setFormData] = useState({});
-    const [formContext, setFormContext] = useEditFormState();
+    const [formContext] = useEditFormState();
+
+    const [formData, setFormData] = useState(initialFormState);
+
+    React.useEffect(() => {
+        console.log('initialFormState', initialFormState);
+        console.log('formData', formData);
+    }, []);
+
     const questionsNumber = formContext?.questions.length;
     
     formContext?.questions === undefined && <Typography>Ce questionnaire ne comporte aucune question :/</Typography>;
@@ -34,7 +44,7 @@ function Questions({} : Props) {
     >
         <Stepper questionNumber={questionsNumber} />
         <div>Formulaire #1</div>
-        <QuestionItem />
+        <QuestionView />
     </FormContext.Provider>
 
     )
