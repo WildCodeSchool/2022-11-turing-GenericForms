@@ -32,7 +32,7 @@ export default class UserResolver {
       const authorization = {
         valid: true,
       };
-      if (ctx.user === undefined) {
+      if (ctx.user === null) {
         authorization.valid = false;
       }
       console.log("Authorization", authorization);
