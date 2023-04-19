@@ -5,6 +5,8 @@ import { Typography } from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
 import { InitialFormState } from '../FormScreen';
 import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
     initialFormState: InitialFormState;
@@ -25,11 +27,24 @@ export const FormContext = createContext<FormContext>({
     setFormData: () => {},
 });
 
+//TODO : Dynamically create a validation schema => use setKey() from zod ?
+const validationSchema = z.object({
+    1: z.string().min(15, {message: 'Min 15 caractères'}).max(500),
+    2: z.string().min(1).max(50),
+    4: z.string().min(1).max(50),
+    6: z.string().min(1).max(50),
+    7: z.string().min(1).max(50),
+});
+
+type ValidationSchema = z.infer<typeof validationSchema>;
+
 function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
     const [formContext] = useEditFormState();
-    const formMethods = useForm({
+    const formMethods = useForm<ValidationSchema>({
         defaultValues: defaultValues,
+        resolver: zodResolver(validationSchema),
+        mode: 'onBlur',
     });
 
     const [formData, setFormData] = useState(initialFormState);

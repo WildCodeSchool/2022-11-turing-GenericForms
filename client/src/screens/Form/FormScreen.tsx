@@ -37,25 +37,6 @@ const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
   }
   return [{id: '', answer: ''}];
 }
-//? Map form default values => how to get an object like below from the questions array?
-//? use the transformArrayToObject utils
-// const mapFormDefaultValues = (questions: QuestionDTO[] | undefined ): any  => {
-//   // if(questions)  {
-//   //   const res = questions.map((question: QuestionDTO) => {
-//   //         return {[question.questionId.toString()]: 'valeur par défaut'};
-//   //   });
-//   //   console.log("mapFormDefaultValues returns", res);
-//   //   return res;
-//   // }
-//   // return {100: 'valeur nulle par défaut'};
-//   return {
-//       "1": "value1",
-//       "2": "value2",
-//       "4": "value4",
-//       "7": "value7"
-//   }
-// }
-
 
 const FormScreen = ({}: FormScreenProps) => {
     const {formId} = useParams();
