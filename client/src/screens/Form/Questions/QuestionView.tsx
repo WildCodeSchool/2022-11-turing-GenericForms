@@ -5,6 +5,7 @@ import ErrorType from './ErrorType';
 import InputType from './InputType';
 import { FormContext } from './Questions';
 import SelectType from './SelectType';
+import SubmitView from './SubmitView';
 
 interface Props {
     questionNumber: number;
@@ -19,17 +20,7 @@ function QuestionView({questionNumber}: Props) {
     }, [formContext?.questions, activeStepIndex]);
 
     if(activeStepIndex === questionNumber) return (
-        <>
-            <div>Fin du formulaire</div>
-            <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                onClick={() => console.log('submit')}
-            >
-                Envoyer le formulaire
-            </Button>
-        </>
+       <SubmitView />
     );
 
     switch (formContext?.questions[activeStepIndex].type) {
