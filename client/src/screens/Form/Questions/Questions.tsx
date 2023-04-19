@@ -4,9 +4,11 @@ import QuestionView from './QuestionView';
 import { Typography } from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
 import { InitialFormState } from '../FormScreen';
+import { FormProvider, useForm } from 'react-hook-form';
 
 interface Props {
     initialFormState: InitialFormState;
+    defaultValues: any;
 };
 
 type FormContext = {
@@ -23,15 +25,19 @@ export const FormContext = createContext<FormContext>({
     setFormData: () => {},
 });
 
-function Questions({initialFormState} : Props) {
+function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
     const [formContext] = useEditFormState();
+    const formMethods = useForm({
+        defaultValues: defaultValues,
+    });
 
     const [formData, setFormData] = useState(initialFormState);
 
     React.useEffect(() => {
         console.log('initialFormState', initialFormState);
         console.log('formData', formData);
+        console.log('defaultValues', defaultValues)
     }, []);
 
     const questionsNumber = formContext?.questions.length;
@@ -42,9 +48,11 @@ function Questions({initialFormState} : Props) {
     <FormContext.Provider
         value={{ activeStepIndex, setActiveStepIndex, formData, setFormData }}
     >
-        <Stepper questionNumber={questionsNumber} />
-        <div>Formulaire #1</div>
-        <QuestionView questionNumber={questionsNumber}/>
+        <FormProvider {...formMethods}> 
+            <Stepper questionNumber={questionsNumber} />
+            <div>{formContext.title}</div>
+            <QuestionView questionNumber={questionsNumber}/>
+        </FormProvider>
     </FormContext.Provider>
 
     )

@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { transformArrayToObject } from "../../helpers/formatDefaultValues";
 import { useEditFormState } from "../../providers/formState";
 import { READ_FORM } from "../../services/forms.query";
 import { ReadOneFormDTO } from "../../types/form";
@@ -36,6 +37,25 @@ const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
   }
   return [{id: '', answer: ''}];
 }
+//? Map form default values => how to get an object like below from the questions array?
+//? use the transformArrayToObject utils
+// const mapFormDefaultValues = (questions: QuestionDTO[] | undefined ): any  => {
+//   // if(questions)  {
+//   //   const res = questions.map((question: QuestionDTO) => {
+//   //         return {[question.questionId.toString()]: 'valeur par défaut'};
+//   //   });
+//   //   console.log("mapFormDefaultValues returns", res);
+//   //   return res;
+//   // }
+//   // return {100: 'valeur nulle par défaut'};
+//   return {
+//       "1": "value1",
+//       "2": "value2",
+//       "4": "value4",
+//       "7": "value7"
+//   }
+// }
+
 
 const FormScreen = ({}: FormScreenProps) => {
     const {formId} = useParams();
@@ -49,7 +69,7 @@ const FormScreen = ({}: FormScreenProps) => {
           setInitialFormState(mapInitialFormState(data?.readOneFormByFormId?.questions));
         },
         onError(error) {
-            console.log(error);
+            console.log("Error while fetching form data", error);
         }
       });
       
@@ -57,16 +77,17 @@ const FormScreen = ({}: FormScreenProps) => {
         setFormContext(form?.readOneFormByFormId);
       }, [form]);
 
-    formLoading && <Typography>Loading...</Typography>;
+    formLoading && <Typography>Chargement...</Typography>;
+    formError && <Typography>Erreur lors du chargement du formulaire</Typography>;
 
-    if(formContext?.visibility === false) {
+    if(formContext?.visibility == false) {
         return <Typography variant="h2">Ce questionnaire n'est pas encore publié</Typography>
     }
-    if(!formLoading && formContext && !formError) {
+    if(!formLoading && formContext) {
       return (
           <>
               <Typography variant="h2">{formContext?.title}</Typography>
-              <Questions initialFormState={initialFormState} />
+              <Questions initialFormState={initialFormState} defaultValues={transformArrayToObject(form?.readOneFormByFormId.questions)} />
           </>
       );
     }
