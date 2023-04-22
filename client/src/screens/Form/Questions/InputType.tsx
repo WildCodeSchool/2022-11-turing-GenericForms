@@ -1,7 +1,6 @@
-import { Grid, TextField, TextFieldProps, Typography } from '@mui/material';
-import React, { useContext, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { useEditFormState } from '../../../providers/formState';
+import { Grid, TextField, Typography } from '@mui/material';
+import React, { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { QuestionDTO } from '../../../types/question';
 import { InitialFormState } from '../FormScreen';
 import { FormContext } from './Questions';
@@ -12,7 +11,7 @@ interface Props {
 
 const InputType = ({question}: Props) => {
     const { setFormData, formData } = useContext(FormContext);
-    const {register, formState: {errors}} = useFormContext();
+    const {register, formState: {errors}, trigger} = useFormContext();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData((formState: InitialFormState) => {
@@ -39,7 +38,6 @@ const InputType = ({question}: Props) => {
           </Typography>
       )
     }
-       
     </Grid>
 </Grid>
 

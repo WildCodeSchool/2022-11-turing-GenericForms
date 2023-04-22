@@ -29,8 +29,8 @@ export const FormContext = createContext<FormContext>({
 
 //TODO : Dynamically create a validation schema => use setKey() from zod ?
 const validationSchema = z.object({
-    1: z.string().min(15, {message: 'Min 15 caractères'}).max(500),
-    2: z.string().min(1).max(50),
+    1: z.string().min(10, {message: 'Min 10 caractères'}).max(500),
+    2: z.string().min(5).max(50),
     4: z.string().min(1).max(50),
     6: z.string().min(1).max(50),
     7: z.string().min(1).max(50),
@@ -40,13 +40,13 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
+    const [questionId, setQuestionId] = React.useState<number>(0);
     const [formContext] = useEditFormState();
     const formMethods = useForm<ValidationSchema>({
         defaultValues: defaultValues,
         resolver: zodResolver(validationSchema),
         mode: 'onBlur',
     });
-
     const [formData, setFormData] = useState(initialFormState);
 
     React.useEffect(() => {
@@ -64,9 +64,11 @@ function Questions({initialFormState, defaultValues} : Props) {
         value={{ activeStepIndex, setActiveStepIndex, formData, setFormData }}
     >
         <FormProvider {...formMethods}> 
-            <Stepper questionNumber={questionsNumber} />
+            <form>
+            <Stepper questionNumber={questionsNumber} questionId={questionId} />
             <div>{formContext.title}</div>
-            <QuestionView questionNumber={questionsNumber}/>
+            <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId}/>
+            </form>
         </FormProvider>
     </FormContext.Provider>
 
