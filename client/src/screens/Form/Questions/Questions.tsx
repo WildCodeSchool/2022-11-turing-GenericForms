@@ -45,7 +45,7 @@ function Questions({initialFormState, defaultValues} : Props) {
     const formMethods = useForm<ValidationSchema>({
         defaultValues: defaultValues,
         resolver: zodResolver(validationSchema),
-        mode: 'onBlur',
+        mode: 'onChange',
     });
     const [formData, setFormData] = useState(initialFormState);
 
