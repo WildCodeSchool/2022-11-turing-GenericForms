@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import {Grid, Typography} from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
 import ErrorType from './ErrorType';
 import InputType from './InputType';
@@ -20,18 +21,34 @@ function QuestionView({questionNumber, setQuestionId}: Props) {
         setQuestionId(formContext?.questions[activeStepIndex]?.questionId);
     }, [formContext?.questions, activeStepIndex]);
 
+    const getQuestionType = () => {
+        switch (formContext?.questions[activeStepIndex].type) {
+            case 'text':
+                return <InputType question={formContext?.questions[activeStepIndex]} />;
+            case 'select':
+                return <SelectType question={formContext?.questions[activeStepIndex]} />;
+            default:
+                return <ErrorType />
+        }
+    }
+    //TODO review the 
     if(activeStepIndex === questionNumber) return (
-       <SubmitView />
+                <SubmitView />
     );
 
-    switch (formContext?.questions[activeStepIndex].type) {
-        case 'text':
-            return <InputType question={formContext?.questions[activeStepIndex]} />;
-        case 'select':
-            return <SelectType question={formContext?.questions[activeStepIndex]} />;
-        default:
-            return <ErrorType />
-    }
+    return (
+        <Grid container sx={{minHeight: '20vh'}} direction={'column'} justifyContent='space-around' alignContent='center'>
+            <Grid item xs={12}>
+                <Typography id="standard-basic" align='center' >
+                    {formContext?.questions[activeStepIndex].title}
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                {getQuestionType()}
+            </Grid>
+        </Grid>
+    
+    )
 }
 
 export default QuestionView;

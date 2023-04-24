@@ -1,7 +1,7 @@
 import Stepper from '../Stepper';
 import React, { createContext, useState } from 'react';
 import QuestionView from './QuestionView';
-import { Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
 import { InitialFormState } from '../FormScreen';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -63,12 +63,20 @@ function Questions({initialFormState, defaultValues} : Props) {
     <FormContext.Provider
         value={{ activeStepIndex, setActiveStepIndex, formData, setFormData }}
     >
-        <FormProvider {...formMethods}> 
-            <form>
-            <Stepper questionNumber={questionsNumber} questionId={questionId} />
-            <div>{formContext.title}</div>
-            <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId}/>
-            </form>
+        <FormProvider {...formMethods}>
+            <Grid container sx={{minHeight: '100vh'}} justifyContent='center' >
+                <Grid item xs={12} >
+                    <Typography variant="h2" align='center' sx={{maxHeight: '5vh'}}>{formContext?.title}</Typography>
+                </Grid>
+                <Grid item xs={8} sx={{minHeight: '40vh'}} alignSelf='center'>
+                    <form>
+                        <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId}/>
+                    </form>
+                </Grid>
+                <Grid item xs={12} sx={{minHeight: '10vh'}}>
+                    <Stepper questionNumber={questionsNumber} questionId={questionId}/>
+                </Grid>
+            </Grid>
         </FormProvider>
     </FormContext.Provider>
 

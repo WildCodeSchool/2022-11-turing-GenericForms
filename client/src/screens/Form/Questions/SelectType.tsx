@@ -12,10 +12,12 @@ const SelectType = ({question}: Props) => {
     const { activeStepIndex } = useContext<any>(FormContext);
 
   return (
+    <div style={{margin: 'auto'}}>
     <FormGroup>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-        <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+        <FormControlLabel control={<Checkbox defaultChecked />} label="choice 1" />
+        <FormControlLabel control={<Checkbox />} label="choice 2" />
     </FormGroup>
+    </div>
   )
 }
 

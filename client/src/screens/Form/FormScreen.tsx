@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { transformArrayToObject } from "../../helpers/formatDefaultValues";
@@ -66,10 +66,11 @@ const FormScreen = ({}: FormScreenProps) => {
     }
     if(!formLoading && formContext) {
       return (
-          <>
-              <Typography variant="h2">{formContext?.title}</Typography>
-              <Questions initialFormState={initialFormState} defaultValues={transformArrayToObject(form?.readOneFormByFormId.questions)} />
-          </>
+        <Grid container justifyContent='space-around'>
+              <Grid item>
+                <Questions initialFormState={initialFormState} defaultValues={transformArrayToObject(form?.readOneFormByFormId.questions)} />
+              </Grid>
+          </Grid>
       );
     }
     return <Typography>Error</Typography>;

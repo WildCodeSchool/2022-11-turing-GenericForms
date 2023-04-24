@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -21,30 +21,38 @@ const SubmitView = () => {
   }, [errors]);
 
   return (
-    <>
-    <div>Fin du formulaire</div>
-    <Button
-        variant="contained"
-        color="primary"
-        type="submit"
-        onClick={handleSubmit(onSubmit)}
-        // disabled={!formState.isValid}
-    >
-        Envoyer le formulaire
-    </Button>
-    {/* show a generic error message if any of the fields are invalid */}
-    <Typography>
-        {Object.keys(errors).length > 0 && (
-            "Error"
-        )}
-    </Typography>
-    {/* loader to style + we should disabled the sending button while sending the form */}
-    {isSubmitting && (
+    <Grid container sx={{minHeight: '20vh'}} direction={'column'} justifyContent='space-around' alignContent='center'>
+      <Grid item xs={12}>
+        <Typography variant='h4' align='center'>Merci d'avoir complété ce formulaire !</Typography>
+      </Grid>
+      <Grid item xs={6} sx={{margin: 'auto'}}>
+        <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+            // disabled={!formState.isValid}
+        >
+            Envoyer le formulaire
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
+        {/* show a generic error message if any of the fields are invalid */}
         <Typography>
-            Envoi du formulaire...
+            {Object.keys(errors).length > 0 && (
+                "Error"
+            )}
         </Typography>
-    )}
-  </>
+      </Grid>
+      <Grid item xs={12}>
+        {/* loader to style + we should disabled the sending button while sending the form */}
+        {isSubmitting && (
+            <Typography>
+                Envoi du formulaire...
+            </Typography>
+        )}
+      </Grid>
+    </Grid>
   )
 }
 

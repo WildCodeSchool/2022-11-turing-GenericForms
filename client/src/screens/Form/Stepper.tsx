@@ -39,7 +39,7 @@ const Stepper = ({questionNumber, questionId}: StepperProps) => {
       steps={maxSteps}
       position="static"
       activeStep={activeStepIndex}
-      sx={{ maxWidth: 400, flexGrow: 1 }}
+      sx={{ maxWidth: 400, margin: 'auto' }}
       nextButton={
         <Button size="small" onClick={handleNext} disabled={(activeStepIndex === maxSteps - 1) || !isValid}>
           Suivant
