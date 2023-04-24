@@ -70,7 +70,7 @@ function Questions({initialFormState, defaultValues} : Props) {
                 </Grid>
                 <Grid item xs={8} sx={{minHeight: '40vh'}} alignSelf='center'>
                     <form>
-                        <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId}/>
+                        <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId} formId={formContext.formId}/>
                     </form>
                 </Grid>
                 <Grid item xs={12} sx={{minHeight: '10vh'}}>

@@ -1,10 +1,15 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
+interface Props {
+  formId: number;
+};
 
-const SubmitView = () => {
-  const {handleSubmit, formState: {errors, isSubmitting}} = useFormContext();
+const SubmitView = ({formId}: Props) => {
+  const {handleSubmit, formState: {errors, isSubmitting, isValid}, reset} = useFormContext();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
       await new Promise(async (resolve) => {
@@ -16,6 +21,11 @@ const SubmitView = () => {
       });
   };
 
+  const handleReset = async (data: any) => {
+    reset();
+    navigate(`/form/${formId}`);
+  };
+
   useEffect(() => {
       console.log("formState.errors =>", errors);
   }, [errors]);
@@ -25,15 +35,25 @@ const SubmitView = () => {
       <Grid item xs={12}>
         <Typography variant='h4' align='center'>Merci d'avoir complété ce formulaire !</Typography>
       </Grid>
-      <Grid item xs={6} sx={{margin: 'auto'}}>
+      <Grid item xs={8} sx={{margin: 'auto'}}>
         <Button
             variant="contained"
             color="primary"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            // disabled={!formState.isValid}
+            disabled={!isValid}
         >
             Envoyer le formulaire
+        </Button>
+      </Grid>
+      <Grid item xs={8} sx={{margin: 'auto'}}>
+        <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={handleReset}
+        >
+            Envoyer un nouveau formulaire
         </Button>
       </Grid>
       <Grid item xs={12}>

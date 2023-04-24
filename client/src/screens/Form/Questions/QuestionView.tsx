@@ -10,9 +10,10 @@ import SubmitView from './SubmitView';
 interface Props {
     questionNumber: number;
     setQuestionId: (questionId: number) => void;
+    formId: number;
 };
 
-function QuestionView({questionNumber, setQuestionId}: Props) {
+function QuestionView({questionNumber, setQuestionId, formId}: Props) {
     const { activeStepIndex } = useContext<any>(FormContext);
     const [formContext] = useEditFormState();
 
@@ -31,9 +32,9 @@ function QuestionView({questionNumber, setQuestionId}: Props) {
                 return <ErrorType />
         }
     }
-    //TODO review the 
+
     if(activeStepIndex === questionNumber) return (
-                <SubmitView />
+                <SubmitView formId={formId} />
     );
 
     return (
