@@ -10,7 +10,8 @@ import { QuestionDTO } from "../../types/question";
 import Questions from "./Questions/Questions";
 
 export type FormState = {
-  [key: string]: string | object;
+  id: string,
+  answer: string | {value: string},
 };
 
 export type InitialFormState = Array<FormState>;
@@ -52,11 +53,15 @@ const FormScreen = ({}: FormScreenProps) => {
         onError(error) {
             console.log("Error while fetching form data", error);
         }
-      });
+    });
+
+    //TODO add here a hook to fetch form data, set initialFormState, set defaultValues and generate validation schema ?
+
+    
       
-      useEffect(() => {
-        setFormContext(form?.readOneFormByFormId);
-      }, [form]);
+    useEffect(() => {
+      setFormContext(form?.readOneFormByFormId);
+    }, [form]);
 
     formLoading && <Typography>Chargement...</Typography>;
     formError && <Typography>Erreur lors du chargement du formulaire</Typography>;

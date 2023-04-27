@@ -7,6 +7,7 @@ import { InitialFormState } from '../FormScreen';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { createSchema } from '../../../utils/schema.utils';
 
 interface Props {
     initialFormState: InitialFormState;
@@ -27,24 +28,25 @@ export const FormContext = createContext<FormContext>({
     setFormData: () => {},
 });
 
-//TODO : Dynamically create a validation schema => use setKey() from zod ?
-const validationSchema = z.object({
-    1: z.string().min(10, {message: 'Min 10 caractères'}).max(500),
-    2: z.string().min(5).max(50),
-    4: z.string().min(1).max(50),
-    6: z.string().min(1).max(50),
-    7: z.string().min(1).max(50),
-});
+// const validationSchema = z.object({
+//     1: z.string().min(10, {message: 'Min 10 caractères'}).max(500),
+//     2: z.string().min(5).max(50),
+//     4: z.string().min(1).max(50),
+//     6: z.string().min(1).max(50),
+//     7: z.string().min(1).max(50),
+// });
 
-type ValidationSchema = z.infer<typeof validationSchema>;
+//TODO transfer schema creation logic into FormScreen.tsx and import though props ?
 
 function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
     const [questionId, setQuestionId] = React.useState<number>(0);
     const [formContext] = useEditFormState();
+    const schema = createSchema(initialFormState);
+    type ValidationSchema = z.infer<typeof schema>;
     const formMethods = useForm<ValidationSchema>({
         defaultValues: defaultValues,
-        resolver: zodResolver(validationSchema),
+        resolver: zodResolver(schema),
         mode: 'onChange',
     });
     const [formData, setFormData] = useState(initialFormState);
@@ -53,6 +55,7 @@ function Questions({initialFormState, defaultValues} : Props) {
         console.log('initialFormState', initialFormState);
         console.log('formData', formData);
         console.log('defaultValues', defaultValues)
+        console.log("dynamic schema ===>", createSchema(initialFormState));
     }, []);
 
     const questionsNumber = formContext?.questions.length;
