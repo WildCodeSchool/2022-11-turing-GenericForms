@@ -16,7 +16,7 @@ export type FormState = {
 
 export type InitialFormState = Array<FormState>;
 
-interface FormScreenProps {};
+interface PublicFormScreenProps {};
 
 const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
   if(questions)  {
@@ -39,7 +39,7 @@ const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
   return [{id: '', answer: ''}];
 }
 
-const FormScreen = ({}: FormScreenProps) => {
+const PublicFormScreen = ({}: PublicFormScreenProps) => {
     const {formId} = useParams();
     const [formContext, setFormContext] = useEditFormState();
     const [initialFormState, setInitialFormState] = React.useState<InitialFormState>([]);
@@ -82,4 +82,4 @@ const FormScreen = ({}: FormScreenProps) => {
 
 };
 
-export default FormScreen;
+export default PublicFormScreen;

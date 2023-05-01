@@ -2,8 +2,8 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Button, MobileStepper } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import theme from "../../styles/theme";
-import { FormContext } from "./Questions/Questions";
+import theme from "../../../styles/theme";
+import { FormContext } from "../Questions/Questions";
 
 interface StepperProps {
   questionNumber: number | undefined;

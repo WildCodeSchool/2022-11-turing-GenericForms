@@ -1,9 +1,9 @@
 import { Grid, TextField, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { QuestionDTO } from '../../../types/question';
-import { InitialFormState } from '../FormScreen';
-import { FormContext } from './Questions';
+import { QuestionDTO } from '../../../../types/question';
+import { InitialFormState } from '../../PublicFormScreen';
+import { FormContext } from '../Questions';
 
 interface Props {
     question: QuestionDTO;

@@ -1,9 +1,9 @@
-import Stepper from '../Stepper';
+import Stepper from '../Stepper/Stepper';
 import React, { createContext, useState } from 'react';
 import QuestionView from './QuestionView';
 import { Grid, Typography } from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
-import { InitialFormState } from '../FormScreen';
+import { InitialFormState } from '../PublicFormScreen';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';

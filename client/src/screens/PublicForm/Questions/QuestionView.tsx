@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import {Grid, Typography} from '@mui/material';
 import { useEditFormState } from '../../../providers/formState';
-import ErrorType from './ErrorType';
-import InputType from './InputType';
+import ErrorType from './QuestionsTypes/ErrorType';
+import InputType from './QuestionsTypes/InputType';
 import { FormContext } from './Questions';
-import SelectType from './SelectType';
+import SelectType from './QuestionsTypes/SelectType';
 import SubmitView from './SubmitView';
 
 interface Props {

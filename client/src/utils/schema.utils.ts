@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { InitialFormState } from "../screens/Form/FormScreen";
+import { InitialFormState } from "../screens/PublicForm/PublicFormScreen";
 
 //TODO add conditional dynamic validation rules : 
 // get question type and add validation rules accordingly

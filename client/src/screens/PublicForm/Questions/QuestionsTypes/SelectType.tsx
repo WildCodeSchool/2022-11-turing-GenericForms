@@ -1,8 +1,8 @@
 import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import { useContext } from 'react';
-import { useEditFormState } from '../../../providers/formState';
-import { QuestionDTO } from '../../../types/question';
-import { FormContext } from './Questions';
+import { useEditFormState } from '../../../../providers/formState';
+import { QuestionDTO } from '../../../../types/question';
+import { FormContext } from '../Questions';
 
 interface Props {
     question: QuestionDTO;
