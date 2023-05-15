@@ -7,6 +7,7 @@ import TextQuestionPreview from '../../../components/QuestionPreview/TextQuestio
 import SelectQuestionPreview from '../../../components/QuestionPreview/SelectQuestionPreview';
 import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQuestionPreview';
 import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
+import EditFormSidebarRight from '../EditFormSidebarRight/EditFormSidebarRight';
 
 interface EditFormMainProps {
   questionIndex: number | undefined;
@@ -42,11 +43,18 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
     question = questions[questionIndex];
   }
 
+  //TODO change left drawer for a simple sidebar component : better layout management
+
   if(question) {
     return (
-      <Grid item xs={10}>
+      <>
+      <Grid item xs={7}>
             {questionPreview(question, setFormContext)}
       </Grid>
+      <Grid item xs={3} sx={{backgroundColor: 'white', border: '1px solid black'}}>
+        <EditFormSidebarRight question={question} setFormContext={setFormContext} />
+      </Grid>
+      </>
     )
   }
 

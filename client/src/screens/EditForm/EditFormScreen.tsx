@@ -4,7 +4,7 @@ import AppBar from '../../components/AppBar/AppBar';
 import { useMutation, useQuery } from '@apollo/client';
 import { READ_USER } from '../../services/user.query';
 import EditFormMain from './EditFormMain/EditFormMain';
-import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
+import EditFormSidebarLeft from './EditFormSidebarLeft/EditFormSidebarLeft';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { CREATE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
@@ -117,9 +117,9 @@ function EditFormScreen({}: EditFormScreenProps) {
     if(formLoading) return <div>Loading...</div>;
 
     return (
-        <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
+        <Grid container sx={{minHeight: '100vh', flexGrow: 1}} alignContent={'flex-start'}>
           <AppBar user={userContext} editForm={true} handleSave={handleSave} />
-          <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
+          <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
           <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
         </Grid>
     )

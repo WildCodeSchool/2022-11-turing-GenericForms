@@ -12,13 +12,13 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { FormDTO } from '../../../types/form';
 import { QuestionType } from '../../../types/questionEnum';
 
-interface EditFormSidebarProps {
+interface EditFormSidebarLeftProps {
     questions?: QuestionDTO[];
     setQuestionIndex: (questionIndex: number) => void;
     setFormContext: any;
 }
 
-const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditFormSidebarProps) => {
+const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: EditFormSidebarLeftProps) => {
 
     const handleClick = (questionIndex: number) => {
         setQuestionIndex(questionIndex);
@@ -56,5 +56,5 @@ const EditFormSidebar = ({questions, setQuestionIndex, setFormContext}: EditForm
 
 
 
-export default EditFormSidebar;
+export default EditFormSidebarLeft;
 
