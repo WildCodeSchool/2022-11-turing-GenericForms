@@ -8,7 +8,7 @@ import Protected from "../Protected";
 import DashboardScreen from "../../screens/Dashboard/DashboardScreen";
 import EditFormScreen from "../../screens/EditForm/EditFormScreen";
 import { EditFormProvider } from "../../providers/formState";
-import FormScreen from "../../screens/Form/FormScreen";
+import PublicFormScreen from "../../screens/PublicForm/PublicFormScreen";
 import { UserProvider } from "../../providers/userState";
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
               <Route
                 path="form/:formId"
                 element={
-                  <FormScreen />
+                  <PublicFormScreen />
                 }
               />
           </Routes>
