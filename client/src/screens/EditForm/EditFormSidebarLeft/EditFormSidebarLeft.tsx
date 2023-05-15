@@ -47,41 +47,39 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: Edit
         });
     }
 
-    //TODO : handle case where no questions are passed or empty questions array
-    // => display drawer with no items and a message "Vite, créer votre première question !"
-
     return (
         <Grid item xs={2} sx={{backgroundColor: themeConstants.colors.white, border: '1px solid grey'}}>
-            <Box sx={{border: '1px solid red', display: 'flex'}} >
+            <Box sx={{display: 'flex'}} my={themeConstants.spacing.quarterSm} >
                 <IconButton onClick={handleAddQuestion} sx={{margin: '0 auto'}}>
                     <AddCircleRoundedIcon />
                 </IconButton>
             </Box>
             <List>
-            {questions && handleClick && questions.map(({title, type}, index) => (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                sx={{
-                    minHeight: 48,
-                    justifyContent: 'initial',
-                    px: 2.5,
-                }}
-                onClick={() => handleClick(index)}
-                >
-                <ListItemIcon
-                    sx={{
-                    minWidth: 0,
-                    mr: 3,
-                    justifyContent: 'center',
-                    }}
-                >
-                    {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
-                </ListItemIcon>
-                <ListItemText primary={title} />
-                </ListItemButton>
-            </ListItem>
-            ))}
-        </List>
+                {questions?.length === 0 && <Typography variant='body1' sx={{textAlign: 'center'}}>Vite, créer votre première question !</Typography>}
+                {questions && handleClick && questions.map(({title, type}, index) => (
+                    <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: 'initial',
+                            px: 2.5,
+                        }}
+                        onClick={() => handleClick(index)}
+                        >
+                        <ListItemIcon
+                            sx={{
+                            minWidth: 0,
+                            mr: 3,
+                            justifyContent: 'center',
+                            }}
+                        >
+                            {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
+                        </ListItemIcon>
+                        <ListItemText primary={title} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
       </Grid>
     )
 
