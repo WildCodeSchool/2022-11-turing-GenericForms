@@ -42,7 +42,6 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
   if(questions && typeof questionIndex !== 'undefined') {
     question = questions[questionIndex];
   }
-
   //TODO change left drawer for a simple sidebar component : better layout management
 
   if(question) {
