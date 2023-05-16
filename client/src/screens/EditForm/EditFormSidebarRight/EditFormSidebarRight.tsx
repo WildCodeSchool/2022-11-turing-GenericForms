@@ -2,12 +2,15 @@ import React from 'react';
 import { QuestionDTO } from '../../../types/question';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import TabPanel from './TabPanel';
+import TabQuestionSettings from './TabQuestionSettings';
+import TabFormStyleSettings from './TabFormStyleSettings';
 
 interface EditFormSidebarRightProps {
     question: QuestionDTO; //? provient du FormContext
     setFormContext: any;
 }
 
+//accessibility props for tabs
 function a11yProps(index: number) {
     return {
       id: `simple-tab-${index}`,
@@ -22,17 +25,20 @@ function EditFormSidebarRight({question, setFormContext}: EditFormSidebarRightPr
     };
   return (
     <Box sx={{minHeight: '92vh'}}>
-        <Box>
-        <Tabs value={tabIndex} onChange={handleChangeTab} aria-label="basic tabs example">
-          <Tab label="Question" {...a11yProps(0)} />
-          <Tab label="Style" {...a11yProps(1)} />
+        <Tabs 
+            value={tabIndex}
+            onChange={handleChangeTab}
+            aria-label="basic tabs example"
+            variant='fullWidth'
+        >
+            <Tab label="Question" {...a11yProps(0)} />
+            <Tab label="Style" {...a11yProps(1)} />
         </Tabs>
-        </Box>
         <TabPanel value={tabIndex} index={0}>
-            Question
+            <TabQuestionSettings question={question} />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-            Style
+            <TabFormStyleSettings />
         </TabPanel>
     </Box>
   )

@@ -8,6 +8,7 @@ import SelectListDrop from '../../components/common/SelectListDrop';
 import { FormDTO, ReadFormsDTO } from '../../types/form';
 import { useUserState } from '../../providers/userState';
 import { Error } from '@mui/icons-material';
+import { SelectItem } from '../../types/common';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -40,11 +41,11 @@ const useCss = (theme: Theme) => ({
     },
 });
 
-const menuItemsArray = [
-    {id: 32, value: 0, label: 'Questions'},
-    {id: 12, value: 1, label: 'Modifié le'},
-    {id: 23, value: 2, label: 'Réponses'},
-    {id: 35, value: 3, label: 'Actif'},
+const menuItemsArray: SelectItem[] = [
+    {value: 0, label: 'Questions'},
+    {value: 1, label: 'Modifié le'},
+    {value: 2, label: 'Réponses'},
+    {value: 3, label: 'Actif'},
 ];
 
 function FormsList({forms}: FormsListProps) {

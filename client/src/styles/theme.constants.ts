@@ -18,6 +18,8 @@ export const themeConstants = {
       success: '#16AF91' as const,
     },
     spacing: {
+      none: 0 as const,
+      min: 1 as const,
       quarterSm: 2 as const,
       quarter: 4 as const,
       demi: 8 as const,
