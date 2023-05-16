@@ -48,11 +48,20 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
     return (
       <>
       <Grid item xs={7}>
-        <Grid container direction={'column'} alignContent={'center'} sx={{height: '100%', paddingTop: '10vh'}} mx={'auto'}>
+        <Grid
+          container
+          direction={'column'}
+          alignContent={'center'}
+          sx={{height: '100%', paddingTop: '10vh'}}
+          mx={'auto'}
+        >
               {questionPreview(question, setFormContext)}
         </Grid>
       </Grid>
-      <Grid item xs={3} sx={{backgroundColor: 'white', border: themeConstants.border.base}}>
+      <Grid
+        item xs={3}
+        sx={{backgroundColor: 'white', border: themeConstants.border.base}}
+      >
         <EditFormSidebarRight question={question} setFormContext={setFormContext} />
       </Grid>
       </>

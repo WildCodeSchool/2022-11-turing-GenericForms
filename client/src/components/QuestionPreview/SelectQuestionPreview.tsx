@@ -61,10 +61,24 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
     return (
         <Box minWidth={250}>
             <Box>
-                <TextField fullWidth multiline id="standard-basic" variant="standard" value={question.title} onChange={handleChangeTitle} />
+                <TextField
+                    helperText="Titre de la question"
+                    fullWidth
+                    multiline
+                    variant="standard"
+                    value={question.title}
+                    onChange={handleChangeTitle}
+                />
             </Box>
             <Box>
-                <TextField fullWidth multiline id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
+                <TextField
+                    helperText="Description de la question"
+                    fullWidth
+                    multiline
+                    variant="standard"
+                    value={question.description}
+                    onChange={handleChangeDescription}
+                />
             </Box>
             <Box>
                 <List key={question.questionId}>

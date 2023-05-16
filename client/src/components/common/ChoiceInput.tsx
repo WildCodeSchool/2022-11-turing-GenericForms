@@ -36,7 +36,16 @@ const ChoiceInput = ({choice, handleRemoveChoice, setFormContext, question}: Cho
     return (
         <ListItem>
                 <Box>
-                    <TextField multiline fullWidth id="standard-basic" variant="standard" value={changeChoiceValue} key={choice.text} onBlur={e => handleChangeChoice(choice)} onChange={handleChangeValue} />
+                    <TextField
+                        multiline
+                        fullWidth
+                        id="standard-basic"
+                        variant="standard"
+                        value={changeChoiceValue}
+                        key={choice.text}
+                        onBlur={e => handleChangeChoice(choice)}
+                        onChange={handleChangeValue}
+                    />
                 </Box>
             <IconButton onClick={handleRemoveChoice}>
                 <RemoveCircleRoundedIcon />
