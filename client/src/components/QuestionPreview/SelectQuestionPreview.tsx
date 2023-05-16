@@ -1,4 +1,4 @@
-import { Grid, IconButton, List, ListItem, TextField, FormHelperText } from '@mui/material';
+import { Grid, IconButton, List, ListItem, TextField, FormHelperText, Box } from '@mui/material';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import React, { useEffect } from 'react';
 import { FormDTO } from '../../types/form';
@@ -6,6 +6,7 @@ import { QuestionDTO } from '../../types/question';
 import AddListItem from '../common/AddListItem';
 import { ChoiceDTO } from '../../types/choice';
 import ChoiceInput from '../common/ChoiceInput';
+import { themeConstants } from '../../styles/theme.constants';
 
 
 interface SelectQuestionPreviewProps {
@@ -58,14 +59,14 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
     questionOrderedChoices = questionOrderedChoices.sort((a, b) => a.choiceId - b.choiceId);
 
     return (
-        <Grid container direction={'column'}>
-            <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={question.title} onChange={handleChangeTitle} />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
-            </Grid>
-            <Grid item xs={12}>
+        <Box minWidth={250}>
+            <Box>
+                <TextField fullWidth multiline id="standard-basic" variant="standard" value={question.title} onChange={handleChangeTitle} />
+            </Box>
+            <Box>
+                <TextField fullWidth multiline id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
+            </Box>
+            <Box>
                 <List key={question.questionId}>
                 {
                     question.choices 
@@ -82,8 +83,8 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                         handleChangeNewChoice={handleChangeNewChoice}
                     />
                  </List>
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     )
 };
 

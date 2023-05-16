@@ -117,9 +117,9 @@ function EditFormScreen({}: EditFormScreenProps) {
     if(formLoading) return <div>Loading...</div>;
 
     return (
-        <Grid container sx={{minHeight: '100vh', flexGrow: 1}} alignContent={'flex-start'}>
+        <Grid container sx={{minHeight: '50vh', flexGrow: 1}} alignContent={'flex-start'}>
           <AppBar user={userContext} editForm={true} handleSave={handleSave} />
-          <Grid container direction={'row'} sx={{borderRight: '1px solid black'}}>
+          <Grid container direction={'row'}>
             <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
             <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
           </Grid>

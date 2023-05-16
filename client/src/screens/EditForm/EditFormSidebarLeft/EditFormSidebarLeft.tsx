@@ -48,7 +48,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: Edit
     }
 
     return (
-        <Grid item xs={2} sx={{backgroundColor: themeConstants.colors.white, border: '1px solid grey'}}>
+        <Grid item xs={2} sx={{backgroundColor: themeConstants.colors.white, border: themeConstants.border.base}}>
             <Box sx={{display: 'flex'}} my={themeConstants.spacing.quarterSm} >
                 <IconButton onClick={handleAddQuestion} sx={{margin: '0 auto'}}>
                     <AddCircleRoundedIcon />

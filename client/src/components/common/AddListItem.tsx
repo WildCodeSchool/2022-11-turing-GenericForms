@@ -24,6 +24,7 @@ const AddListItem = ({choices, handleAddChoice, choiceValue, handleChangeNewChoi
                     value={choiceValue} 
                     placeholder={choices.length === 0 ? "Choix 1" : "Ajouter un choix"}
                     onChange={handleChangeNewChoice}
+                    multiline
             />
         </ListItem>
     )
