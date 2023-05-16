@@ -5,6 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import theme from '../styles/theme';
 import { useNavigate } from 'react-router-dom';
 import { FormDTO } from '../types/form';
+import { themeConstants } from '../styles/theme.constants';
 
 interface FormItemProps {
     form: FormDTO;
@@ -12,7 +13,7 @@ interface FormItemProps {
 
 const useCss = (theme: Theme) => ({
     formsListContainer: {
-        border: '1px solid #000000',
+        border: themeConstants.border.base,
         height: '8vh',
         margin: '1vh 1vw',
     },
