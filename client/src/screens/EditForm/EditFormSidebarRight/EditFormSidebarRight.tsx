@@ -7,7 +7,6 @@ import TabFormStyleSettings from './TabFormStyleSettings';
 
 interface EditFormSidebarRightProps {
     question: QuestionDTO; //? provient du FormContext
-    setFormContext: any;
 }
 
 //accessibility props for tabs
@@ -18,7 +17,7 @@ function a11yProps(index: number) {
     };
 }
 
-function EditFormSidebarRight({question, setFormContext}: EditFormSidebarRightProps) {
+function EditFormSidebarRight({question}: EditFormSidebarRightProps) {
     const [tabIndex, setTabIndex] = React.useState(0);
     const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);

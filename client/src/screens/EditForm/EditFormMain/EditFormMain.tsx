@@ -62,7 +62,7 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
         item xs={3}
         sx={{backgroundColor: 'white', border: themeConstants.border.base}}
       >
-        <EditFormSidebarRight question={question} setFormContext={setFormContext} />
+        <EditFormSidebarRight question={question} />
       </Grid>
       </>
     )

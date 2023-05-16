@@ -5,7 +5,7 @@ export const parseToSelectItems = (items: ThemeDTO[] | undefined) => {
     return items.map((item) => {
         return {
             label: item.name,
-            value: item.style,
+            value: item.themeId,
         };
     });
 };

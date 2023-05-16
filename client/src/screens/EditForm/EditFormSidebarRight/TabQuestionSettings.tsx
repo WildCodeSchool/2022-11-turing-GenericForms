@@ -10,13 +10,14 @@ interface TabQuestionProps {
 };
 
 //TODO get all themes from graphQL query and map them to menuItemsArray
-const menuItemsArray: SelectItem[] = [
-  {value: 0, label: 'Texte'},
-  {value: 1, label: 'Choix multiples'},
-  {value: 2, label: 'Nombre'},
-];
+
 
 function TabQuestion({question}: TabQuestionProps) {
+  const menuItemsArray: SelectItem[] = [
+    {value: 0, label: 'Texte'},
+    {value: 1, label: 'Choix multiples'},
+    {value: 2, label: 'Nombre'},
+  ];
 
   return (
     <Box>
