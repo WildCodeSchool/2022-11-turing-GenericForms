@@ -1,36 +1,72 @@
 import React, { useEffect } from 'react';
-import { ReadThemesDTO, ThemeDTO } from '../../../types/theme';
-import { useQuery } from '@apollo/client';
-import { READ_THEMES } from '../../../services/theme.query';
+import { ReadThemeDTO, ReadThemesDTO, ThemeDTO } from '../../../types/theme';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { READ_THEME, READ_THEMES } from '../../../services/theme.query';
 import { parseToSelectItems } from '../../../utils/common.utils';
 import { SelectItem } from '../../../types/common';
 import { themeConstants } from '../../../styles/theme.constants';
 import {Box, TextField, Typography} from '@mui/material';
 import SelectListDrop from '../../../components/common/SelectListDrop';
 import { useEditFormState } from '../../../providers/formState';
+import { FormDTO } from '../../../types/form';
 
 function TabFormStyleSettings() {
   const [formContext, setFormContext] = useEditFormState();
   const [menuItems, setMenuItems] = React.useState<SelectItem[]>([]);
-  const [themeId, setThemeId] = React.useState<number>(formContext?.theme.themeId); // = themeId 
+  const [themeId, setThemeId] = React.useState<number>(formContext?.theme.themeId);
+  const [theme, setTheme] = React.useState<ThemeDTO>(formContext?.theme);
 
   const {data: dataThemes, loading: themesLoading, error: themesError} = useQuery<ReadThemesDTO>(READ_THEMES, {
     onCompleted(data: ReadThemesDTO) {
       setMenuItems(parseToSelectItems(data.readThemes));
-      console.log("form themeId ==>", themeId);
     },
     onError(error) {
         console.log(error);
     }
   });
 
+  const [refetch, {data: dataTheme, loading: themeLoading, error: themeError}] = useLazyQuery<ReadThemeDTO>(READ_THEME, {
+    variables: { themeId: themeId},
+  });
+
   useEffect(() => {
-    console.log('theme chosen ==>', themeId )
+    console.log('theme chosen ==>', themeId );
+    refetch({variables: {themeId: themeId}}).then((res) => {
+      console.log('res', res);
+      res.data && setTheme(res.data?.readOneTheme);
+    });
   }, [themeId])
 
   const handleChange = (value: number) => {
     setThemeId(value);
+    setFormContext((formContext: FormDTO) => {
+      return {
+          ...formContext,
+          theme: {
+            ...formContext.theme,
+            themeId: value
+          }
+      }
+    });
   };
+
+  const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTheme((theme) => {
+      return {
+        ...theme,
+        [event.target.name]: event.target.value
+      }
+    });
+    setFormContext((formContext: FormDTO) => {
+        return {
+            ...formContext,
+            theme: {
+              ...formContext.theme,
+              [event.target.name]: event.target.value
+            }
+        }
+    });
+};
 
   return (
     <Box>
@@ -45,7 +81,10 @@ function TabFormStyleSettings() {
             id="outlined-basic"
             label="Couleur d'arrière plan"
             variant="outlined"
-            value={formContext?.theme.backgroundColor}
+            name='backgroundColor'
+            value={theme?.backgroundColor}
+            onChange={handleChangeColor}
+            required
           />
         </Box>
         <Box>
@@ -53,7 +92,10 @@ function TabFormStyleSettings() {
             id="outlined-basic"
             label="Couleur primaire"
             variant="outlined"
-            value={formContext?.theme.primaryColor}
+            name='primaryColor'
+            value={theme?.primaryColor}
+            onChange={handleChangeColor}
+            required
           />
         </Box>
         <Box>
@@ -61,7 +103,10 @@ function TabFormStyleSettings() {
             id="outlined-basic"
             label="Couleur secondaire"
             variant="outlined"
-            value={formContext?.theme.secondaryColor}
+            name='secondaryColor'
+            value={theme?.secondaryColor}
+            onChange={handleChangeColor}
+            required
           />
         </Box>
       </Box>

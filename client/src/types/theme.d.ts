@@ -11,3 +11,7 @@ export interface ThemeDTO {
 export interface ReadThemesDTO {
     readThemes: ThemeDTO[];
 }
+
+export interface ReadThemeDTO {
+    readOneTheme: ThemeDTO;
+}
