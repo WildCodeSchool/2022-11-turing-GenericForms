@@ -21,6 +21,12 @@ const SubmitView = ({formId}: Props) => {
           console.log("formState errors", errors);
           resolve(undefined);
         }, 3000);
+      })
+      .then(() => {
+        navigate("/form/success");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -44,7 +50,7 @@ const SubmitView = ({formId}: Props) => {
             color="primary"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            disabled={!isValid || isPreview}
+            disabled={!isValid || isPreview || isSubmitting}
         >
             Envoyer le formulaire
         </Button>
@@ -61,12 +67,10 @@ const SubmitView = ({formId}: Props) => {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        {/* show a generic error message if any of the fields are invalid */}
-        <Typography>
-            {Object.keys(errors).length > 0 && (
-                "Error"
-            )}
-        </Typography>
+        {/* show a generic error message if any of the fields is invalid */}
+        {Object.keys(errors).length > 0 && (
+          <Typography>Error</Typography>
+        )}
       </Grid>
       <Grid item xs={12}>
         {/* loader to style + we should disabled the sending button while sending the form */}
