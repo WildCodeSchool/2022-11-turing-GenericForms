@@ -1,11 +1,12 @@
 import React from 'react';
 import './AppBar.css';
-import { Toolbar, Typography, List, ListItem, ListItemText, Box, Container, Grid, Button, Switch, Theme } from '@mui/material';
+import { Toolbar, Typography, Box, Grid, Button, Switch, Theme, Link } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 import { useEditFormState } from '../../providers/formState';
 import { FormDTO } from '../../types/form';
 import theme from '../../styles/theme';
+import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
 
 declare module "@mui/material/AppBar" {
     interface AppBarPropsColorOverrides{
@@ -46,6 +47,19 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
         });
     };
 
+    const popoverContent = (
+        <Box sx={{ p: 2, maxWidth: "40vw" }}>
+            <Typography>Vous pouvez prévisualiser ce formulaire en cliquant sur ce lien :</Typography>
+            <Typography>
+                <Link href={`http://localhost:3000/form/preview/${form?.formId}`} target="_blank">
+                    Formulaire {form?.title}
+                </Link>
+            </Typography>
+            <Typography paddingTop={2}>Attention, vos modifications non sauvegardées ne seront pas visibles !</Typography>
+        </Box>
+
+    );
+
     return (
         <Grid item xs={12} className='appbar-container'>
             <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "paper.light", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
@@ -69,9 +83,10 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                             </Typography>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
                                 <Typography variant='body1' color='primary'>
-                                    Publier le formulaire
+                                    Publier : 
                                 </Typography>
-                                <Switch color='primary' 
+                                <Switch 
+                                    color='success' 
                                     checked={form?.visibility}
                                     onChange={handleChangeVisibility}
                                 />
@@ -82,6 +97,11 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                                 >
                                     Enregistrer
                                 </Button>
+                                <Popover 
+                                    btnTitle='Prévisualiser'
+                                    children={popoverContent}
+                                    btnColor='info'
+                                />
                             </Box>
                             </>
                         )

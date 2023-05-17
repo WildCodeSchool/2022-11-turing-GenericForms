@@ -6,7 +6,8 @@ import TabQuestionSettings from './TabQuestionSettings';
 import TabFormSettings from './TabFormSettings';
 
 interface EditFormSidebarRightProps {
-    question: QuestionDTO; //? provient du FormContext
+    question: QuestionDTO;
+    questionIndex: number | undefined;
 }
 
 //accessibility props for tabs
@@ -17,21 +18,23 @@ function a11yProps(index: number) {
     };
 }
 
-function EditFormSidebarRight({question}: EditFormSidebarRightProps) {
+function EditFormSidebarRight({question, questionIndex}: EditFormSidebarRightProps) {
     const [tabIndex, setTabIndex] = React.useState(0);
     const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
     };
+
+    
   return (
     <Box sx={{minHeight: '92vh'}}>
         <Tabs 
             value={tabIndex}
             onChange={handleChangeTab}
-            aria-label="basic tabs example"
+            aria-label="menu customisation questions et formulaire"
             variant='fullWidth'
         >
-            <Tab label="Question" {...a11yProps(0)} />
-            <Tab label="Style" {...a11yProps(1)} />
+            <Tab label={questionIndex !== undefined ? 'Question #' + `${questionIndex+1}` : 'Aucune Question sélectionnée'} {...a11yProps(0)} />
+            <Tab label="Formulaire" {...a11yProps(1)} />
         </Tabs>
         <TabPanel value={tabIndex} index={0}>
             <TabQuestionSettings question={question} />
