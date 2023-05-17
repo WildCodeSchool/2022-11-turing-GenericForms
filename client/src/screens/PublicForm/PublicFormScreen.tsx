@@ -1,13 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { Typography, Grid } from "@mui/material";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { transformArrayToObject } from "../../helpers/formatDefaultValues";
 import { useEditFormState } from "../../providers/formState";
 import { READ_FORM } from "../../services/forms.query";
 import { ReadOneFormDTO } from "../../types/form";
 import { QuestionDTO } from "../../types/question";
 import Questions from "./Questions/Questions";
+import { themeConstants } from "../../styles/theme.constants";
 
 export type FormState = {
   id: string,
@@ -43,6 +44,9 @@ const PublicFormScreen = ({}: PublicFormScreenProps) => {
     const {formId} = useParams();
     const [formContext, setFormContext] = useEditFormState();
     const [initialFormState, setInitialFormState] = React.useState<InitialFormState>([]);
+    const {search} = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const isPreview = Boolean(queryParams.get('preview'));
 
     const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
         variables: { readOneFormId: formId},
@@ -66,13 +70,19 @@ const PublicFormScreen = ({}: PublicFormScreenProps) => {
     formLoading && <Typography>Chargement...</Typography>;
     formError && <Typography>Erreur lors du chargement du formulaire</Typography>;
 
-    if(formContext?.visibility == false) {
-        return <Typography variant="h2">Ce questionnaire n'est pas encore publié</Typography>
+    if(!formContext || !formId) {
+        return <Typography variant="h2">Ce questionnaire n'esxiste pas.</Typography>
     }
+
     if(!formLoading && formContext) {
       return (
-        <Grid container justifyContent='space-around'>
-              <Grid item>
+        <Grid container justifyContent='center' alignItems='center'>
+          {isPreview && (
+              <Grid item xs={6} sx={{backgroundColor: themeConstants.colors.semiLightGrey}} m={2}>
+                  <Typography variant="h6" sx={{textAlign: 'center'}}>Formulaire en mode prévisualisation</Typography>
+              </Grid>
+          )}
+              <Grid item xs={12}>
                 <Questions initialFormState={initialFormState} defaultValues={transformArrayToObject(form?.readOneFormByFormId.questions)} />
               </Grid>
           </Grid>

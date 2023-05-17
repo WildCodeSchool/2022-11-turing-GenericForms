@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface Props {
   formId: number;
@@ -9,6 +9,9 @@ interface Props {
 
 const SubmitView = ({formId}: Props) => {
   const {handleSubmit, formState: {errors, isSubmitting, isValid}, reset} = useFormContext();
+  const {search} = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const isPreview = Boolean(queryParams.get('preview'));
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
@@ -41,7 +44,7 @@ const SubmitView = ({formId}: Props) => {
             color="primary"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            disabled={!isValid}
+            disabled={!isValid || isPreview}
         >
             Envoyer le formulaire
         </Button>
@@ -49,11 +52,12 @@ const SubmitView = ({formId}: Props) => {
       <Grid item xs={8} sx={{margin: 'auto'}}>
         <Button
             variant="contained"
-            color="primary"
+            color="info"
             type="submit"
             onClick={handleReset}
+            disabled={isPreview}
         >
-            Envoyer un nouveau formulaire
+            Effacer ce formulaire
         </Button>
       </Grid>
       <Grid item xs={12}>
