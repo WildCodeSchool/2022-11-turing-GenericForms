@@ -7,6 +7,7 @@ import { useEditFormState } from '../../providers/formState';
 import { FormDTO } from '../../types/form';
 import theme from '../../styles/theme';
 import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
+import { themeConstants } from '../../styles/theme.constants';
 
 declare module "@mui/material/AppBar" {
     interface AppBarPropsColorOverrides{
@@ -78,18 +79,26 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                     }
                     {editForm ?
                         (   <>
-                            <Typography variant='h6' color='primary'>
-                                {form?.title}
-                            </Typography>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
-                                <Typography variant='body1' color='primary'>
-                                    Publier : 
+                            <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
+                            {form?.visibility && (
+                                <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
+                                <Typography variant='body1'>
+                                        Lien du formulaire
                                 </Typography>
+                                </Link>
+                                )}
                                 <Switch 
-                                    color='success' 
+                                    color='info' 
                                     checked={form?.visibility}
                                     onChange={handleChangeVisibility}
                                 />
+                            </Box>
+                            <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <Typography variant='h6' color={themeConstants.colors.mediumGrey}>
+                                    {form?.title}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
                                 <Button
                                     variant='contained'
                                     sx={{ mr: 2, minWidth: 15, minHeight: 35, borderRadius: 2 }}
