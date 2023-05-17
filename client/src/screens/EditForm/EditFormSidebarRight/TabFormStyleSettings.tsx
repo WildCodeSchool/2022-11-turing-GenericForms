@@ -72,7 +72,7 @@ function TabFormStyleSettings() {
     <Box>
       <Box sx={styles.tab}>
         <Typography variant='h6' sx={styles.tabTitle}>Thème graphique</Typography>
-        {menuItems.length > 0 && <SelectListDrop menuItems={menuItems} handleChange={handleChange} />}
+        {menuItems.length > 0 && <SelectListDrop menuItems={menuItems} handleChange={handleChange} initialValue={formContext.theme.themeId} />}
       </Box>
       <Box sx={styles.tab}>
         <Typography variant='h6' sx={styles.tabTitle}>Customiser le thème</Typography>

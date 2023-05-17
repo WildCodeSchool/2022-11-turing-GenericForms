@@ -10,6 +10,7 @@ import { SelectItem } from '../../types/common';
 interface SelectListDropProps {
     menuItems: SelectItem[];
     handleChange?: any;
+    initialValue?: number;
 };
 
 //! Possible to use only CSS to delkete this useStyles call ?
@@ -37,10 +38,10 @@ const useCss = (theme: Theme) => ({
     },
 });
 
-const SelectListDrop = ({menuItems, handleChange}: SelectListDropProps) => {
+const SelectListDrop = ({menuItems, handleChange, initialValue}: SelectListDropProps) => {
     const classes = useStyles();
     const css = useCss(theme);
-    const [val, setVal] = useState(menuItems[0]?.value);
+    const [val, setVal] = useState(initialValue || menuItems[0].value);
 
     useEffect(() => {
         console.log("SelectListDrop menuItems ===> ", menuItems)
