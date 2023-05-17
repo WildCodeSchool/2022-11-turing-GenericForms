@@ -3,7 +3,7 @@ import { QuestionDTO } from '../../../types/question';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import TabPanel from './TabPanel';
 import TabQuestionSettings from './TabQuestionSettings';
-import TabFormStyleSettings from './TabFormStyleSettings';
+import TabFormSettings from './TabFormSettings';
 
 interface EditFormSidebarRightProps {
     question: QuestionDTO; //? provient du FormContext
@@ -37,7 +37,7 @@ function EditFormSidebarRight({question}: EditFormSidebarRightProps) {
             <TabQuestionSettings question={question} />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-            <TabFormStyleSettings />
+            <TabFormSettings />
         </TabPanel>
     </Box>
   )

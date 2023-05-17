@@ -10,7 +10,7 @@ import SelectListDrop from '../../../components/common/SelectListDrop';
 import { useEditFormState } from '../../../providers/formState';
 import { FormDTO } from '../../../types/form';
 
-function TabFormStyleSettings() {
+function TabFormSettings() {
   const [formContext, setFormContext] = useEditFormState();
   const [menuItems, setMenuItems] = React.useState<SelectItem[]>([]);
   const [themeId, setThemeId] = React.useState<number>(formContext?.theme.themeId);
@@ -50,6 +50,15 @@ function TabFormStyleSettings() {
     });
   };
 
+  const handleChangeDetails = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormContext((formContext: FormDTO) => {
+        return {
+            ...formContext,
+            [event.target.name]: event.target.value
+        }
+    });
+  };
+
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTheme((theme) => {
       return {
@@ -70,6 +79,30 @@ function TabFormStyleSettings() {
 
   return (
     <Box>
+      <Box sx={styles.tab}>
+        <Typography variant='h6' sx={styles.tabTitle}>Détails</Typography>
+        <TextField
+            id="outlined-basic"
+            label="Titre"
+            variant="outlined"
+            name='title'
+            value={formContext?.title}
+            onChange={handleChangeDetails}
+            required
+        />
+         <TextField
+            id="outlined-basic"
+            label="Catégorie"
+            variant="outlined"
+            name='category'
+            value={formContext?.category}
+            onChange={handleChangeDetails}
+            required
+        />
+        {/* TODO : add a select list to choose a category => use an enum category table for now, on form creation set a default category like "Autres" */}
+        <Typography variant='body1'>Catégorie</Typography>
+        {<SelectListDrop menuItems={[{label: 'Autres', value: 0}]} handleChange={handleChange} initialValue={0} />}
+      </Box>
       <Box sx={styles.tab}>
         <Typography variant='h6' sx={styles.tabTitle}>Thème graphique</Typography>
         {menuItems.length > 0 && <SelectListDrop menuItems={menuItems} handleChange={handleChange} initialValue={formContext.theme.themeId} />}
@@ -133,4 +166,4 @@ const styles = {
   },
 };
 
-export default TabFormStyleSettings;
+export default TabFormSettings;
