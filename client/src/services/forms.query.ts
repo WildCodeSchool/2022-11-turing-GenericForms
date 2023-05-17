@@ -34,6 +34,7 @@ export const READ_FORM = gql(`
       title
       category
       themeId
+      visibility
       theme {
         themeId
         name

@@ -14,6 +14,7 @@ import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
+import { UPDATE_FORM } from '../../services/forms.mutation';
 
 interface EditFormScreenProps {};
 
@@ -48,14 +49,32 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
    });
 
-   const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
-      onCompleted(data: ResponseMessageDTO) {
-        console.log("updateQuestion completed");
-      },
-      onError(error: any) {
-        console.log(error);
-      }
-    });
+  const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
+    onCompleted(data: ResponseMessageDTO) {
+      console.log("updateQuestion completed");
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
+
+  const [updateForm, { data: updateFormResponse, loading: loadingFormUpdate, error: errorFormUpdate }] = useMutation(UPDATE_FORM, {
+    variables: { updateFormInput: {
+      formId: formContext?.formId,
+      title: formContext?.title,
+      description: formContext?.description,
+      category: formContext?.category,
+      themeId: formContext?.theme.themeId,
+      visibility: formContext?.visibility,
+    }},
+    onCompleted(data: ResponseMessageDTO) {
+      console.log("updateForm completed");
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
+  
 
   useEffect(() => {
     setFormContext(form?.readOneFormByFormId);
@@ -65,6 +84,10 @@ function EditFormScreen({}: EditFormScreenProps) {
   //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
     console.log("save");
+
+    //TODO create a mutation to update the form title, category, description, themeId...
+
+    updateForm();
 
     formContext.questions.forEach((question: QuestionDTO) => {
       if(question.questionId === undefined) {
