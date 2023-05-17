@@ -47,7 +47,7 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
   if(question) {
     return (
       <>
-      <Grid item xs={7}>
+      <Grid item xs={6}>
         <Grid
           container
           direction={'column'}
@@ -59,7 +59,7 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
         </Grid>
       </Grid>
       <Grid
-        item xs={3}
+        item xs={4}
         sx={{backgroundColor: 'white', border: themeConstants.border.base}}
       >
         <EditFormSidebarRight question={question} questionIndex={questionIndex}  />

@@ -61,8 +61,6 @@ const PublicFormScreen = ({}: PublicFormScreenProps) => {
 
     //TODO add here a hook to fetch form data, set initialFormState, set defaultValues and generate validation schema ?
 
-    
-      
     useEffect(() => {
       setFormContext(form?.readOneFormByFormId);
     }, [form]);
