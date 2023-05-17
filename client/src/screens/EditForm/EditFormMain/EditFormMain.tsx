@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography  } from '@mui/material';
+import { Box, Grid, Typography  } from '@mui/material';
 import { QuestionDTO } from '../../../types/question';
 import { QuestionType } from '../../../types/questionEnum';
 import TextQuestionPreview from '../../../components/QuestionPreview/TextQuestionPreview';
 import SelectQuestionPreview from '../../../components/QuestionPreview/SelectQuestionPreview';
 import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQuestionPreview';
 import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
+import EditFormSidebarRight from '../EditFormSidebarRight/EditFormSidebarRight';
+import { themeConstants } from '../../../styles/theme.constants';
 
 interface EditFormMainProps {
   questionIndex: number | undefined;
@@ -44,19 +46,35 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
 
   if(question) {
     return (
-      <Grid item xs={10}>
-            {questionPreview(question, setFormContext)}
+      <>
+      <Grid item xs={6}>
+        <Grid
+          container
+          direction={'column'}
+          alignContent={'center'}
+          sx={{height: '100%', paddingTop: '10vh'}}
+          mx={'auto'}
+        >
+              {questionPreview(question, setFormContext)}
+        </Grid>
       </Grid>
+      <Grid
+        item xs={4}
+        sx={{backgroundColor: 'white', border: themeConstants.border.base}}
+      >
+        <EditFormSidebarRight question={question} questionIndex={questionIndex}  />
+      </Grid>
+      </>
     )
   }
 
   return (
     <Grid item xs={10}>
-      <Grid container direction={'column'}>
+      <Box >
         <Typography variant="h4">
           No question selected
         </Typography>
-      </Grid>
+      </Box>
     </Grid>
   )
   

@@ -5,7 +5,7 @@ interface FormDTO {
     formId: number;
     title: string;
     category: string;
-    visbilility: boolean;
+    visibility: boolean;
     themeId: number;
     theme: ThemeDTO;
     user: Partial<UserDTO>;

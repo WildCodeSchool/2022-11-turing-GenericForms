@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, ListItem, TextField } from '@mui/material';
+import { Box, IconButton, ListItem, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { ChoiceDTO } from '../../types/choice';
@@ -35,9 +35,18 @@ const ChoiceInput = ({choice, handleRemoveChoice, setFormContext, question}: Cho
 
     return (
         <ListItem>
-            <FormControl >
-                <TextField id="standard-basic" variant="standard" value={changeChoiceValue} key={choice.text} onBlur={e => handleChangeChoice(choice)} onChange={handleChangeValue} />
-            </FormControl>
+                <Box>
+                    <TextField
+                        multiline
+                        fullWidth
+                        id="standard-basic"
+                        variant="standard"
+                        value={changeChoiceValue}
+                        key={choice.text}
+                        onBlur={e => handleChangeChoice(choice)}
+                        onChange={handleChangeValue}
+                    />
+                </Box>
             <IconButton onClick={handleRemoveChoice}>
                 <RemoveCircleRoundedIcon />
             </IconButton>

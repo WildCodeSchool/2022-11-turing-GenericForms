@@ -10,14 +10,16 @@ export const themeConstants = {
       primaryContrast: '#FFFFFF' as const,
       secondary: '#16AF91' as const,
       secondaryHighlight: '#c8f0e9' as const,
-      gray: '#F9F9FF' as const,
-      mediumGray: '#627187' as const,
-      semiLightGray: '#DFE8F5' as const,
-      lightGray: '#9BA7B8' as const,
+      grey: '#c5c5c9' as const,
+      mediumGrey: '#627187' as const,
+      semiLightGrey: '#DFE8F5' as const,
+      lightGrey: '#9BA7B8' as const,
       error: '#B0154D' as const,
       success: '#16AF91' as const,
     },
     spacing: {
+      none: 0 as const,
+      min: 1 as const,
       quarterSm: 2 as const,
       quarter: 4 as const,
       demi: 8 as const,
@@ -73,5 +75,9 @@ export const themeConstants = {
     },
     components: {
       appBarHeight: 56 as const,
+    },
+    borderTest: '1px solid red' as const,
+    border: {
+      base: '1px solid #c5c5c9' as const,
     }
   };

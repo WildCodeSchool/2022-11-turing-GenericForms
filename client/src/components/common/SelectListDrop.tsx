@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { FormControl, MenuItem, Select, Theme } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FormControl, MenuItem, Select, SelectChangeEvent, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import theme from '../../styles/theme';
 import { themeConstants } from '../../styles/theme.constants';
 import { styles } from './SelectListDrop.styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { SelectItem } from '../../types/common';
 
 interface SelectListDropProps {
-    menuItems: any[];
+    menuItems: SelectItem[];
+    handleChange?: any;
+    initialValue?: number;
 };
 
 //! Possible to use only CSS to delkete this useStyles call ?
@@ -35,10 +38,14 @@ const useCss = (theme: Theme) => ({
     },
 });
 
-const SelectListDrop = ({menuItems}: SelectListDropProps) => {
+const SelectListDrop = ({menuItems, handleChange, initialValue}: SelectListDropProps) => {
     const classes = useStyles();
     const css = useCss(theme);
-    const [val,setVal] = useState(1);
+    const [val, setVal] = useState(initialValue || menuItems[0].value);
+
+    useEffect(() => {
+        console.log("SelectListDrop menuItems ===> ", menuItems)
+    }, [menuItems]);
 
 
     //Pass custom props to redesign the Menu elements used in the Select component : mui.com/material-ui/api/menu/
@@ -50,7 +57,7 @@ const SelectListDrop = ({menuItems}: SelectListDropProps) => {
         },
        anchorOrigin: {
         horizontal: 10,
-        vertical: 10,
+        vertical: 45,
         },
         transformOrigin: {
             horizontal: 10,
@@ -64,8 +71,9 @@ const SelectListDrop = ({menuItems}: SelectListDropProps) => {
         )
     };
 
-    const handleChange = (event: any) => {
+    const handleChangeValue = (event: SelectChangeEvent<string | number>) => {
         setVal(event.target.value);
+        handleChange && handleChange(event.target.value);
     };
 
     return (
@@ -75,11 +83,11 @@ const SelectListDrop = ({menuItems}: SelectListDropProps) => {
                 MenuProps={menuProps}
                 IconComponent={iconComponent}
                 value={val}
-                onChange={handleChange}
+                onChange={handleChangeValue}
             >
-                {menuItems.map((item) => {
+                {menuItems.map((item, index) => {
                     return (
-                        <MenuItem value={item.value} key={item.id}>{item.label}</MenuItem>
+                        <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
                     )
                 })
                 }

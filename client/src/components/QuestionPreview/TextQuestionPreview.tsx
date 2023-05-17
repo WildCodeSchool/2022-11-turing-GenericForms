@@ -1,7 +1,8 @@
-import { Grid, TextField, Typography } from '@mui/material';
+import { Box, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
+import { themeConstants } from '../../styles/theme.constants';
 
 interface TextQuestionPreviewProps {
     question: QuestionDTO; //? provient du FormContext
@@ -29,14 +30,26 @@ const TextQuestionPreview = ({question, setFormContext}: TextQuestionPreviewProp
     };
 
     return (
-        <Grid container direction={'column'}>
-            <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={question.title} onChange={handleChangeTitle} />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField id="standard-basic" variant="standard" value={question.description} onChange={handleChangeDescription} />
-            </Grid>
-        </Grid>
+        <Box minWidth={250}>
+                <Box>
+                    <TextField
+                        helperText="Titre de la question"
+                        fullWidth multiline
+                        id="standard-basic"
+                        variant="standard"
+                        value={question.title}
+                        onChange={handleChangeTitle} />
+                </Box>
+                <Box>
+                    <TextField 
+                        helperText="Description de la question"
+                        fullWidth multiline
+                        id="standard-basic"
+                        variant="standard"
+                        value={question.description}
+                        onChange={handleChangeDescription} />
+                </Box>
+        </Box>
     )
 };
 

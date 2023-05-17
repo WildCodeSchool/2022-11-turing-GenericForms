@@ -7,3 +7,11 @@ export interface ThemeDTO {
     secondaryColor: string;
     backgroundColor: string;
 }
+
+export interface ReadThemesDTO {
+    readThemes: ThemeDTO[];
+}
+
+export interface ReadThemeDTO {
+    readOneTheme: ThemeDTO;
+}

@@ -28,7 +28,7 @@ function DashboardScreen({}: DashboardScreenProps) {
   error && <Typography>Error</Typography>;
   
     return (
-        <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
+        <Grid container>
           <AppBar user={userData?.readOneUser}/>
           <DashboardSidebar/>
           <DashboardMain forms={userData?.readOneUser.forms} />

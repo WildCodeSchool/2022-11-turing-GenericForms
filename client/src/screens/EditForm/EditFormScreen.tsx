@@ -2,33 +2,29 @@ import React, { useEffect } from 'react';
 import { Grid  } from '@mui/material';
 import AppBar from '../../components/AppBar/AppBar';
 import { useMutation, useQuery } from '@apollo/client';
-import { READ_USER } from '../../services/user.query';
 import EditFormMain from './EditFormMain/EditFormMain';
-import EditFormSidebar from './EditFormSidebar/EditFormSidebar';
+import EditFormSidebarLeft from './EditFormSidebarLeft/EditFormSidebarLeft';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { CREATE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
-import { FormDTO, ReadOneFormDTO } from '../../types/form';
+import { ReadOneFormDTO } from '../../types/form';
 import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
+import { UPDATE_FORM } from '../../services/forms.mutation';
 
 interface EditFormScreenProps {};
 
 function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
   const [formContext, setFormContext] = useEditFormState();
-  // const userId = localStorage.getItem("userId");
   const [userContext, setUserContext] = useUserState();
 
   const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
-    onCompleted(data: ReadOneFormDTO) {
-      // setFormContext(form?.readOneFormByFormId);
-    },
     onError(error) {
         console.log(error);
     }
@@ -53,16 +49,34 @@ function EditFormScreen({}: EditFormScreenProps) {
     }
    });
 
-   const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
-      onCompleted(data: ResponseMessageDTO) {
-        console.log("updateQuestion completed");
-      },
-      onError(error: any) {
-        console.log(error);
-      }
-    });
+  const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
+    onCompleted(data: ResponseMessageDTO) {
+      console.log("updateQuestion completed");
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
 
-  useEffect(() => {    
+  const [updateForm, { data: updateFormResponse, loading: loadingFormUpdate, error: errorFormUpdate }] = useMutation(UPDATE_FORM, {
+    variables: { updateFormInput: {
+      formId: formContext?.formId,
+      title: formContext?.title,
+      description: formContext?.description,
+      category: formContext?.category,
+      themeId: formContext?.theme.themeId,
+      visibility: formContext?.visibility,
+    }},
+    onCompleted(data: ResponseMessageDTO) {
+      console.log("updateForm completed");
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
+  
+
+  useEffect(() => {
     setFormContext(form?.readOneFormByFormId);
   }, [form]);
 
@@ -70,6 +84,11 @@ function EditFormScreen({}: EditFormScreenProps) {
   //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
     console.log("save");
+
+    //TODO create a mutation to update the form title, category, description, themeId...
+
+    updateForm();
+
     formContext.questions.forEach((question: QuestionDTO) => {
       if(question.questionId === undefined) {
         const createQuestionInput: CreateQuestionInput = {
@@ -90,6 +109,7 @@ function EditFormScreen({}: EditFormScreenProps) {
       };
       updateQuestion({variables: {updateQuestionInput}});
 
+      //TODO transfer in back the below logic on Choices array to save choices if question.choices.length > 0
       if(question.choices.length > 0) {
         question.choices.forEach((choice) => {
           const updateChoiceInput: UpdateChoiceInput = {
@@ -100,10 +120,6 @@ function EditFormScreen({}: EditFormScreenProps) {
         });
       }
 
-      //TODO add another call on Choices array to save choices if question.choices.length > 0
-
-
-      
       //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);
     });
@@ -117,10 +133,12 @@ function EditFormScreen({}: EditFormScreenProps) {
     if(formLoading) return <div>Loading...</div>;
 
     return (
-        <Grid container sx={{minHeight: '100vh'}} alignContent={'flex-start'}>
-          <AppBar user={userContext} editForm={true} handleSave={handleSave} />
-          <EditFormSidebar questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
-          <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
+        <Grid container sx={{minHeight: '50vh', flexGrow: 1}} alignContent={'flex-start'}>
+          <AppBar user={userContext} form={formContext} editForm={true} handleSave={handleSave} />
+          <Grid container direction={'row'}>
+            <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} setFormContext={setFormContext} />
+            <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} setFormContext={setFormContext} />
+          </Grid>
         </Grid>
     )
 }
