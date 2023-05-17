@@ -85,6 +85,7 @@ function TabFormStyleSettings() {
             value={theme?.backgroundColor}
             onChange={handleChangeColor}
             required
+            disabled
           />
         </Box>
         <Box>
@@ -96,6 +97,7 @@ function TabFormStyleSettings() {
             value={theme?.primaryColor}
             onChange={handleChangeColor}
             required
+            disabled
           />
         </Box>
         <Box>
@@ -107,6 +109,7 @@ function TabFormStyleSettings() {
             value={theme?.secondaryColor}
             onChange={handleChangeColor}
             required
+            disabled
           />
         </Box>
       </Box>
