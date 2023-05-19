@@ -17,6 +17,10 @@ export default class Question {
 
   @Field()
   @Column()
+  validationId: number;
+
+  @Field()
+  @Column()
   title: string;
 
   @Field({ nullable: true })
@@ -48,6 +52,9 @@ export class CreateQuestionInput implements Partial<Question> {
   formId: number;
 
   @Field()
+  validationId: number;
+
+  @Field()
   title: string;
 
   @Field({ nullable: true })
@@ -64,6 +71,9 @@ export class UpdateQuestionInput implements Partial<Question> {
 
   @Field()
   formId: number;
+
+  @Field()
+  validationId?: number;
 
   @Field()
   title: string;

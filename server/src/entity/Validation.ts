@@ -39,8 +39,6 @@ export default class Validation {
 
 @InputType({ description: "create a validation input" })
 export class CreateValidationInput implements Partial<Validation> {
-    @Field()
-    validationId: number;
   
     @Field({ nullable: true })
     required: boolean;
