@@ -60,7 +60,11 @@ class QuestionService implements IService {
 
   async create(createQuestionInput: CreateQuestionInput): Promise<Question> {
     try {
-      return await this.db.save({ ...createQuestionInput });
+      // ? by default we create a question with validation rules null and required false
+      const validation = await datasource.getRepository("Validation").save({
+        required: false,
+      });
+      return await this.db.save({ ...createQuestionInput, validationId: validation.validationId });
     } catch (err) {
       console.log(err);
       throw new Error("error saving the question");
