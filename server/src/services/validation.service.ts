@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import Validation from "../entity/Validation";
+import Validation, { CreateValidationInput } from "../entity/Validation";
 import { IService } from "./interfaces";
 import datasource from "../lib/datasource";
 
@@ -18,6 +18,15 @@ class ValidationService implements IService {
         } catch (err) {
             console.error(err);
             throw new Error("There was an error getting the validation")
+        }
+    }
+
+    async create(validation: CreateValidationInput): Promise<Validation> {
+        try {
+            return await this.db.save({ ...validation });
+        } catch (err) {
+            console.log(err);
+            throw new Error("There was an error saving the validation")
         }
     }
     
