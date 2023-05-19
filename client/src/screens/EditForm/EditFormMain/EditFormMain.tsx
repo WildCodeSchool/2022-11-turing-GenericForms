@@ -39,7 +39,7 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
     }
   }, [navigate]);
 
-  let question = {} as QuestionDTO | undefined;
+  let question = undefined as QuestionDTO | undefined;
   if(questions && typeof questionIndex !== 'undefined') {
     question = questions[questionIndex];
   }
@@ -70,9 +70,12 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
 
   return (
     <Grid item xs={10}>
-      <Box >
+    <Box
+      sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%'}}
+      marginTop={themeConstants.spacing.baseSm}
+    >
         <Typography variant="h4">
-          No question selected
+          Aucune question sélectionnée !
         </Typography>
       </Box>
     </Grid>

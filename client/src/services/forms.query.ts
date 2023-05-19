@@ -56,6 +56,14 @@ export const READ_FORM = gql(`
           choiceId
           text
         }
+        validation {
+          validationId
+          required
+          textCharMax
+          textCharMin
+          multipleChoiceMin
+          multipleChoiceMax
+        }
       }
     }
   }

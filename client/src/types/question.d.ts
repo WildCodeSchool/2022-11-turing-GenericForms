@@ -1,5 +1,6 @@
 import {QuestionType} from './questionEnum';
 import { ChoiceDTO } from "./choice";
+import { ValidationDTO } from './validation';
 
 export interface QuestionDTO {
     questionId: number;
@@ -8,6 +9,7 @@ export interface QuestionDTO {
     type: QuestionType;
     formId: number;
     choices: ChoiceDTO[];
+    validation: ValidationDTO;
 }
 
 export interface ReadOneQuestionDTO {
