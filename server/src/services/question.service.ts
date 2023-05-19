@@ -16,7 +16,7 @@ class QuestionService implements IService {
   async readQuestions(): Promise<Question[]> {
     try {
       const question = await this.db.find({
-        relations: ["form", "choices"],
+        relations: ["form", "choices", "validation"],
       });
       return question;
     } catch (err) {
@@ -31,7 +31,7 @@ class QuestionService implements IService {
         where: {
           formId,
         },
-        relations: ["form", "choices"],
+        relations: ["form", "choices", "validation"],
       });
       return question;
     } catch (err) {
@@ -46,7 +46,7 @@ class QuestionService implements IService {
         where: {
           questionId,
         },
-        relations: ["form"],
+        relations: ["form", "choices", "validation"],
       });
       if(question === null) {
         throw new Error("No form with this ID");
