@@ -72,8 +72,8 @@ export class UpdateQuestionInput implements Partial<Question> {
   @Field()
   formId: number;
 
-  // @Field()
-  // validationId?: number;
+  @Field()
+  validationId: number;
 
   @Field()
   title: string;

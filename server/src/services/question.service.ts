@@ -80,6 +80,12 @@ class QuestionService implements IService {
         questionId,
         updateQuestionInput
       );
+      
+      //! Can update validation rules by calling the Validation Repository here but can't pass the validation object details...
+      const validation = await datasource.getRepository("Validation").update(updateQuestionInput.validationId, {
+        required: true, // how to get the validation object details here ?
+      });
+
       if (affected === 0)
         return {
           success: false,

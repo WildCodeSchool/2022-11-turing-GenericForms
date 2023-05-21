@@ -22,6 +22,7 @@ export interface UpdateQuestionInput {
     description: string;
     type: QuestionType;
     formId: number;
+    validationId: number;
 }
 
 export interface CreateQuestionInput {
