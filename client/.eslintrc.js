@@ -1,22 +1,19 @@
+/* eslint-env node */
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    jest: true,
-  },
-  extends: ["standard-with-typescript", "prettier"],
-  overrides: [],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+  ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: "latest",
+    project: "tsconfig.json",
+    tsconfigRootDir: __dirname,
     sourceType: "module",
-    project: ["./tsconfig.json"],
   },
-  rules: {
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        checksVoidReturn: false,
-      },
-    ],
-  },
+  plugins: ['@typescript-eslint'],
+  // rules: {
+  //     '@typescript-eslint/no-unsafe-call': "off",
+  // },
+  root: true,
 };
