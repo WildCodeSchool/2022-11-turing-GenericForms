@@ -10,5 +10,7 @@ jobs:
         node-version: '16'
     - name: Install modules
       run: yarn
+    - name: Temp Workaround
+      run: cd ~ && npm i @typescript-eslint/eslint-plugin
     - name: Run ESLint
-      run: npx eslint server/src --ext .js,.jsx,.ts,.tsx
+      run: npx eslint server/src --ext .js,.jsx,.ts,.tsx -c server/.eslintrc.js
