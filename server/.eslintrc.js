@@ -12,5 +12,8 @@ module.exports = {
         sourceType: "module",
     },
     plugins: ['@typescript-eslint'],
+    rules: {
+        '@typescript-eslint/no-unsafe-call': "off",
+    },
     root: true,
 };
