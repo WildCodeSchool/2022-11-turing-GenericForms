@@ -35,6 +35,8 @@
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/eslint-parser": "^7.22.5",
     "@faker-js/faker": "^7.6.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
@@ -44,7 +46,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "eslint": "^8.23.0",
+    "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.26.0",
