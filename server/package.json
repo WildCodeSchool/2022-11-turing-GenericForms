@@ -8,7 +8,6 @@
     "startWithTest": "npm run start && npm run test",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "localStart": "ts-node-dev src/index.ts --local",
-    "hello": "echo \"hello world\"",
     "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
     "test": "jest --config ./jest.config.js --watchAll"
   },
