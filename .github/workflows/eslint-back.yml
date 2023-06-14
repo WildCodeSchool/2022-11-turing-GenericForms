@@ -11,7 +11,5 @@ jobs:
         cache-dependency-path: server/package-lock.json
     - name: Install modules
       run: cd server && yarn
-    # - name: Temp Workaround
-    # run: cd ~ && npm i @typescript-eslint/eslint-plugin
     - name: Run ESLint
       run: cd server && yarn eslint src/ --ext .js,.jsx,.ts,.tsx
