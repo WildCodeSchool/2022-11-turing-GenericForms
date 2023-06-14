@@ -14,4 +14,4 @@ jobs:
     # - name: Temp Workaround
     # run: cd ~ && npm i @typescript-eslint/eslint-plugin
     - name: Run ESLint
-      run: npx eslint server/src --ext .js,.jsx,.ts,.tsx -c server/.eslintrc.js
+      run: cd server & yarn eslint server/src --ext .js,.jsx,.ts,.tsx
