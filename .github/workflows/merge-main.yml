@@ -9,7 +9,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Goto client and run tests
-        run: cd client && npm i --force && npm test
+        run: cd client && yarn --force && yarn jest
   docker:
     needs: test-front
     if: github.ref == 'refs/heads/main'
@@ -33,4 +33,4 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:client"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quete1902:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/generic-forms:latest
