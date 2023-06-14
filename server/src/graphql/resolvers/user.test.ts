@@ -15,7 +15,7 @@ afterEach(async () => {
 });
   
 
-let apolloServer = async () =>  {
+const apolloServer = async () =>  {
     const schema = await buildSchema({
         resolvers: [UserResolver],
         validate: false,
@@ -71,8 +71,8 @@ test("Insert user", async () => {
             },
         },
     });
-    let result = await server.executeOperation({query: READ_USERS});
-    let users = result?.data?.readUsers;
+    const result = await server.executeOperation({query: READ_USERS});
+    const users = result?.data?.readUsers;
     
     expect(users.length).toBe(1);
     expect(users[0].email).toEqual("test@test.fr");
