@@ -8,9 +8,11 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '16'
+        cache: "yarn"
+        cache-dependency-path: server/package-lock.json
     - name: Install modules
       run: yarn
-    - name: Temp Workaround
-      run: cd ~ && npm i @typescript-eslint/eslint-plugin
+    # - name: Temp Workaround
+    # run: cd ~ && npm i @typescript-eslint/eslint-plugin
     - name: Run ESLint
       run: npx eslint server/src --ext .js,.jsx,.ts,.tsx -c server/.eslintrc.js
