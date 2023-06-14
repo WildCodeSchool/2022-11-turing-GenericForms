@@ -1,9 +1,6 @@
 name: merge-main
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   test-front:
@@ -12,7 +9,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Goto client and run tests
-        run: cd client && npm i && npm test
+        run: cd client && npm i --force && npm test
   docker:
     needs: test-front
     if: github.ref == 'refs/heads/main'
