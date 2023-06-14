@@ -10,14 +10,14 @@ export default class ChoiceResolver {
     async readChoices(): Promise<Choice[]> {
       const choices = await new ChoiceService().readChoices();
       return choices;
-    };
+    }
 
     @Mutation(() => Choice)
     async createChoice(@Arg("createChoiceInput") createChoiceInput: CreateChoiceInput): Promise<Choice> {
       if(createChoiceInput.questionId === null) throw new Error("questionId is required to create choice");
       const choice = await new ChoiceService().createChoice(createChoiceInput);
       return choice;
-    };
+    }
 
     @Mutation(() => ResponseMessage)
     async updateChoice(@Arg("updateChoiceInput") updateChoiceInput: UpdateChoiceInput): Promise<ResponseMessage> {
@@ -26,4 +26,4 @@ export default class ChoiceResolver {
       return response;
     }
 
-};
+}

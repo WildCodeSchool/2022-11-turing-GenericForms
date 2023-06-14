@@ -15,11 +15,11 @@ const getHost = (): string | undefined => {
   if(process.argv.includes("--local")) {
     port = 5432;
     return process.env.DB_HOST_LOCAL;
-  };
+  }
   if (process.env.SCRIPT === "startWithTest") {
     port = 5432;
     return process.env.DB_HOST_TEST;
-  };
+  }
   return process.env.DB_HOST;
 };
 
