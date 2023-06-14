@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --watch --poll --respawn src/index.ts",
     "startWithTest": "npm run start && npm run test",
-    "hello": "echo \"hello world\"",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "localStart": "ts-node-dev src/index.ts --local",
     "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
     "test": "jest --config ./jest.config.js --watchAll"
@@ -43,19 +43,15 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^22.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.5",
-    "eslint-plugin-promise": "^6.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
+    "eslint": "^8.42.0",
     "jest": "^29.5.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0",
     "typeorm-fixtures-cli": "^3.0.2",
-    "typescript": "^5.0.2"
+    "typescript": "^5.1.3"
   }
 }
