@@ -1,5 +1,8 @@
-name: ESLint front
-on: push
+name: ESLint client
+on: 
+  push:
+    tags:
+      - client
 jobs:
   build:
     runs-on: ubuntu-latest
