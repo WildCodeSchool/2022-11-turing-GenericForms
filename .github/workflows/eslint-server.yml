@@ -1,5 +1,7 @@
-name: ESLint back
-on: push
+name: ESLint server
+on: 
+  push:
+    branches: [main, 'server/**']
 jobs:
   build:
     runs-on: ubuntu-latest
