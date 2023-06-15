@@ -1,4 +1,4 @@
-name: ESLint back
+name: ESLint server
 on: 
   push:
     tags:
