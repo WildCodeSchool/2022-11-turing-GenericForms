@@ -1,5 +1,8 @@
 name: ESLint back
-on: push
+on: 
+  push:
+    tags:
+      - server
 jobs:
   build:
     runs-on: ubuntu-latest
