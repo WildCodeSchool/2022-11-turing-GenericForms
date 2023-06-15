@@ -1,8 +1,7 @@
 name: ESLint client
 on: 
   push:
-    tags:
-      - client
+    branches: [main, 'client/**']
 jobs:
   build:
     runs-on: ubuntu-latest
