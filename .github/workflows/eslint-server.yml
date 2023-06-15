@@ -1,8 +1,7 @@
 name: ESLint server
 on: 
   push:
-    tags:
-      - server
+    branches: [main, 'server/**']
 jobs:
   build:
     runs-on: ubuntu-latest
