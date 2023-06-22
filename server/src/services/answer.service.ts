@@ -10,12 +10,25 @@ class AnswerService implements IService {
     this.db = datasource.getRepository(Answer);
   }
 
+  async read(): Promise<Answer[]> {
+    try {
+      const answers = await this.db.find({
+        relations: ["question"],
+      });
+      return answers;
+    } catch (err) {
+      console.error(err);
+      throw new Error("There was an error getting the answers");
+    }
+  }
+
   async readByQuestionId(questionId: number): Promise<Answer[]> {
     try {
       const answers = await this.db.find({
         where: {
           questionId,
         },
+        relations: ["question"],
       });
       return answers;
     } catch (err) {
@@ -31,6 +44,7 @@ class AnswerService implements IService {
         where: {
           userId,
         },
+        relations: ["question"],
       });
       return answers;
     } catch (err) {
