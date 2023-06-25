@@ -6,6 +6,7 @@ import Question from "../entity/Question";
 import Answer from "../entity/Answer";
 import Theme from "../entity/Theme";
 import Choice from "../entity/Choice";
+import Validation from "../entity/Validation";
 
 dotenv.config();
 
@@ -31,6 +32,6 @@ export default new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-  entities: [Form, User, Question, Answer, Theme, Choice],
+  entities: [Form, User, Question, Answer, Theme, Choice, Validation],
   logging: ["query", "error"],
 });

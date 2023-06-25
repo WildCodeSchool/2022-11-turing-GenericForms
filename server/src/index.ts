@@ -17,13 +17,14 @@ import {
   getPayloadFromToken,
 } from "./utils/authorization.utils";
 import UserService from "./services/user.service";
+import ValidationResolver from "./graphql/resolvers/validation.resolver";
 
 dotenv.config();
 
 async function start(): Promise<void> {
   // Create the schema
   const schema = await buildSchema({
-    resolvers: [FormResolver, UserResolver, QuestionResolver, AnswerResolver, ThemeResolver, ChoiceResolver],
+    resolvers: [FormResolver, UserResolver, QuestionResolver, AnswerResolver, ThemeResolver, ChoiceResolver, ValidationResolver],
     validate: false,
     authChecker: customAuthChecker,
   });

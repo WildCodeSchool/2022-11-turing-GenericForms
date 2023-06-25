@@ -1,8 +1,9 @@
 import { ObjectType, Field, InputType } from "type-graphql";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import Choice from "./Choice";
 import Form from "./Form";
 import Answer from "./Answer";
+import Validation from "./Validation";
 
 @ObjectType()
 @Entity("questions")
@@ -14,6 +15,10 @@ export default class Question {
   @Field()
   @Column()
   formId: number;
+
+  @Field()
+  @Column()
+  validationId: number;
 
   @Field()
   @Column()
@@ -39,12 +44,20 @@ export default class Question {
   @Field(() => [Answer])
   @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true})
   answers: Answer[];
+  
+  @Field(() => Validation)
+  @OneToOne((_type) => Validation, (validation: Validation) => validation.question, {eager: true, cascade: true})
+  @JoinColumn({ name: "validationId" })
+  validation: Validation;
 }
 
 @InputType({ description: "create a question input" })
 export class CreateQuestionInput implements Partial<Question> {
   @Field()
   formId: number;
+
+  // @Field()
+  // validationId: number;
 
   @Field()
   title: string;
@@ -63,6 +76,9 @@ export class UpdateQuestionInput implements Partial<Question> {
 
   @Field()
   formId: number;
+
+  @Field()
+  validationId: number;
 
   @Field()
   title: string;

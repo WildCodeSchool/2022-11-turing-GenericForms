@@ -16,7 +16,7 @@ class QuestionService implements IService {
   async readQuestions(): Promise<Question[]> {
     try {
       const question = await this.db.find({
-        relations: ["form", "choices"],
+        relations: ["form", "choices", "validation"],
       });
       return question;
     } catch (err) {
@@ -31,7 +31,7 @@ class QuestionService implements IService {
         where: {
           formId,
         },
-        relations: ["form", "choices"],
+        relations: ["form", "choices", "validation"],
       });
       return question;
     } catch (err) {
@@ -46,7 +46,7 @@ class QuestionService implements IService {
         where: {
           questionId,
         },
-        relations: ["form"],
+        relations: ["form", "choices", "validation"],
       });
       if(question === null) {
         throw new Error("No form with this ID");
@@ -60,7 +60,11 @@ class QuestionService implements IService {
 
   async create(createQuestionInput: CreateQuestionInput): Promise<Question> {
     try {
-      return await this.db.save({ ...createQuestionInput });
+      // ? by default we create a question with validation rules null and required false
+      const validation = await datasource.getRepository("Validation").save({
+        required: false,
+      });
+      return await this.db.save({ ...createQuestionInput, validationId: validation.validationId });
     } catch (err) {
       console.log(err);
       throw new Error("error saving the question");
@@ -76,6 +80,12 @@ class QuestionService implements IService {
         questionId,
         updateQuestionInput
       );
+      
+      //! Can update validation rules by calling the Validation Repository here but can't pass the validation object details...
+      const validation = await datasource.getRepository("Validation").update(updateQuestionInput.validationId, {
+        required: true, // how to get the validation object details here ?
+      });
+
       if (affected === 0)
         return {
           success: false,
