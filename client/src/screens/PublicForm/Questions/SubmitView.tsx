@@ -28,11 +28,7 @@ const SubmitView = ({formId}: Props) => {
     }
   });
 
-  //TODO Send form answers from there ?
-  // X 1 - access to form answers with questionId and log them
-  // X 2 - save one form answer in the backend 
-  // X 3 - check if ok with the backend
-  // X 4 - create a loop to save all form answers in the backend
+  //TODO Create a promise that will resolve when all answers are created => then redirect to success page
   const onSubmit = async (data: FieldValues) => {
     const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
       return {
@@ -42,24 +38,24 @@ const SubmitView = ({formId}: Props) => {
     });
     console.log("answers =>", answers);
 
-    answers.forEach(async (answer) => {
-      await createAnswer({
-        variables: {
-          createAnswerInput: {
-            questionId: answer.questionId,
-            answerText: answer.answer,
-            userId: 1,
-          }
-        }
-      });
-    });
-
       await new Promise((resolve) => {
-        setTimeout(() => {
-          console.log("sending form", data);
-          console.log("formState errors", errors);
-          resolve(undefined);
-        }, 3000);
+        answers.forEach(async (answer) => {
+          await createAnswer({
+            variables: {
+              createAnswerInput: {
+                questionId: answer.questionId,
+                answerText: answer.answer,
+                userId: 1,
+              }
+            }
+          });
+        });
+        resolve(undefined);
+        //? If need to test a loading state use setTimeout
+        // setTimeout(() => {
+        //   console.log("formState errors", errors);
+        //   resolve(undefined);
+        // }, 3000);
       })
       .then(() => {
         navigate("/submit/success");
