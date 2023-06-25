@@ -7,7 +7,14 @@ import { Context } from "../../services/interfaces";
 @Resolver(Answer)
 export default class AnswerResolver {
 
-    @Authorized()
+    // @Authorized()
+    @Query(() => [Answer])
+    async readAnswers(): Promise<Answer[]> {
+        const answers = await new AnswerService().read();
+        return answers;
+    }
+
+    // @Authorized()
     @Query(() => [Answer])
     async readAnswersByQuestion(@Arg("questionId",) questionId: number, @Ctx() ctx: Context ): Promise<Answer[]> {
         const answers = await new AnswerService().readByQuestionId(questionId);
@@ -30,7 +37,7 @@ export default class AnswerResolver {
 
     @Mutation(() => ResponseMessage)
     async updateAnswer(@Arg("updateAnswerInput") {answerId, ...updateAnswerInput}: UpdateAnswerInput) : Promise<ResponseMessage> {
-        if ((updateAnswerInput.questionId == null) || (updateAnswerInput.userId == null)) {
+        if (answerId == null) {
             throw new Error ( "Both questionId and userId are required")
         }
         return await new AnswerService().update({answerId, ...updateAnswerInput});

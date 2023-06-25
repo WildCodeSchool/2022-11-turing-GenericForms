@@ -2,6 +2,7 @@ import { ObjectType, Field, InputType } from "type-graphql";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Choice from "./Choice";
 import Form from "./Form";
+import Answer from "./Answer";
 
 @ObjectType()
 @Entity("questions")
@@ -34,6 +35,10 @@ export default class Question {
   @Field(() => [Choice])
   @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true})
   choices: Choice[];
+
+  @Field(() => [Answer])
+  @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true})
+  answers: Answer[];
 }
 
 @InputType({ description: "create a question input" })
