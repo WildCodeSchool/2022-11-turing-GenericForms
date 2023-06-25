@@ -7,7 +7,7 @@ import { SelectItem } from '../../../types/common';
 
 interface TabQuestionProps {
     question: QuestionDTO;
-};
+}
 
 function TabQuestion({question}: TabQuestionProps) {
   const menuItemsArray: SelectItem[] = [
@@ -17,14 +17,19 @@ function TabQuestion({question}: TabQuestionProps) {
   ];
   const [minLength, setMinLength] = React.useState<number | undefined>(question.validation.textCharMin);
 
+  useEffect(() => {
+    setMinLength(question.validation.textCharMin);
+  }, [minLength, question]);
+
+
   //TODO change validation rule in question of Form Context
   const handleChangeRequired = () => {
       console.log('handle change required ==>', question.validation.required);
   };
 
   //TODO change validation rule in question of Form Context and delete local state
-  const handleChangeLength = (e: any) => {
-    setMinLength(e.target.value);
+  const handleChangeLength = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setMinLength(Number(e.target.value));
   };
 
 
@@ -62,14 +67,14 @@ function TabQuestion({question}: TabQuestionProps) {
             }}
             variant="outlined"
             size='small'
-            value={minLength}
+            value={minLength ? minLength : 0}
             onChange={handleChangeLength}
           />
         </Box>
       </Box>
     </Box>
   )
-};
+}
 
 const styles = {
   tab: {
