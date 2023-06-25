@@ -30,25 +30,16 @@ const SubmitView = ({formId}: Props) => {
 
   //TODO Send form answers from there ?
   // X 1 - access to form answers with questionId and log them
-  // - 2 - save one form answer in the backend 
-  // - 3 - check if ok with the backend
-  // - 4 - create a loop to save all form answers in the backend
+  // X 2 - save one form answer in the backend 
+  // X 3 - check if ok with the backend
+  // X 4 - create a loop to save all form answers in the backend
   const onSubmit = async (data: FieldValues) => {
-    // const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
-    //   return {
-    //     questionId: Number(key),
-    //     answer: value
-    //   }
-    // });
-
-    const answers = [
-      {
-        questionId: 26,
-        answer: "John Doe",
-        userId: 1,
-      },
-    ]
-
+    const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
+      return {
+        questionId: Number(key),
+        answer: value
+      }
+    });
     console.log("answers =>", answers);
 
     answers.forEach(async (answer) => {
