@@ -106,6 +106,7 @@ function EditFormScreen({}: EditFormScreenProps) {
         description: question.description,
         type: question.type,
         formId: question.formId,
+        validationId: question.validation.validationId,
       };
       updateQuestion({variables: {updateQuestionInput}});
 

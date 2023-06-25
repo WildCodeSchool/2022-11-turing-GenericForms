@@ -2,8 +2,8 @@ import React from 'react';
 import { QuestionDTO } from '../../../types/question';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import TabPanel from './TabPanel';
-import TabQuestionSettings from './TabQuestionSettings';
-import TabFormSettings from './TabFormSettings';
+import TabQuestionSettings from './TabQuestion';
+import TabFormSettings from './TabForm';
 
 interface EditFormSidebarRightProps {
     question: QuestionDTO;

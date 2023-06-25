@@ -22,7 +22,15 @@ const originalArray: QuestionDTO[] = [
                 choiceId: 3,
                 text: "Bleuet"
             }
-        ]
+        ],
+        validation: {
+            validationId: 1,
+            required: true,
+            multipleChoiceMin: 1,
+            multipleChoiceMax: 1,
+            textCharMin: undefined,
+            textCharMax: undefined,
+        }
     },
     {
         formId: 1,
@@ -30,7 +38,15 @@ const originalArray: QuestionDTO[] = [
         title: "Nouvelle question",
         description: "test description",
         type: QuestionType.TEXT,
-        choices: []
+        choices: [],
+        validation: {
+            validationId: 2,
+            required: true,
+            multipleChoiceMin: 1,
+            multipleChoiceMax: 1,
+            textCharMin: undefined,
+            textCharMax: undefined,
+        }
     },
     {
         formId: 1,
@@ -38,7 +54,15 @@ const originalArray: QuestionDTO[] = [
         title: "Quel est votre plat préféré ?",
         description: "test description",
         type: QuestionType.TEXT,
-        choices: []
+        choices: [],
+        validation: {
+            validationId: 3,
+            required: true,
+            multipleChoiceMin: 1,
+            multipleChoiceMax: 1,
+            textCharMin: undefined,
+            textCharMax: undefined,
+        }
     },
     {
         formId: 1,
@@ -46,7 +70,15 @@ const originalArray: QuestionDTO[] = [
         title: "Quel est votre animal préféré ?",
         description: "description",
         type: QuestionType.TEXT,
-        choices: []
+        choices: [],
+        validation: {
+            validationId: 4,
+            required: true,
+            multipleChoiceMin: 1,
+            multipleChoiceMax: 1,
+            textCharMin: undefined,
+            textCharMax: undefined,
+        }
     },
   ];
 
