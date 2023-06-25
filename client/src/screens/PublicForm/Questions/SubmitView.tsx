@@ -2,11 +2,10 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { PublicFormData, PublicFormDataArray, SubmitFormAnswers } from '../../../types/publicForm';
+import { SubmitFormAnswers } from '../../../types/publicForm';
 import { useMutation } from '@apollo/client';
 import { CREATE_ANSWER } from '../../../services/answers.mutation';
-import { CreateAnswerInput, CreateAnswerResponse } from '../../../types/answer';
-import { CreateQuestionInput } from '../../../types/question';
+import { CreateAnswerResponse } from '../../../types/answer';
 
 interface Props {
   formId: number;
@@ -19,7 +18,7 @@ const SubmitView = ({formId}: Props) => {
   const isPreview = Boolean(queryParams.get('preview'));
   const navigate = useNavigate();
 
-  const [createAnswer, {data, loading, error} ] = useMutation<CreateAnswerResponse>(CREATE_ANSWER, {
+  const [createAnswer ] = useMutation<CreateAnswerResponse>(CREATE_ANSWER, {
     onCompleted(data) {
       console.log("createAnswer completed =>", data);
     },
@@ -28,7 +27,6 @@ const SubmitView = ({formId}: Props) => {
     }
   });
 
-  //TODO Create a promise that will resolve when all answers are created => then redirect to success page
   const onSubmit = async (data: FieldValues) => {
     const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
       return {
