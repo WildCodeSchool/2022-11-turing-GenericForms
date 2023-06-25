@@ -13,7 +13,7 @@ class AnswerService implements IService {
   async read(): Promise<Answer[]> {
     try {
       const answers = await this.db.find({
-        relations: ["question"],
+        relations: ["question", "user"],
       });
       return answers;
     } catch (err) {
@@ -28,7 +28,7 @@ class AnswerService implements IService {
         where: {
           questionId,
         },
-        relations: ["question"],
+        relations: ["question", "user"],
       });
       return answers;
     } catch (err) {
@@ -44,7 +44,7 @@ class AnswerService implements IService {
         where: {
           userId,
         },
-        relations: ["question"],
+        relations: ["question", "user"],
       });
       return answers;
     } catch (err) {

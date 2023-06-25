@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field, InputType } from "type-graphql";
 import Question from "./Question";
+import User from "./User";
 
 @ObjectType()
 @Entity("answers")
@@ -36,6 +37,12 @@ export default class Answer {
     @ManyToOne((_type) => Question, (question: Question) => question.questionId)
     @JoinColumn({ name: "questionId" })
     question: Question;
+
+    @Field(() => User)
+    @ManyToOne((_type) => User, (user: User) => user.userId)
+    @JoinColumn({ name: "userId" })
+    user: User;
+
 }
 
 @InputType({description: "create an answer input"})

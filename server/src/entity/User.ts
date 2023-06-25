@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ObjectType, InputType, Field } from "type-graphql";
 import Form from "./Form";
+import Answer from "./Answer";
 
 @ObjectType()
 @Entity("users")
@@ -41,6 +42,10 @@ export default class User {
     @Field(() => [Form])
     @OneToMany((_type) => Form, (form: Form) => form.user, {eager: true})
     forms: Form[];
+
+    @Field(() => [Answer])
+    @OneToMany((_type) => Answer, (answer: Answer) => answer.user, {eager: true})
+    answers: Answer[];
 
 }
 
