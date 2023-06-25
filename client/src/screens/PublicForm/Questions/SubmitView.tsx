@@ -1,11 +1,12 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { PublicFormData, PublicFormDataArray } from '../../../types/publicForm';
 
 interface Props {
   formId: number;
-};
+}
 
 const SubmitView = ({formId}: Props) => {
   const {handleSubmit, formState: {errors, isSubmitting, isValid}, reset} = useFormContext();
@@ -15,13 +16,13 @@ const SubmitView = ({formId}: Props) => {
   const navigate = useNavigate();
 
   //TODO Send form answers from there ?
-  // - 1 - access to form answers with questionId and log them
+  // X 1 - access to form answers with questionId and log them
   // - 2 - save one form answer in the backend 
   // - 3 - check if ok with the backend
   // - 4 - create a loop to save all form answers in the backend
-  const onSubmit = async (data: any) => {
-      await new Promise(async (resolve) => {
-        await setTimeout(() => {
+  const onSubmit = async (data: FieldValues) => {
+      await new Promise((resolve) => {
+        setTimeout(() => {
           console.log("sending form", data);
           console.log("formState errors", errors);
           resolve(undefined);
@@ -39,7 +40,7 @@ const SubmitView = ({formId}: Props) => {
       });
   };
 
-  const handleReset = async (data: any) => {
+  const handleReset = () => {
     reset();
     navigate(`/form/${formId}`);
   };
