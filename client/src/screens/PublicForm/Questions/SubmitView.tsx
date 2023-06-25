@@ -2,7 +2,11 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { PublicFormData, PublicFormDataArray } from '../../../types/publicForm';
+import { PublicFormData, PublicFormDataArray, SubmitFormAnswers } from '../../../types/publicForm';
+import { useMutation } from '@apollo/client';
+import { CREATE_ANSWER } from '../../../services/answers.mutation';
+import { CreateAnswerInput, CreateAnswerResponse } from '../../../types/answer';
+import { CreateQuestionInput } from '../../../types/question';
 
 interface Props {
   formId: number;
@@ -15,12 +19,50 @@ const SubmitView = ({formId}: Props) => {
   const isPreview = Boolean(queryParams.get('preview'));
   const navigate = useNavigate();
 
+  const [createAnswer, {data, loading, error} ] = useMutation<CreateAnswerResponse>(CREATE_ANSWER, {
+    onCompleted(data) {
+      console.log("createAnswer completed =>", data);
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
+
   //TODO Send form answers from there ?
   // X 1 - access to form answers with questionId and log them
   // - 2 - save one form answer in the backend 
   // - 3 - check if ok with the backend
   // - 4 - create a loop to save all form answers in the backend
   const onSubmit = async (data: FieldValues) => {
+    // const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
+    //   return {
+    //     questionId: Number(key),
+    //     answer: value
+    //   }
+    // });
+
+    const answers = [
+      {
+        questionId: 26,
+        answer: "John Doe",
+        userId: 1,
+      },
+    ]
+
+    console.log("answers =>", answers);
+
+    answers.forEach(async (answer) => {
+      await createAnswer({
+        variables: {
+          createAnswerInput: {
+            questionId: answer.questionId,
+            answerText: answer.answer,
+            userId: 1,
+          }
+        }
+      });
+    });
+
       await new Promise((resolve) => {
         setTimeout(() => {
           console.log("sending form", data);
@@ -28,10 +70,6 @@ const SubmitView = ({formId}: Props) => {
           resolve(undefined);
         }, 3000);
       })
-
-
-
-
       .then(() => {
         navigate("/submit/success");
       })

@@ -7,3 +7,5 @@ interface PublicFormData {
 }
 
 export type PublicFormDataArray = PublicFormData[];
+
+export type SubmitFormAnswers = {questionId: number, answer: string}[];
