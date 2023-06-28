@@ -56,7 +56,7 @@ export const transformArrayToObject = (arr: QuestionDTO[] | undefined) => {
     const resultObj: DefaultValues = {};
     if(arr) {
         arr.forEach((item) => {
-        resultObj[item.questionId] = `value ${item.questionId}`;
+        resultObj[item.questionId] = `réponse #${item.questionId}`;
         })
     }
     return resultObj;
