@@ -61,7 +61,7 @@ export class UpdateValidationInput implements Partial<Validation> {
     @Field()
     validationId: number;
   
-    @Field({ nullable: true })
+    @Field()
     required: boolean;
   
     @Field({ nullable: true })
