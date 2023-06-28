@@ -26,7 +26,7 @@ const InputType = ({question}: Props) => {
                 id="standard-basic"
                 variant="standard"
                 placeholder={question.description}
-                {...register(`${question.questionId}`, {onChange: (e) => handleChange(e)})}
+                {...register(`${question.questionId}`, {onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange(e)})}
             />
             {errors && errors?.[`${question.questionId}`]?.message as string && (
                 <Typography>

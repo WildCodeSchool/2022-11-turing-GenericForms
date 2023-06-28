@@ -18,10 +18,39 @@ export const createSchema = (initialFormState: InitialFormState) => {
     // ];
 
     let schema = z.object({});
-    for (const prop of initialFormState) {
-        schema = schema.setKey(prop.id, z.string().min(5, {message: 'Min 5 caractères'}).max(10));
-        if(prop.id === '1') {
-            schema = schema.setKey(prop.id, z.string().min(10, {message: 'Min 10 caractères'}).max(50));
+    for (const question of initialFormState) {
+        if(question.validation.required) {
+            if(question.validation.minLength && question.validation.maxLength) {
+                schema = schema.setKey(
+                    question.id,
+                    z.string()
+                    .min(question.validation.minLength , {message: `Min ${question.validation.minLength} caractères`})
+                    .max(question.validation.maxLength , {message: `Max ${question.validation.maxLength} caractères`})
+                    )
+            }
+            if(!question.validation.minLength && !question.validation.maxLength) {
+                schema = schema.setKey(
+                    question.id,
+                    z.string().nonempty()
+                    )
+            }
+        }
+        if(!question.validation.required) {
+            if(question.validation.minLength && question.validation.maxLength) {
+                schema = schema.setKey(
+                    question.id,
+                    z.string()
+                    .min(question.validation.minLength , {message: `Min ${question.validation.minLength} caractères`})
+                    .max(question.validation.maxLength , {message: `Max ${question.validation.maxLength} caractères`})
+                    .optional()
+                    )
+            }
+            if(!question.validation.minLength && !question.validation.maxLength) {
+                schema = schema.setKey(
+                    question.id,
+                    z.string().optional()
+                    )
+            }
         }
     }
     return schema;

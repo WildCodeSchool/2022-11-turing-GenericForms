@@ -13,34 +13,52 @@ import { themeConstants } from "../../styles/theme.constants";
 export type FormState = {
   id: string,
   answer: string | {value: string},
+  validation: {
+    required?: boolean,
+    minLength?: number,
+    maxLength?: number,
+  }
 };
 
 export type InitialFormState = Array<FormState>;
-
-interface PublicFormScreenProps {};
 
 const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
   if(questions)  {
     const res = questions.map((question: QuestionDTO) => {
       if(question.type === 'text') {
-          return {id: question.questionId.toString(), answer: ''};
+          return {
+            id: question.questionId.toString(),
+            answer: '',
+            validation:
+              {
+                required: question.validation.required,
+                minLength: question.validation.textCharMin,
+                maxLength: question.validation.textCharMax,
+              }
+          };
       }
       if(question.type === 'select') {
           return {
             id: question.questionId.toString(),
             answer: {
               value: '',
-          }};
+            },
+            validation: {}
+          };
       }
-      return {id: '', answer: ''};
+      return {
+        id: '',
+        answer: '',
+        validation: {}
+      };
     });
     console.log("mapInitialFormState returns", res);
     return res;
   }
-  return [{id: '', answer: ''}];
+  return [{id: '', answer: '', validation: {}}];
 }
 
-const PublicFormScreen = ({}: PublicFormScreenProps) => {
+const PublicFormScreen = () => {
     const {formId} = useParams();
     const [formContext, setFormContext] = useEditFormState();
     const [initialFormState, setInitialFormState] = React.useState<InitialFormState>([]);
