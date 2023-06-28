@@ -1,11 +1,15 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { SubmitFormAnswers } from '../../../types/publicForm';
+import { useMutation } from '@apollo/client';
+import { CREATE_ANSWER } from '../../../services/answers.mutation';
+import { CreateAnswerResponse } from '../../../types/answer';
 
 interface Props {
   formId: number;
-};
+}
 
 const SubmitView = ({formId}: Props) => {
   const {handleSubmit, formState: {errors, isSubmitting, isValid}, reset} = useFormContext();
@@ -14,23 +18,52 @@ const SubmitView = ({formId}: Props) => {
   const isPreview = Boolean(queryParams.get('preview'));
   const navigate = useNavigate();
 
-  const onSubmit = async (data: any) => {
-      await new Promise(async (resolve) => {
-        await setTimeout(() => {
-          console.log("sending form", data);
-          console.log("formState errors", errors);
-          resolve(undefined);
-        }, 3000);
+  const [createAnswer ] = useMutation<CreateAnswerResponse>(CREATE_ANSWER, {
+    onCompleted(data) {
+      console.log("createAnswer completed =>", data);
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
+
+  const onSubmit = async (data: FieldValues) => {
+    const answers: SubmitFormAnswers = Object.entries(data).map(([key, value]) => {
+      return {
+        questionId: Number(key),
+        answer: value
+      }
+    });
+    console.log("answers =>", answers);
+
+      await new Promise((resolve) => {
+        answers.forEach(async (answer) => {
+          await createAnswer({
+            variables: {
+              createAnswerInput: {
+                questionId: answer.questionId,
+                answerText: answer.answer,
+                userId: 1,
+              }
+            }
+          });
+        });
+        resolve(undefined);
+        //? If need to test a loading state use setTimeout
+        // setTimeout(() => {
+        //   console.log("formState errors", errors);
+        //   resolve(undefined);
+        // }, 3000);
       })
       .then(() => {
-        navigate("/form/success");
+        navigate("/submit/success");
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleReset = async (data: any) => {
+  const handleReset = () => {
     reset();
     navigate(`/form/${formId}`);
   };

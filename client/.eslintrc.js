@@ -14,6 +14,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
    rules: {
        '@typescript-eslint/no-misused-promises': "off",
+       '@typescript-eslint/no-unsafe-assignment': 'off',
    },
   root: true,
 };

@@ -1,3 +1,4 @@
+import { DefaultValues } from "../types/publicForm";
 import { QuestionDTO } from "../types/question";
 import { QuestionType } from "../types/questionEnum";
 
@@ -50,16 +51,12 @@ import { QuestionType } from "../types/questionEnum";
 //     },
 //   ];
 
-type DefaultValues = {
-    [key: string]: string;
-};
-
-// Output: {"1": "value1", "2": "value2", "4": "value4", "7": "value7"}
+// Output: {"1": "value1", "2": "value2", "4": "value4", "7": "value7"}s
 export const transformArrayToObject = (arr: QuestionDTO[] | undefined) => {
     const resultObj: DefaultValues = {};
     if(arr) {
         arr.forEach((item) => {
-        resultObj[item.questionId] = `value ${item.questionId}`;
+        resultObj[item.questionId] = `réponse #${item.questionId}`;
         })
     }
     return resultObj;

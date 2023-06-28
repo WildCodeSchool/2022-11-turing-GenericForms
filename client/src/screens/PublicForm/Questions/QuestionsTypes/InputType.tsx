@@ -24,8 +24,9 @@ const InputType = ({question}: Props) => {
         <Grid item xs={12}>
             <TextField 
                 id="standard-basic"
-                variant="standard" 
-                {...register(`${question.questionId}`, {onChange: (e) => handleChange(e)})}
+                variant="standard"
+                placeholder={question.description}
+                {...register(`${question.questionId}`, {onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange(e)})}
             />
             {errors && errors?.[`${question.questionId}`]?.message as string && (
                 <Typography>
