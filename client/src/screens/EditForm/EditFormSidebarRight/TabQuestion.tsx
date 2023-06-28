@@ -9,22 +9,30 @@ interface TabQuestionProps {
     question: QuestionDTO;
 }
 
+const menuItemsArray: SelectItem[] = [
+  {value: 0, label: 'Texte'},
+  {value: 1, label: 'Choix multiples'},
+  {value: 2, label: 'Nombre'},
+];
+
 function TabQuestion({question}: TabQuestionProps) {
-  const menuItemsArray: SelectItem[] = [
-    {value: 0, label: 'Texte'},
-    {value: 1, label: 'Choix multiples'},
-    {value: 2, label: 'Nombre'},
-  ];
+  const [required, setRequired] = React.useState<boolean>(question.validation.required);
   const [minLength, setMinLength] = React.useState<number | undefined>(question.validation.textCharMin);
+  const [hasTextMin, setHasTextMin] = React.useState<boolean>(question.validation.textCharMin !== undefined ? true : false);
 
   useEffect(() => {
-    setMinLength(question.validation.textCharMin);
-  }, [minLength, question]);
-
+    if(!hasTextMin) {
+      setMinLength(undefined);
+    }
+  }, [hasTextMin]);
 
   //TODO change validation rule in question of Form Context
   const handleChangeRequired = () => {
-      console.log('handle change required ==>', question.validation.required);
+    setRequired(!required);
+  };
+
+  const handleChangeHasTextMin = () => {
+    setHasTextMin(!hasTextMin);
   };
 
   //TODO change validation rule in question of Form Context and delete local state
@@ -53,13 +61,20 @@ function TabQuestion({question}: TabQuestionProps) {
           <Typography variant='body1'>Réponse obligatoire</Typography>
           <Switch 
               color='info' 
-              checked={question.validation.required}
+              checked={required}
               onChange={handleChangeRequired}
           />
         </Box>
         <Box sx={styles.tabContent} >
-          <Typography variant='body1'>Caractères minimum :</Typography>
-          <TextField
+          <Typography variant='body1'>Caractères minimum</Typography>
+          <Switch 
+              color='info' 
+              checked={hasTextMin}
+              onChange={handleChangeHasTextMin}
+          />
+        </Box>
+        <Box sx={styles.tabContent} >
+          {hasTextMin && (<TextField
             id="outlined-number"
             type="number"
             InputLabelProps={{
@@ -69,7 +84,7 @@ function TabQuestion({question}: TabQuestionProps) {
             size='small'
             value={minLength ? minLength : 0}
             onChange={handleChangeLength}
-          />
+          />)}
         </Box>
       </Box>
     </Box>

@@ -15,6 +15,8 @@ import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
 import { UPDATE_FORM } from '../../services/forms.mutation';
+import { UPDATE_VALIDATION } from '../../services/validation.mutation';
+import { ValidationDTO } from '../../types/validation';
 
 interface EditFormScreenProps {};
 
@@ -35,7 +37,7 @@ function EditFormScreen({}: EditFormScreenProps) {
     onCompleted(data: ResponseMessageDTO) {
         console.log("updateQuestion completed");
     },
-    onError(error: any) {
+    onError(error) {
         console.log(error);
     }
   });
@@ -44,7 +46,7 @@ function EditFormScreen({}: EditFormScreenProps) {
     onCompleted(data: CreateQuestionResponse) {
       console.log("createQuestion completed");
     },
-    onError(error: any) {
+    onError(error) {
       console.log(error);
     }
    });
@@ -53,7 +55,16 @@ function EditFormScreen({}: EditFormScreenProps) {
     onCompleted(data: ResponseMessageDTO) {
       console.log("updateQuestion completed");
     },
-    onError(error: any) {
+    onError(error) {
+      console.log(error);
+    }
+  });
+
+  const [updateValidation, { data: updateValidationResponse, loading: loadingValidationUpdate, error: errorValidationUpdate }] = useMutation(UPDATE_VALIDATION, {
+    onCompleted(data: ValidationDTO) {
+      console.log("updateValidation completed => ", data);
+    },
+    onError(error) {
       console.log(error);
     }
   });
@@ -85,10 +96,12 @@ function EditFormScreen({}: EditFormScreenProps) {
   const handleSave = () => {
     console.log("save");
 
-    //TODO create a mutation to update the form title, category, description, themeId...
+    //? update the form data first
+    updateForm().catch((error) => {
+      console.log("updateForm error: ", error);
+    });
 
-    updateForm();
-
+    //? then update each questions data using a loop
     formContext.questions.forEach((question: QuestionDTO) => {
       if(question.questionId === undefined) {
         const createQuestionInput: CreateQuestionInput = {
@@ -97,7 +110,9 @@ function EditFormScreen({}: EditFormScreenProps) {
           type: question.type,
           formId: question.formId,
         };
-        createQuestion({variables: {createQuestionInput}});
+        createQuestion({variables: {createQuestionInput}}).catch((error) => {
+          console.log("create question error: ", error);
+        });
         return;
       };
       const updateQuestionInput: UpdateQuestionInput = {
@@ -108,7 +123,24 @@ function EditFormScreen({}: EditFormScreenProps) {
         formId: question.formId,
         validationId: question.validation.validationId,
       };
-      updateQuestion({variables: {updateQuestionInput}});
+      updateQuestion({variables: {updateQuestionInput}}).catch((error) => {
+        console.log("update question error: ", error);
+      });
+
+      if(question.validation.validationId !== undefined) {
+          console.log("update validation rules")
+          const updateValidationInput = {
+            validationId: question.validation.validationId,
+            required: question.validation.required,
+            textCharMin: 1,
+            textCharMax: 100,
+            // textCharMin: question.validation.textCharMin,
+            // textCharMax: question.validation.textCharMax,
+          };
+          updateValidation({variables: {updateValidationInput}}).catch((error) => {
+            console.log("update validation error: ", error);
+          });
+        }
 
       //TODO transfer in back the below logic on Choices array to save choices if question.choices.length > 0
       if(question.choices.length > 0) {
@@ -117,14 +149,18 @@ function EditFormScreen({}: EditFormScreenProps) {
             choiceId: choice.choiceId,
             text: choice.text,
           };
-          updateChoice({variables: {updateChoiceInput}});
+          updateChoice({variables: {updateChoiceInput}}).catch((error) => {
+            console.log("update choice error: ", error);
+          });
         });
       }
 
       //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);
     });
-    refetchQuestions();
+    refetchQuestions().catch((error) => {
+      console.log("refetchQuestions error: ", error);
+    });
   };
 
     if (!formId) {
