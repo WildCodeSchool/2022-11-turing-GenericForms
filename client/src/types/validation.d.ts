@@ -1,3 +1,7 @@
+
+export type ValidationDTOFields = keyof ValidationDTO;
+
+
 export interface ValidationDTO {
     validationId: number;
     required: boolean;

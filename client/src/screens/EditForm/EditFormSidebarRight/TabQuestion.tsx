@@ -5,6 +5,7 @@ import { themeConstants } from '../../../styles/theme.constants';
 import SelectListDrop from '../../../components/common/SelectListDrop';
 import { SelectItem } from '../../../types/common';
 import { FormDTO } from '../../../types/form';
+import TabQuestionValidationInput from './TabQuestionValidationInput';
 
 interface TabQuestionProps {
     question: QuestionDTO;
@@ -27,28 +28,6 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
       }
     });
   };
-
-  const handleChangeTextValidation = ({e, checked}: {
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >,
-    checked?: boolean | string,
-  }) => {
-    if(checked !== undefined) {
-    setFormContext((formContext: FormDTO) => {
-      return {
-        ...formContext,
-        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, textCharMin: checked ? 0 : null}} : questionCtx)
-      }
-    });
-    } else {
-      setFormContext((formContext: FormDTO) => {
-            return {
-              ...formContext,
-              questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, textCharMin: Number(e.target.value)}} : questionCtx)
-            }
-          });
-    }
-  };
-
 
   if(!question.questionId || !question.type) {
     <Box>
@@ -75,28 +54,18 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
               onChange={(e, checked) => handleChangeRequired(e, checked)}
           />
         </Box>
-        <Box sx={styles.tabContent} >
-          <Typography variant='body1'>Caractères minimum</Typography>
-          <Switch 
-              color='info' 
-              checked={question.validation.textCharMin !== null ? true : false}
-              onChange={(e, checked) => handleChangeTextValidation({e, checked})}
-          />
-        </Box>
-        <Box sx={styles.tabContent} >
-          {question.validation.textCharMin !== null && (<TextField
-            name='textCharMin'
-            id="outlined-number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="outlined"
-            size='small'
-            value={question.validation.textCharMin}
-            onChange={e => handleChangeTextValidation({e})}
-          />)}
-        </Box>
+        <TabQuestionValidationInput
+          question={question}
+          fieldName='textCharMin'
+          fieldDescription='Caractères minimum'
+          setFormContext={setFormContext}
+        />
+        <TabQuestionValidationInput
+          question={question}
+          fieldName='textCharMax'
+          fieldDescription='Caractères maximum'
+          setFormContext={setFormContext}
+        />
       </Box>
     </Box>
   )
