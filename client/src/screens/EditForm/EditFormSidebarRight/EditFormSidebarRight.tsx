@@ -38,7 +38,7 @@ function EditFormSidebarRight({question, questionIndex, setFormContext}: EditFor
             <Tab label="Formulaire" {...a11yProps(1)} />
         </Tabs>
         <TabPanel value={tabIndex} index={0}>
-            <TabQuestionSettings question={question} setFormContext={setFormContext} questionIndex={questionIndex} />
+            <TabQuestionSettings question={question} setFormContext={setFormContext} />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
             <TabFormSettings />
