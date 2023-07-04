@@ -23,27 +23,30 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
     setFormContext((formContext: FormDTO) => {
       return {
         ...formContext,
-        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, required: checked}} : questionCtx)
+        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [e.target.name]: checked}} : questionCtx)
       }
     });
   };
 
-  const handleChangeHasTextMin = (e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+  const handleChangeTextValidation = ({e, checked}: {
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >,
+    checked?: boolean | string,
+  }) => {
+    if(checked !== undefined) {
     setFormContext((formContext: FormDTO) => {
       return {
         ...formContext,
         questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, textCharMin: checked ? 0 : null}} : questionCtx)
       }
     });
-  };
-
-  const handleChangeLength = (length: string) => {
-    setFormContext((formContext: FormDTO) => {
-      return {
-        ...formContext,
-        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, textCharMin: Number(length)}} : questionCtx)
-      }
-    });
+    } else {
+      setFormContext((formContext: FormDTO) => {
+            return {
+              ...formContext,
+              questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, textCharMin: Number(e.target.value)}} : questionCtx)
+            }
+          });
+    }
   };
 
 
@@ -66,7 +69,8 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
         <Box sx={styles.tabContent} >
           <Typography variant='body1'>Réponse obligatoire</Typography>
           <Switch 
-              color='info' 
+              color='info'
+              name='required'
               checked={question.validation.required}
               onChange={(e, checked) => handleChangeRequired(e, checked)}
           />
@@ -76,11 +80,12 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
           <Switch 
               color='info' 
               checked={question.validation.textCharMin !== null ? true : false}
-              onChange={(e, checked) => handleChangeHasTextMin(e, checked)}
+              onChange={(e, checked) => handleChangeTextValidation({e, checked})}
           />
         </Box>
         <Box sx={styles.tabContent} >
           {question.validation.textCharMin !== null && (<TextField
+            name='textCharMin'
             id="outlined-number"
             type="number"
             InputLabelProps={{
@@ -89,7 +94,7 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
             variant="outlined"
             size='small'
             value={question.validation.textCharMin}
-            onChange={e => handleChangeLength(e.target.value)}
+            onChange={e => handleChangeTextValidation({e})}
           />)}
         </Box>
       </Box>
