@@ -132,10 +132,8 @@ function EditFormScreen({}: EditFormScreenProps) {
           const updateValidationInput = {
             validationId: question.validation.validationId,
             required: question.validation.required,
-            textCharMin: 1,
-            textCharMax: 100,
-            // textCharMin: question.validation.textCharMin,
-            // textCharMax: question.validation.textCharMax,
+            textCharMin: question.validation.textCharMin,
+            textCharMax: question.validation.textCharMax,
           };
           updateValidation({variables: {updateValidationInput}}).catch((error) => {
             console.log("update validation error: ", error);
