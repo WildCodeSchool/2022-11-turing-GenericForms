@@ -40,11 +40,11 @@ export default class User {
     updatedAt: Date;
 
     @Field(() => [Form])
-    @OneToMany((_type) => Form, (form: Form) => form.user, {eager: true})
+    @OneToMany((_type) => Form, (form: Form) => form.user, {eager: true, cascade: true})
     forms: Form[];
 
     @Field(() => [Answer])
-    @OneToMany((_type) => Answer, (answer: Answer) => answer.user, {eager: true})
+    @OneToMany((_type) => Answer, (answer: Answer) => answer.user, {eager: true, cascade: true})
     answers: Answer[];
 
 }

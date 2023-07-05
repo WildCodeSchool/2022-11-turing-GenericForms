@@ -38,11 +38,11 @@ export default class Question {
   form: Form;
 
   @Field(() => [Choice])
-  @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true})
+  @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true, cascade: true})
   choices: Choice[];
 
   @Field(() => [Answer])
-  @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true})
+  @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true, cascade: true})
   answers: Answer[];
   
   @Field(() => Validation)
