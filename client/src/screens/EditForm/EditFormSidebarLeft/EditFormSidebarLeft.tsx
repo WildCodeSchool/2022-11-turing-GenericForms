@@ -1,5 +1,5 @@
 import { Typography, List, ListItem, ListItemText, IconButton, ListItemButton, Grid, Box, ListItemAvatar } from '@mui/material';
-import { CreateQuestionInput, QuestionDTO } from '../../../types/question';
+import { CreateQuestionInput, NewEmptyQuestion, QuestionDTO } from '../../../types/question';
 import {AddCircleRounded, Clear} from '@mui/icons-material';
 import { FormDTO } from '../../../types/form';
 import { QuestionType } from '../../../types/questionEnum';
@@ -23,15 +23,21 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
 
     //TODO replace type by a variable type (depends on user selected type in a future dropdown select)
     const handleAddQuestion = () => {
-        console.log("Add question");
-       
         setFormContext((formContext: FormDTO) => {
             console.log("formContext ===> ", formContext);
-            const createQuestionInput: CreateQuestionInput = {
+            const createQuestionInput: NewEmptyQuestion = {
                 title: 'Nouvelle question',
                 description: '',
                 type: QuestionType.TEXT,
                 formId: formContext.formId,
+                choices: [],
+                validation: {
+                    required: false,
+                    textCharMin: null,
+                    textCharMax: null,
+                    multipleChoiceMin: null,
+                    multipleChoiceMax: null,
+                },
             };
             return {
                 ...formContext,
@@ -40,8 +46,6 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
         });
     }
 
-    //? easier to work with a deleted property than to remove the question from the array ?
-    //? will use this property to target the questions to delete in the backend mutation
     const handleDeleteQuestion = (questionIndex: number) => {
         setFormContext((formContext: FormDTO) => {            
             return {

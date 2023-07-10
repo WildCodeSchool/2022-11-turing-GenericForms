@@ -43,3 +43,18 @@ export interface DeleteQuestionResponse {
         success: boolean;
     }
 }
+
+interface NewEmptyQuestion {
+    title: string;
+    description: string;
+    type: QuestionType;
+    formId: number;
+    choices: ChoiceDTO[];
+    validation: {
+        required: boolean;
+        textCharMin: number | null;
+        textCharMax: number | null;
+        multipleChoiceMin: number | null,
+        multipleChoiceMax: number | null,
+    };
+}
