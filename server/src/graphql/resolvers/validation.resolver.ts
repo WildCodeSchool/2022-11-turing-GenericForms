@@ -1,5 +1,5 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import Validation, { CreateValidationInput } from "../../entity/Validation";
+import Validation, { CreateValidationInput, UpdateValidationInput } from "../../entity/Validation";
 import ValidationService from "../../services/validation.service";
 
 
@@ -17,4 +17,12 @@ export default class ValidationResolver {
     ): Promise<Validation> {
         return await new ValidationService().create({ ...createValidationInput});
     }
+
+    @Mutation(() => Validation)
+    async updateValidation(
+        @Arg("updateValidationInput") updateValidationInput: UpdateValidationInput
+    ): Promise<Validation> {
+        return await new ValidationService().update({ ...updateValidationInput});
+    }
+
 }

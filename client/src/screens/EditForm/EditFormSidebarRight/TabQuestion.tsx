@@ -1,37 +1,33 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { QuestionDTO } from '../../../types/question';
 import { Typography, Box, Switch, TextField } from '@mui/material';
 import { themeConstants } from '../../../styles/theme.constants';
 import SelectListDrop from '../../../components/common/SelectListDrop';
 import { SelectItem } from '../../../types/common';
+import { FormDTO } from '../../../types/form';
+import TabQuestionValidationInput from './TabQuestionValidationInput';
 
 interface TabQuestionProps {
     question: QuestionDTO;
+    setFormContext: any;
 }
 
-function TabQuestion({question}: TabQuestionProps) {
-  const menuItemsArray: SelectItem[] = [
-    {value: 0, label: 'Texte'},
-    {value: 1, label: 'Choix multiples'},
-    {value: 2, label: 'Nombre'},
-  ];
-  const [minLength, setMinLength] = React.useState<number | undefined>(question.validation.textCharMin);
+const menuItemsArray: SelectItem[] = [
+  {value: 0, label: 'Texte'},
+  {value: 1, label: 'Choix multiples'},
+  {value: 2, label: 'Nombre'},
+];
 
-  useEffect(() => {
-    setMinLength(question.validation.textCharMin);
-  }, [minLength, question]);
+function TabQuestion({question, setFormContext}: TabQuestionProps) {
 
-
-  //TODO change validation rule in question of Form Context
-  const handleChangeRequired = () => {
-      console.log('handle change required ==>', question.validation.required);
+  const handleChangeRequired = (e: React.ChangeEvent<HTMLInputElement>, checked: boolean ) => {
+    setFormContext((formContext: FormDTO) => {
+      return {
+        ...formContext,
+        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [e.target.name]: checked}} : questionCtx)
+      }
+    });
   };
-
-  //TODO change validation rule in question of Form Context and delete local state
-  const handleChangeLength = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setMinLength(Number(e.target.value));
-  };
-
 
   if(!question.questionId || !question.type) {
     <Box>
@@ -52,25 +48,24 @@ function TabQuestion({question}: TabQuestionProps) {
         <Box sx={styles.tabContent} >
           <Typography variant='body1'>Réponse obligatoire</Typography>
           <Switch 
-              color='info' 
+              color='info'
+              name='required'
               checked={question.validation.required}
-              onChange={handleChangeRequired}
+              onChange={(e, checked) => handleChangeRequired(e, checked)}
           />
         </Box>
-        <Box sx={styles.tabContent} >
-          <Typography variant='body1'>Caractères minimum :</Typography>
-          <TextField
-            id="outlined-number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="outlined"
-            size='small'
-            value={minLength ? minLength : 0}
-            onChange={handleChangeLength}
-          />
-        </Box>
+        <TabQuestionValidationInput
+          question={question}
+          fieldName='textCharMin'
+          fieldDescription='Caractères minimum'
+          setFormContext={setFormContext}
+        />
+        <TabQuestionValidationInput
+          question={question}
+          fieldName='textCharMax'
+          fieldDescription='Caractères maximum'
+          setFormContext={setFormContext}
+        />
       </Box>
     </Box>
   )

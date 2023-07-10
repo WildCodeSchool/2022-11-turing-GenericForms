@@ -26,7 +26,7 @@ const questionPreview = (question: QuestionDTO, setFormContext: any) => {
       return <SelectQuestionPreview question={question} setFormContext={setFormContext} />;
     default:
       return <NoQuestionPreview />;
-  };
+  }
 };
 
 function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainProps) {
@@ -62,7 +62,7 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
         item xs={4}
         sx={{backgroundColor: 'white', border: themeConstants.border.base}}
       >
-        <EditFormSidebarRight question={question} questionIndex={questionIndex}  />
+        <EditFormSidebarRight question={question} questionIndex={questionIndex} setFormContext={setFormContext}  />
       </Grid>
       </>
     )

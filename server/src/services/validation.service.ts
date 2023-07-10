@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import Validation, { CreateValidationInput } from "../entity/Validation";
+import Validation, { CreateValidationInput, UpdateValidationInput } from "../entity/Validation";
 import { IService } from "./interfaces";
 import datasource from "../lib/datasource";
 
@@ -30,7 +30,14 @@ class ValidationService implements IService {
         }
     }
     
-
+    async update(validation: UpdateValidationInput): Promise<Validation> {
+        try {
+            return await this.db.save({ ...validation });
+        } catch (err) {
+            console.log(err);
+            throw new Error("There was an error updating the validation")
+        }
+    }
 
 }
 
