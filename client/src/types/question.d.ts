@@ -10,6 +10,7 @@ export interface QuestionDTO {
     formId: number;
     choices: ChoiceDTO[];
     validation: ValidationDTO;
+    deleted?: boolean;
 }
 
 export interface ReadOneQuestionDTO {

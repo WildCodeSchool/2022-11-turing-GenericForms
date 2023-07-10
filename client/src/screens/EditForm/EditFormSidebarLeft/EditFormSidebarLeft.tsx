@@ -15,7 +15,7 @@ interface EditFormSidebarLeftProps {
 }
 
 const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftProps) => {
-    const [formContext, setFormContext] = useEditFormState();
+    const [setFormContext] = useEditFormState();
     
     const handleClick = (questionIndex: number) => {
         setQuestionIndex(questionIndex);
@@ -40,45 +40,23 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
         });
     }
 
-    //TODO delete question from formContext
+    //? easier to work with a deleted property than to remove the question from the array ?
+    //? will use this property to target the questions to delete in the backend mutation
     const handleDeleteQuestion = (questionIndex: number) => {
-
-        console.log("Delete question index #", questionIndex);
-        console.log(formContext);
-
-        setFormContext((formContext: FormDTO) => {
-            console.log("formContext ===> ", formContext);
-            const questions = [
-                ...formContext.questions,
-                {
-                    title: 'Test Delete',
-                    description: '',
-                    type: QuestionType.TEXT,
-                    formId: formContext.formId,
-                }
-            ]
-            questions.splice(questionIndex, 1);
-            console.log("questions spliced ===> ", questions);
+        setFormContext((formContext: FormDTO) => {            
             return {
                 ...formContext,
-                questions: questions
+                questions: questions?.map((question, index) => {
+                    if (index === questionIndex) {
+                        return {
+                            ...question,
+                            deleted: true
+                        };
+                    }
+                    return question;
+                })
             }
         });
-
-
-        // questions.shift();
-        // console.log("new questions ===> ", questions);
-        // setFormContext((formContext: FormDTO) => {
-        //     console.log("formContext ===> ", formContext);
-        //     let questions = formContext.questions;
-        //     questions.splice(questionIndex, 1);
-        //     console.log("questions spliced ===> ", questions);
-        //     // return {
-        //     //     ...formContext,
-        //     //     questions: questions
-        //     // }
-        //     return formContext;
-        // });
     }
 
     return (
@@ -90,8 +68,9 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
             </Box>
             <List>
                 {questions?.length === 0 && <Typography variant='body1' sx={{textAlign: 'center'}}>Vite, créer votre première question !</Typography>}
-                {questions && handleClick && questions.map(({title, type}, index) => (
-                    <ListItem 
+                {questions && handleClick && questions.map(({title, type, deleted}, index) => (
+                    !deleted &&
+                    (<ListItem 
                         key={index} 
                         disablePadding sx={{ display: 'block' }}
                         secondaryAction={
@@ -123,7 +102,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                             </ListItemAvatar>
                             <ListItemText primary={title} />
                         </ListItemButton>
-                    </ListItem>
+                    </ListItem>)
                 ))}
             </List>
       </Grid>
