@@ -6,9 +6,9 @@ import EditFormMain from './EditFormMain/EditFormMain';
 import EditFormSidebarLeft from './EditFormSidebarLeft/EditFormSidebarLeft';
 import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
-import { CREATE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
+import { CREATE_QUESTION, DELETE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
 import { ReadOneFormDTO } from '../../types/form';
-import { CreateQuestionInput, CreateQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
+import { CreateQuestionInput, CreateQuestionResponse, DeleteQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
@@ -16,7 +16,7 @@ import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
 import { UPDATE_FORM } from '../../services/forms.mutation';
 
-interface EditFormScreenProps {};
+interface EditFormScreenProps {}
 
 function EditFormScreen({}: EditFormScreenProps) {
   const {formId} = useParams();
@@ -74,7 +74,15 @@ function EditFormScreen({}: EditFormScreenProps) {
       console.log(error);
     }
   });
-  
+
+  const [deleteQuestion, { data: deleteQuestionResponse, loading: loadingQuestionDelete, error: errorQuestionDelete }] = useMutation(DELETE_QUESTION, {
+    onCompleted(data: DeleteQuestionResponse) {
+      console.log("deleteQuestion completed", data);
+    },
+    onError(error: any) {
+      console.log(error);
+    }
+  });
 
   useEffect(() => {
     setFormContext(form?.readOneFormByFormId);
@@ -84,12 +92,18 @@ function EditFormScreen({}: EditFormScreenProps) {
   //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
     console.log("save");
-
-    //TODO create a mutation to update the form title, category, description, themeId...
-
-    updateForm();
+    updateForm().catch((error) => {
+      console.log(error);
+    });
 
     formContext.questions.forEach((question: QuestionDTO) => {
+      if(question.deleted) {
+        console.log("delete question mutation #", question.questionId)
+        deleteQuestion({variables: {questionId: question.questionId}}).catch((error) => {
+          console.log(error);
+        });
+        return;
+      }
       if(question.questionId === undefined) {
         const createQuestionInput: CreateQuestionInput = {
           title: question.title,
@@ -97,9 +111,11 @@ function EditFormScreen({}: EditFormScreenProps) {
           type: question.type,
           formId: question.formId,
         };
-        createQuestion({variables: {createQuestionInput}});
+        createQuestion({variables: {createQuestionInput}}).catch((error) => {
+          console.log(error);
+        });
         return;
-      };
+      }
       const updateQuestionInput: UpdateQuestionInput = {
         questionId: question.questionId,
         title: question.title,
@@ -108,7 +124,9 @@ function EditFormScreen({}: EditFormScreenProps) {
         formId: question.formId,
         validationId: question.validation.validationId,
       };
-      updateQuestion({variables: {updateQuestionInput}});
+      updateQuestion({variables: {updateQuestionInput}}).catch((error) => {
+        console.log(error);
+      });
 
       //TODO transfer in back the below logic on Choices array to save choices if question.choices.length > 0
       if(question.choices.length > 0) {
@@ -117,14 +135,18 @@ function EditFormScreen({}: EditFormScreenProps) {
             choiceId: choice.choiceId,
             text: choice.text,
           };
-          updateChoice({variables: {updateChoiceInput}});
+          updateChoice({variables: {updateChoiceInput}}).catch((error) => {
+            console.log(error);
+          });
         });
       }
 
       //will send back a ResponseMessageDTO => should use to display a message to the user 
       console.log("update question response: ", updateQuestionResponse);
     });
-    refetchQuestions();
+    refetchQuestions().catch((error) => {
+      console.log(error);
+    });
   };
 
     if (!formId) {

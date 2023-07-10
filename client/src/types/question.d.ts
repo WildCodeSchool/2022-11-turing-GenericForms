@@ -36,3 +36,10 @@ export interface CreateQuestionInput {
 export interface CreateQuestionResponse {
     createQuestion: Partial<QuestionDTO>;
 }
+
+export interface DeleteQuestionResponse {
+    deleteQuestion: {
+        message: string;
+        success: boolean;
+    }
+}
