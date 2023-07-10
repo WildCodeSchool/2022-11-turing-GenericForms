@@ -100,15 +100,14 @@ function EditFormScreen() {
   //? Is forEach the best solution ? What if one server call fails ? 
   //? Should we use concept like a Promise.all() instead ?
   const handleSave = () => {
-    console.log("save");
+    // first update the form data
     updateForm().catch((error) => {
       console.log(error);
     });
 
-    //? then update each questions data using a loop
+    // then update each questions data using a loop
     formContext.questions.forEach((question: QuestionDTO) => {
       if(question.deleted) {
-        console.log("delete question mutation #", question.questionId)
         deleteQuestion({variables: {questionId: question.questionId}}).catch((error) => {
           console.log(error);
         });
@@ -126,6 +125,8 @@ function EditFormScreen() {
         });
         return;
       }
+      //TODO add validation properties on UpdateQuestionInput in backend mutation (textCharMin, textCharMax, required...)
+      // and pass these properties to the updateQuestionInput so backend can create a new validation entry
       const updateQuestionInput: UpdateQuestionInput = {
         questionId: question.questionId,
         title: question.title,
@@ -139,7 +140,6 @@ function EditFormScreen() {
       });
 
       if(question.validation.validationId !== undefined) {
-          console.log("update validation rules")
           const updateValidationInput = {
             validationId: question.validation.validationId,
             required: question.validation.required,
