@@ -21,3 +21,12 @@ mutation CreateQuestion($createQuestionInput: CreateQuestionInput!) {
   }
 `);
 
+export const DELETE_QUESTION = gql(`
+  mutation DeleteQuestion($questionId: Float!) {
+    deleteQuestion(questionId: $questionId) {
+      message
+      success
+    }
+  }
+`);
+

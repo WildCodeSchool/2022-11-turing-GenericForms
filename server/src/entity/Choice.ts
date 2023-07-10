@@ -19,7 +19,7 @@ export default class Choice {
     questionId: number;
 
     @Field(() => Question)
-    @ManyToOne((_type) => Question, (question: Question) => question.questionId)
+    @ManyToOne((_type) => Question, (question: Question) => question.questionId, {onDelete: "CASCADE"})
     @JoinColumn({ name: "questionId" })
     question: Question;
 }

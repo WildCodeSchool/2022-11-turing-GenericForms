@@ -48,7 +48,7 @@ export default class Form {
   questions: Question[];
 
   @Field(() => User)
-  @ManyToOne((_type) => User, (user: User) => user.userId)
+  @ManyToOne((_type) => User, (user: User) => user.userId, {onDelete: "CASCADE"})
   @JoinColumn({ name: "userId" })
   user: User;
 }

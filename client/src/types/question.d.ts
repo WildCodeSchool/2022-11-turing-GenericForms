@@ -10,6 +10,7 @@ export interface QuestionDTO {
     formId: number;
     choices: ChoiceDTO[];
     validation: ValidationDTO;
+    deleted?: boolean;
 }
 
 export interface ReadOneQuestionDTO {
@@ -34,4 +35,11 @@ export interface CreateQuestionInput {
 
 export interface CreateQuestionResponse {
     createQuestion: Partial<QuestionDTO>;
+}
+
+export interface DeleteQuestionResponse {
+    deleteQuestion: {
+        message: string;
+        success: boolean;
+    }
 }

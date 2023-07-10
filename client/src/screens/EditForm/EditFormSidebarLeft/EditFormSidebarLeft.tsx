@@ -1,29 +1,22 @@
-import React, { useState } from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import { Typography, List, ListItem, ListItemText, Drawer as MuiDrawer, IconButton, Divider, Toolbar, ListItemButton, ListItemIcon, Grid, Box } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronLeft';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Drawer from '../../../components/Drawer';
-import { menuItems } from '../../../types/commonComponents';
+import { Typography, List, ListItem, ListItemText, IconButton, ListItemButton, Grid, Box, ListItemAvatar } from '@mui/material';
 import { CreateQuestionInput, QuestionDTO } from '../../../types/question';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import {AddCircleRounded, Clear} from '@mui/icons-material';
 import { FormDTO } from '../../../types/form';
 import { QuestionType } from '../../../types/questionEnum';
 import ShortTextIcon from '@mui/icons-material/ShortText';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import { themeConstants } from '../../../styles/theme.constants';
+import { useEditFormState } from '../../../providers/formState';
 
 
 interface EditFormSidebarLeftProps {
     questions?: QuestionDTO[];
     setQuestionIndex: (questionIndex: number) => void;
-    setFormContext: any;
 }
 
-const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: EditFormSidebarLeftProps) => {
-
+const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftProps) => {
+    const [formContext, setFormContext] = useEditFormState();
+    
     const handleClick = (questionIndex: number) => {
         setQuestionIndex(questionIndex);
     };
@@ -47,17 +40,49 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: Edit
         });
     }
 
+    //? easier to work with a deleted property than to remove the question from the array ?
+    //? will use this property to target the questions to delete in the backend mutation
+    const handleDeleteQuestion = (questionIndex: number) => {
+        setFormContext((formContext: FormDTO) => {            
+            return {
+                ...formContext,
+                questions: questions?.map((question, index) => {
+                    if (index === questionIndex) {
+                        return {
+                            ...question,
+                            deleted: true
+                        };
+                    }
+                    return question;
+                })
+            }
+        });
+    }
+
     return (
         <Grid item xs={2} sx={{backgroundColor: themeConstants.colors.white, border: themeConstants.border.base}}>
             <Box sx={{display: 'flex'}} my={themeConstants.spacing.quarterSm} >
                 <IconButton onClick={handleAddQuestion} sx={{margin: '0 auto'}}>
-                    <AddCircleRoundedIcon />
+                    <AddCircleRounded />
                 </IconButton>
             </Box>
             <List>
                 {questions?.length === 0 && <Typography variant='body1' sx={{textAlign: 'center'}}>Vite, créer votre première question !</Typography>}
-                {questions && handleClick && questions.map(({title, type}, index) => (
-                    <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                {questions && handleClick && questions.map(({title, type, deleted}, index) => (
+                    !deleted &&
+                    (<ListItem 
+                        key={index} 
+                        disablePadding sx={{ display: 'block' }}
+                        secondaryAction={
+                            <IconButton 
+                                edge="end" 
+                                aria-label="supprimer"
+                                onClick={() => handleDeleteQuestion(index)}
+                            >
+                              <Clear />
+                            </IconButton>
+                          }
+                    >
                         <ListItemButton
                         sx={{
                             minHeight: 48,
@@ -66,31 +91,22 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, setFormContext}: Edit
                         }}
                         onClick={() => handleClick(index)}
                         >
-                        <ListItemIcon
-                            sx={{
-                            minWidth: 0,
-                            mr: 3,
-                            justifyContent: 'center',
-                            }}
-                        >
-                            {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={title} />
+                            <ListItemAvatar
+                                sx={{
+                                minWidth: 0,
+                                mr: 3,
+                                justifyContent: 'center',
+                                }}
+                            >
+                                {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
+                            </ListItemAvatar>
+                            <ListItemText primary={title} />
                         </ListItemButton>
-                    </ListItem>
+                    </ListItem>)
                 ))}
             </List>
       </Grid>
     )
-
-
-    // return (
-    //     <Drawer title='Questions' questions={questions} handleClick={handleClick}>
-    //         <IconButton onClick={handleAddQuestion}>
-    //             <AddCircleRoundedIcon />
-    //         </IconButton>
-    //     </Drawer>
-    // )
 }
 
 
