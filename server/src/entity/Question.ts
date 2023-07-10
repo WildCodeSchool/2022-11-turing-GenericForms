@@ -33,20 +33,20 @@ export default class Question {
   type: string;
 
   @Field(() => Form)
-  @ManyToOne((_type) => Form, (form: Form) => form.formId)
+  @ManyToOne((_type) => Form, (form: Form) => form.formId, { onDelete: "CASCADE" })
   @JoinColumn({ name: "formId" })
   form: Form;
 
   @Field(() => [Choice])
-  @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true, cascade: true})
+  @OneToMany((_type) => Choice, (choice: Choice) => choice.question, {eager: true})
   choices: Choice[];
 
   @Field(() => [Answer])
-  @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true, cascade: true})
+  @OneToMany((_type) => Answer, (answer: Answer) => answer.question, {eager: true})
   answers: Answer[];
   
   @Field(() => Validation)
-  @OneToOne((_type) => Validation, (validation: Validation) => validation.question, {eager: true, cascade: true})
+  @OneToOne((_type) => Validation, (validation: Validation) => validation.question, {eager: true, onDelete: "CASCADE"})
   @JoinColumn({ name: "validationId" })
   validation: Validation;
 }
@@ -55,9 +55,6 @@ export default class Question {
 export class CreateQuestionInput implements Partial<Question> {
   @Field()
   formId: number;
-
-  // @Field()
-  // validationId: number;
 
   @Field()
   title: string;

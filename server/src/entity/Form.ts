@@ -44,11 +44,11 @@ export default class Form {
   theme: Theme;
 
   @Field(() => [Question])
-  @OneToMany((_type) => Question, (question: Question) => question.form, {eager: true, cascade: true})
+  @OneToMany((_type) => Question, (question: Question) => question.form, {eager: true})
   questions: Question[];
 
   @Field(() => User)
-  @ManyToOne((_type) => User, (user: User) => user.userId)
+  @ManyToOne((_type) => User, (user: User) => user.userId, {onDelete: "CASCADE"})
   @JoinColumn({ name: "userId" })
   user: User;
 }

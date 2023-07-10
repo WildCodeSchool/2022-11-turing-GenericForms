@@ -33,7 +33,7 @@ export default class Validation {
   @Column({ nullable: true })
   textCharMax?: number;
 
-  @OneToOne((_type) => Question, (question: Question) => question.validation)
+  @OneToOne((_type) => Question, (question: Question) => question.validation, { onDelete: "CASCADE" })
   question: Question;
 }
 

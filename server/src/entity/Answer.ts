@@ -34,7 +34,7 @@ export default class Answer {
     // updatedAt: Date;
 
     @Field(() => Question)
-    @ManyToOne((_type) => Question, (question: Question) => question.questionId)
+    @ManyToOne((_type) => Question, (question: Question) => question.questionId, {onDelete: "CASCADE"})
     @JoinColumn({ name: "questionId" })
     question: Question;
 
