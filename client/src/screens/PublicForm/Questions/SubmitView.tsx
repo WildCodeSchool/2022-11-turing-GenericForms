@@ -8,10 +8,10 @@ import { CREATE_ANSWER } from '../../../services/answers.mutation';
 import { CreateAnswerResponse } from '../../../types/answer';
 
 interface Props {
-  formId: number;
+  formId: number | undefined;
 }
 
-const SubmitView = ({formId}: Props) => {
+const SubmitView = ({formId = 0}: Props) => {
   const {handleSubmit, formState: {errors, isSubmitting, isValid}, reset} = useFormContext();
   const {search} = useLocation();
   const queryParams = new URLSearchParams(search);
