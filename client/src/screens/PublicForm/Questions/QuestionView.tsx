@@ -8,18 +8,18 @@ import SelectType from './QuestionsTypes/SelectType';
 import SubmitView from './SubmitView';
 
 interface Props {
-    questionNumber: number;
-    setQuestionId: (questionId: number) => void;
-    formId: number;
-};
+    questionNumber: number | undefined;
+    setQuestionId: React.Dispatch<React.SetStateAction<number>>;
+    formId: number | undefined;
+}
 
 function QuestionView({questionNumber, setQuestionId, formId}: Props) {
-    const { activeStepIndex } = useContext<any>(FormContext);
-    const [formContext] = useEditFormState();
+    const { activeStepIndex } = useContext<FormContext>(FormContext);
+    const {formContext} = useEditFormState();
 
     useEffect(() => {
         console.log(formContext?.questions[activeStepIndex]);
-        setQuestionId(formContext?.questions[activeStepIndex]?.questionId);
+        setQuestionId(formContext?.questions[activeStepIndex]?.questionId || 0);
     }, [formContext?.questions, activeStepIndex]);
 
     const getQuestionType = () => {
