@@ -15,7 +15,7 @@ interface EditFormSidebarLeftProps {
 }
 
 const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftProps) => {
-    const [formContext, setFormContext] = useEditFormState();
+    const {setFormContext} = useEditFormState();
     
     const handleClick = (questionIndex: number) => {
         setQuestionIndex(questionIndex);

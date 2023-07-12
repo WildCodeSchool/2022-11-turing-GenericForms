@@ -32,7 +32,7 @@ const useCss = (theme: Theme) => ({
 const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     const css = useCss(theme);
     const navigate = useNavigate();
-    const [formContext, setFormContext] = useEditFormState();
+    const {setFormContext} = useEditFormState();
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -40,11 +40,13 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     };
 
     const handleChangeVisibility = () => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((formContext) => {
+            if(formContext) {
             return {
                 ...formContext,
-                visibility: !formContext.visibility
+                visibility: formContext?.visibility
             }
+        }
         });
     };
 

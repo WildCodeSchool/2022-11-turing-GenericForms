@@ -20,7 +20,7 @@ import { ValidationDTO } from '../../types/validation';
 
 function EditFormScreen() {
   const {formId} = useParams();
-  const [formContext, setFormContext] = useEditFormState();
+  const {formContext, setFormContext} = useEditFormState();
   const [userContext, setUserContext] = useUserState();
 
   const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
@@ -71,7 +71,6 @@ function EditFormScreen() {
     variables: { updateFormInput: {
       formId: formContext?.formId,
       title: formContext?.title,
-      description: formContext?.description,
       category: formContext?.category,
       themeId: formContext?.theme.themeId,
       visibility: formContext?.visibility,
@@ -106,7 +105,7 @@ function EditFormScreen() {
     });
 
     // then update each questions data using a loop
-    formContext.questions.forEach((question: QuestionDTO) => {
+    formContext?.questions.forEach((question: QuestionDTO) => {
       if(question.deleted) {
         deleteQuestion({variables: {questionId: question.questionId}}).catch((error) => {
           console.log(error);
