@@ -10,7 +10,7 @@ declare module "@mui/material/Button" {
 
 interface LoginFormProps {
     setForm: React.Dispatch<React.SetStateAction<SigningForm>>;
-    handleSubmit: (e: any) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 //TODO : add a password visible option

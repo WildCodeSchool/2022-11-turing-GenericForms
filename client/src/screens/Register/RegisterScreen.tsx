@@ -24,7 +24,7 @@ function Register() {
     console.log("FORM", form);
   }, [form]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     register({
       variables: {

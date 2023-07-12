@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
 import { Grid, Button, Container } from "@mui/material";
 import LoginForm from "../../components/LoginForm";
-import { CHECK_TOKEN, LOGIN } from "../../services/auth.query";
+import { LOGIN } from "../../services/auth.query";
 import jwt_decode from "jwt-decode";
 import { LoginResponse } from "../../types/auth";
 
@@ -42,7 +42,7 @@ function Login() {
     }
   }, []);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if(token) {

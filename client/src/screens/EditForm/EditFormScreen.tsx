@@ -8,9 +8,8 @@ import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { CREATE_QUESTION, DELETE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
 import { ReadOneFormDTO } from '../../types/form';
-import { CreateQuestionInput, CreateQuestionResponse, DeleteQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
+import { CreateQuestionInput, DeleteQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
-import { ResponseMessageDTO } from '../../types/commonComponents';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
@@ -23,7 +22,7 @@ function EditFormScreen() {
   const {formContext, setFormContext} = useEditFormState();
   const [userContext, setUserContext] = useUserState();
 
-  const {data: form, loading: formLoading, error: formError, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
+  const {data: form, loading: formLoading, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
     onError(error) {
         console.log(error);
@@ -31,8 +30,8 @@ function EditFormScreen() {
   });
   const [questionIndex, setQuestionIndex] = React.useState<number | undefined>();
 
-  const [updateQuestion, { data: updateQuestionResponse, loading: loadingQuestionUpdate, error: errorQuestionUpdate }] = useMutation(UPDATE_QUESTION, {
-    onCompleted(data: ResponseMessageDTO) {
+  const [updateQuestion, { data: updateQuestionResponse }] = useMutation(UPDATE_QUESTION, {
+    onCompleted() {
         console.log("updateQuestion completed");
     },
     onError(error) {
@@ -40,8 +39,8 @@ function EditFormScreen() {
     }
   });
 
-  const [createQuestion, { data: createQuestionResponse, loading: loadingQuestionCreate, error: errorQuestionCreate }] = useMutation(CREATE_QUESTION, {
-    onCompleted(data: CreateQuestionResponse) {
+  const [createQuestion] = useMutation(CREATE_QUESTION, {
+    onCompleted() {
       console.log("createQuestion completed");
     },
     onError(error) {
@@ -49,8 +48,8 @@ function EditFormScreen() {
     }
    });
 
-  const [updateChoice, { data: updateChoiceResponse, loading: loadingChoiceUpdate, error: errorChoiceUpdate }] = useMutation(UPDATE_CHOICE, {
-    onCompleted(data: ResponseMessageDTO) {
+  const [updateChoice] = useMutation(UPDATE_CHOICE, {
+    onCompleted() {
       console.log("updateQuestion completed");
     },
     onError(error) {
@@ -58,7 +57,7 @@ function EditFormScreen() {
     }
   });
 
-  const [updateValidation, { data: updateValidationResponse, loading: loadingValidationUpdate, error: errorValidationUpdate }] = useMutation(UPDATE_VALIDATION, {
+  const [updateValidation] = useMutation(UPDATE_VALIDATION, {
     onCompleted(data: ValidationDTO) {
       console.log("updateValidation completed => ", data);
     },
@@ -67,7 +66,7 @@ function EditFormScreen() {
     }
   });
 
-  const [updateForm, { data: updateFormResponse, loading: loadingFormUpdate, error: errorFormUpdate }] = useMutation(UPDATE_FORM, {
+  const [updateForm] = useMutation(UPDATE_FORM, {
     variables: { updateFormInput: {
       formId: formContext?.formId,
       title: formContext?.title,
@@ -75,19 +74,19 @@ function EditFormScreen() {
       themeId: formContext?.theme.themeId,
       visibility: formContext?.visibility,
     }},
-    onCompleted(data: ResponseMessageDTO) {
+    onCompleted() {
       console.log("updateForm completed");
     },
-    onError(error: any) {
+    onError(error) {
       console.log(error);
     }
   });
 
-  const [deleteQuestion, { data: deleteQuestionResponse, loading: loadingQuestionDelete, error: errorQuestionDelete }] = useMutation(DELETE_QUESTION, {
+  const [deleteQuestion] = useMutation(DELETE_QUESTION, {
     onCompleted(data: DeleteQuestionResponse) {
       console.log("deleteQuestion completed", data);
     },
-    onError(error: any) {
+    onError(error) {
       console.log(error);
     }
   });

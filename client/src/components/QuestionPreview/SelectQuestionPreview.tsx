@@ -24,7 +24,6 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
         setNewChoiceValue("");
     }, [question]);
     
-    //TODO add a debouncer wrapper to avoid too many calls to the server
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormContext((formContext: FormDTO) => {
             return {

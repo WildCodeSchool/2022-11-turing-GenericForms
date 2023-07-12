@@ -22,7 +22,7 @@ const SubmitView = ({formId = 0}: Props) => {
     onCompleted(data) {
       console.log("createAnswer completed =>", data);
     },
-    onError(error: any) {
+    onError(error) {
       console.log(error);
     }
   });
