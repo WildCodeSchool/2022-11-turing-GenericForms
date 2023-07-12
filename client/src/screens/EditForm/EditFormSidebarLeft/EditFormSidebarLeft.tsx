@@ -1,12 +1,12 @@
 import { Typography, List, ListItem, ListItemText, IconButton, ListItemButton, Grid, Box, ListItemAvatar } from '@mui/material';
-import { CreateQuestionInput, NewEmptyQuestion, QuestionDTO } from '../../../types/question';
+import { NewEmptyQuestion, QuestionDTO } from '../../../types/question';
 import {AddCircleRounded, Clear} from '@mui/icons-material';
-import { FormDTO } from '../../../types/form';
 import { QuestionType } from '../../../types/questionEnum';
 import ShortTextIcon from '@mui/icons-material/ShortText';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import { themeConstants } from '../../../styles/theme.constants';
 import { useEditFormState } from '../../../providers/formState';
+import { FormDTO } from '../../../types/form';
 
 
 interface EditFormSidebarLeftProps {
@@ -23,13 +23,14 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
 
     //TODO replace type by a variable type (depends on user selected type in a future dropdown select)
     const handleAddQuestion = () => {
-        setFormContext((formContext: FormDTO) => {
-            console.log("formContext ===> ", formContext);
+        setFormContext((form) => {
+            if(!form) return;
+            console.log("formContext ===> ", form);
             const createQuestionInput: NewEmptyQuestion = {
                 title: 'Nouvelle question',
                 description: '',
                 type: QuestionType.TEXT,
-                formId: formContext.formId,
+                formId: form.formId,
                 choices: [],
                 validation: {
                     required: false,
@@ -40,16 +41,17 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                 },
             };
             return {
-                ...formContext,
-                questions: [...formContext.questions, createQuestionInput]
-            }
+                ...form,
+                questions: [...form.questions, createQuestionInput]
+            } as FormDTO;
         });
     }
 
     const handleDeleteQuestion = (questionIndex: number) => {
-        setFormContext((formContext: FormDTO) => {            
+        setFormContext((form) => {
+            if(!form || form.questions !== undefined) return;
             return {
-                ...formContext,
+                ...form,
                 questions: questions?.map((question, index) => {
                     if (index === questionIndex) {
                         return {
@@ -59,7 +61,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                     }
                     return question;
                 })
-            }
+            } as FormDTO;
         });
     }
 
