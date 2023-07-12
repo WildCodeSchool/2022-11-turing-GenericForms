@@ -9,9 +9,9 @@ import { SelectItem } from '../../types/common';
 
 interface SelectListDropProps {
     menuItems: SelectItem[];
-    handleChange?: any;
+    handleChange?: (value: number) => void;
     initialValue?: number;
-};
+}
 
 //! Possible to use only CSS to delkete this useStyles call ?
 const useStyles = makeStyles(styles);
@@ -65,7 +65,7 @@ const SelectListDrop = ({menuItems, handleChange, initialValue}: SelectListDropP
         }
     };
 
-    const iconComponent = (props: any) => {
+    const iconComponent = () => {
         return (
             <ExpandMoreIcon sx={css.icon}/>
         )
@@ -73,7 +73,7 @@ const SelectListDrop = ({menuItems, handleChange, initialValue}: SelectListDropP
 
     const handleChangeValue = (event: SelectChangeEvent<string | number>) => {
         setVal(event.target.value);
-        handleChange && handleChange(event.target.value);
+        handleChange && handleChange(Number(event.target.value));
     };
 
     return (

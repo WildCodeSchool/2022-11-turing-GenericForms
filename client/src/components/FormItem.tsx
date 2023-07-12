@@ -9,7 +9,7 @@ import { themeConstants } from '../styles/theme.constants';
 
 interface FormItemProps {
     form: FormDTO;
-};
+}
 
 const useCss = (theme: Theme) => ({
     formsListContainer: {

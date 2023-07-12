@@ -1,15 +1,14 @@
 import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import { useContext } from 'react';
-import { useEditFormState } from '../../../../providers/formState';
 import { QuestionDTO } from '../../../../types/question';
 import { FormContext } from '../Questions';
 
 interface Props {
     question: QuestionDTO;
-};
+}
 
 const SelectType = ({question}: Props) => {
-    const { activeStepIndex } = useContext<any>(FormContext);
+    const { activeStepIndex } = useContext<FormContext>(FormContext);
 
   return (
     <div style={{margin: 'auto'}}>

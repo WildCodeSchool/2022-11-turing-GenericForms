@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { CHECK_TOKEN } from "../services/auth.query";
 import { Button } from "@mui/material";
 
-function Protected({ children }: any) {
+function Protected({ children }: React.PropsWithChildren<object>) {
   const navigate = useNavigate();
   const [authorized, setAuthorized] = useState(false);
   const { refetch } = useQuery(CHECK_TOKEN, {
@@ -20,7 +20,7 @@ function Protected({ children }: any) {
   });
 
   useEffect(() => {
-    refetch();
+    refetch().catch((error) => console.log(error));
   }, []);
 
   return (

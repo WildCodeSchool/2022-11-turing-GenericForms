@@ -19,7 +19,7 @@ declare module "@mui/material/Button" {
 
 interface RegisterFormProps {
   setForm: React.Dispatch<React.SetStateAction<RegisterForm>>;
-  handleSubmit: (e: any) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 function RegisterForm({ setForm, handleSubmit }: RegisterFormProps) {

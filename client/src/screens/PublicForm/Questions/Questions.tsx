@@ -8,21 +8,22 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSchema } from '../../../utils/schema.utils';
+import { DefaultValues } from '../../../types/publicForm';
 
 interface Props {
     initialFormState: InitialFormState;
-    defaultValues: any;
-};
+    defaultValues: DefaultValues;
+}
 
-type FormContext = {
-    activeStepIndex: number | undefined;
+export type FormContext = {
+    activeStepIndex: number;
     setActiveStepIndex: React.Dispatch<React.SetStateAction<number>>;
     formData: InitialFormState;
-    setFormData: React.Dispatch<React.SetStateAction<any>>;
+    setFormData: React.Dispatch<React.SetStateAction<InitialFormState>>;
 };
 
 export const FormContext = createContext<FormContext>({
-    activeStepIndex: undefined,
+    activeStepIndex: 0,
     setActiveStepIndex: () => {},
     formData: [],
     setFormData: () => {},
@@ -41,7 +42,7 @@ export const FormContext = createContext<FormContext>({
 function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
     const [questionId, setQuestionId] = React.useState<number>(0);
-    const [formContext] = useEditFormState();
+    const {formContext} = useEditFormState();
     const schema = createSchema(initialFormState);
     type ValidationSchema = z.infer<typeof schema>;
     const formMethods = useForm<ValidationSchema>({
@@ -73,7 +74,7 @@ function Questions({initialFormState, defaultValues} : Props) {
                 </Grid>
                 <Grid item xs={8} sx={{minHeight: '40vh'}} alignSelf='center'>
                     <form>
-                        <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId} formId={formContext.formId}/>
+                        <QuestionView questionNumber={questionsNumber} setQuestionId={setQuestionId} formId={formContext?.formId}/>
                     </form>
                 </Grid>
                 <Grid item xs={12} sx={{minHeight: '10vh'}}>

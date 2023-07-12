@@ -7,7 +7,7 @@ import { FormDTO } from '../../../types/form';
 
 interface DashboardMainProps {
   forms: FormDTO[] | undefined;
-};
+}
 
 function Dashboard({forms}: DashboardMainProps) {
   const navigate = useNavigate();

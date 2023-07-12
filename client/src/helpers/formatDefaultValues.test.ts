@@ -86,10 +86,10 @@ describe('transformArrayToObject', () => {
     it('should return an object with the correct keys and values', () => {
         const result = transformArrayToObject(originalArray);
         expect(result).toEqual({
-            6: 'value 6',
-            2: 'value 2',
-            3: 'value 3',
-            4: 'value 4',
+            6: 'réponse #6',
+            2: 'réponse #2',
+            3: 'réponse #3',
+            4: 'réponse #4',
         });
     });
 });

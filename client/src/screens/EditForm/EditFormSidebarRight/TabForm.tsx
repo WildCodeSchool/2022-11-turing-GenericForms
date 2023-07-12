@@ -8,13 +8,12 @@ import { themeConstants } from '../../../styles/theme.constants';
 import {Box, TextField, Typography} from '@mui/material';
 import SelectListDrop from '../../../components/common/SelectListDrop';
 import { useEditFormState } from '../../../providers/formState';
-import { FormDTO } from '../../../types/form';
 
 function TabFormSettings() {
-  const [formContext, setFormContext] = useEditFormState();
+  const {formContext, setFormContext} = useEditFormState();
   const [menuItems, setMenuItems] = React.useState<SelectItem[]>([]);
-  const [themeId, setThemeId] = React.useState<number>(formContext?.theme.themeId);
-  const [theme, setTheme] = React.useState<ThemeDTO>(formContext?.theme);
+  const [themeId, setThemeId] = React.useState<number | undefined>(formContext?.theme.themeId);
+  const [theme, setTheme] = React.useState<ThemeDTO | undefined>(formContext?.theme);
 
   const {data: dataThemes, loading: themesLoading, error: themesError} = useQuery<ReadThemesDTO>(READ_THEMES, {
     onCompleted(data: ReadThemesDTO) {
@@ -25,7 +24,7 @@ function TabFormSettings() {
     }
   });
 
-  const [refetch, {data: dataTheme, loading: themeLoading, error: themeError}] = useLazyQuery<ReadThemeDTO>(READ_THEME, {
+  const [refetch] = useLazyQuery<ReadThemeDTO>(READ_THEME, {
     variables: { themeId: themeId},
   });
 
@@ -34,26 +33,30 @@ function TabFormSettings() {
     refetch({variables: {themeId: themeId}}).then((res) => {
       console.log('res', res);
       res.data && setTheme(res.data?.readOneTheme);
+    }).catch((error) => {
+      console.log('error', error);
     });
   }, [themeId])
 
   const handleChange = (value: number) => {
     setThemeId(value);
-    setFormContext((formContext: FormDTO) => {
-      return {
-          ...formContext,
-          theme: {
-            ...formContext.theme,
-            themeId: value
-          }
-      }
+    setFormContext((form) => {
+      if(!form) return;
+        return {
+            ...form,
+            theme: {
+              ...form.theme,
+              themeId: value
+            }
+        }
     });
   };
 
   const handleChangeDetails = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormContext((formContext: FormDTO) => {
+    setFormContext((form) => {
+      if(!form) return;
         return {
-            ...formContext,
+            ...form,
             [event.target.name]: event.target.value
         }
     });
@@ -61,16 +64,18 @@ function TabFormSettings() {
 
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTheme((theme) => {
+      if(!theme) return;
       return {
         ...theme,
         [event.target.name]: event.target.value
       }
     });
-    setFormContext((formContext: FormDTO) => {
+    setFormContext((form) => {
+      if(!form) return;
         return {
-            ...formContext,
+            ...form,
             theme: {
-              ...formContext.theme,
+              ...form.theme,
               [event.target.name]: event.target.value
             }
         }
@@ -105,7 +110,7 @@ function TabFormSettings() {
       </Box>
       <Box sx={styles.tab}>
         <Typography variant='h6' sx={styles.tabTitle}>Thème graphique</Typography>
-        {menuItems.length > 0 && <SelectListDrop menuItems={menuItems} handleChange={handleChange} initialValue={formContext.theme.themeId} />}
+        {menuItems.length > 0 && <SelectListDrop menuItems={menuItems} handleChange={handleChange} initialValue={formContext?.theme.themeId} />}
       </Box>
       <Box sx={styles.tab}>
         <Box>
@@ -147,7 +152,7 @@ function TabFormSettings() {
       </Box>
     </Box>
   )
-};
+}
 
 const styles = {
   tab: {

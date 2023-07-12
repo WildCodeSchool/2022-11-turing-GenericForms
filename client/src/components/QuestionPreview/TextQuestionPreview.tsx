@@ -1,30 +1,31 @@
-import { Box, Grid, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import { FormDTO } from '../../types/form';
+import { Box, TextField } from '@mui/material';
+import React from 'react';
 import { QuestionDTO } from '../../types/question';
-import { themeConstants } from '../../styles/theme.constants';
+import { useEditFormState } from '../../providers/formState';
 
 interface TextQuestionPreviewProps {
     question: QuestionDTO; //? provient du FormContext
-    setFormContext: any;
 }
 
-const TextQuestionPreview = ({question, setFormContext}: TextQuestionPreviewProps) => {    
+const TextQuestionPreview = ({question}: TextQuestionPreviewProps) => {
+    const {setFormContext} = useEditFormState();    
 
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((form) => {
+            if(!form) return;
             return {
-                ...formContext,
-                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, title: event.target.value} : questionCtx)
+                ...form,
+                questions: form.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, title: event.target.value} : questionCtx)
             }
         });
     };
 
     const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((form) => {
+            if(!form) return;
             return {
-                ...formContext,
-                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, description: event.target.value} : questionCtx)
+                ...form,
+                questions: form.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, description: event.target.value} : questionCtx)
             }
         });
     };

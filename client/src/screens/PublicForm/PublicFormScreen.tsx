@@ -60,7 +60,7 @@ const mapInitialFormState = (questions: QuestionDTO[] ): InitialFormState => {
 
 const PublicFormScreen = () => {
     const {formId} = useParams();
-    const [formContext, setFormContext] = useEditFormState();
+    const {formContext, setFormContext} = useEditFormState();
     const [initialFormState, setInitialFormState] = React.useState<InitialFormState>([]);
     const {search} = useLocation();
     const queryParams = new URLSearchParams(search);

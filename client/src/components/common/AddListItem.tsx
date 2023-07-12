@@ -8,7 +8,7 @@ interface Props {
     handleAddChoice: () => void;
     choiceValue: string;
     handleChangeNewChoice: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 
 const AddListItem = ({choices, handleAddChoice, choiceValue, handleChangeNewChoice}: Props) => {

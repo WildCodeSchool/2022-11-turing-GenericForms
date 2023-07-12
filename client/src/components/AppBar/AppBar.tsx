@@ -32,7 +32,7 @@ const useCss = (theme: Theme) => ({
 const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     const css = useCss(theme);
     const navigate = useNavigate();
-    const [formContext, setFormContext] = useEditFormState();
+    const {setFormContext} = useEditFormState();
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -40,11 +40,13 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     };
 
     const handleChangeVisibility = () => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((formContext) => {
+            if(formContext) {
             return {
                 ...formContext,
-                visibility: !formContext.visibility
+                visibility: formContext?.visibility
             }
+        }
         });
     };
 
@@ -52,7 +54,7 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
         <Box sx={{ p: 2, maxWidth: "40vw" }}>
             <Typography>Vous pouvez prévisualiser ce formulaire en cliquant sur ce lien :</Typography>
             <Typography>
-                <Link href={`http://localhost:3000/form/${form?.formId}?preview=true`} target="_blank">
+                <Link href={`http://localhost:3000/form/${form?.formId || 0}?preview=true`} target="_blank">
                     Formulaire {form?.title}
                 </Link>
             </Typography>

@@ -8,14 +8,13 @@ import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '../../../components/Drawer';
 import { menuItems } from '../../../types/commonComponents';
 
-interface DashboardSidebarProps {}
 
 const items: menuItems = [
     { title: 'Inbox', icon: <InboxIcon /> },
     { title: 'Mail', icon: <MailIcon /> },
 ]
 
-const DashboardSidebar = ({}: DashboardSidebarProps) => {
+const DashboardSidebar = () => {
 
     return (
        <Drawer title='Notifications' menuItems={items} />

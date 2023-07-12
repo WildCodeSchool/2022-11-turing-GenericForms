@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
 import { Grid, Button, Container } from "@mui/material";
 import LoginForm from "../../components/LoginForm";
-import { CHECK_TOKEN, LOGIN } from "../../services/auth.query";
+import { LOGIN } from "../../services/auth.query";
 import jwt_decode from "jwt-decode";
+import { LoginResponse } from "../../types/auth";
 
 type JwtToken = {
   userId: number;
@@ -20,9 +21,9 @@ function Login() {
   });
 
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
-    onCompleted(data) {
-      localStorage.setItem("token", data.login.token);
-      let decodedToken: JwtToken = jwt_decode(data.login.token);
+    onCompleted(data: LoginResponse) {
+      localStorage.setItem("token", data.login.token );
+      const decodedToken: JwtToken = jwt_decode(data.login.token);
       console.log("DECODED TOKEN", decodedToken);
       localStorage.setItem("userId", `${decodedToken.userId}`);
       navigate("/dashboard");
@@ -35,13 +36,13 @@ function Login() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if(token) {
-      let decodedToken: JwtToken = jwt_decode(token);
+      const decodedToken: JwtToken = jwt_decode(token);
       decodedToken.exp > Date.now() / 1000 && navigate("/dashboard");
       console.log("token not expired")
     }
   }, []);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if(token) {
@@ -54,7 +55,7 @@ function Login() {
           password: form.password,
         },
       },
-    });
+    }).catch((error) => console.log(error));
   };
 
 

@@ -9,28 +9,29 @@ import NumberQuestionPreview from '../../../components/QuestionPreview/NumberQue
 import NoQuestionPreview from '../../../components/QuestionPreview/NoQuestionPreview';
 import EditFormSidebarRight from '../EditFormSidebarRight/EditFormSidebarRight';
 import { themeConstants } from '../../../styles/theme.constants';
+import { useEditFormState } from '../../../providers/formState';
 
 interface EditFormMainProps {
   questionIndex: number | undefined;
   questions: QuestionDTO[] | undefined; //? proviennent du FormContext
-  setFormContext: any;
 }
 
-const questionPreview = (question: QuestionDTO, setFormContext: any) => {
+const questionPreview = (question: QuestionDTO) => {
   switch (question.type) {
     case QuestionType.TEXT:
-      return <TextQuestionPreview question={question} setFormContext={setFormContext} />;
+      return <TextQuestionPreview question={question} />;
     case QuestionType.NUMBER:
       return <NumberQuestionPreview />;
     case QuestionType.SELECT:
-      return <SelectQuestionPreview question={question} setFormContext={setFormContext} />;
+      return <SelectQuestionPreview question={question} />;
     default:
       return <NoQuestionPreview />;
   }
 };
 
-function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainProps) {
+function EditFormMain({questionIndex, questions}: EditFormMainProps) {
   const navigate = useNavigate();
+  const {setFormContext} = useEditFormState();
 
   useEffect(()  => {
     const token = localStorage.getItem("token");
@@ -55,14 +56,14 @@ function EditFormMain({questionIndex, questions, setFormContext}: EditFormMainPr
           sx={{height: '100%', paddingTop: '10vh'}}
           mx={'auto'}
         >
-              {questionPreview(question, setFormContext)}
+              {questionPreview(question)}
         </Grid>
       </Grid>
       <Grid
         item xs={4}
         sx={{backgroundColor: 'white', border: themeConstants.border.base}}
       >
-        <EditFormSidebarRight question={question} questionIndex={questionIndex} setFormContext={setFormContext}  />
+        <EditFormSidebarRight question={question} questionIndex={questionIndex} />
       </Grid>
       </>
     )
