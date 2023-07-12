@@ -4,12 +4,11 @@ import { Typography, Box, Switch, TextField } from '@mui/material';
 import { themeConstants } from '../../../styles/theme.constants';
 import SelectListDrop from '../../../components/common/SelectListDrop';
 import { SelectItem } from '../../../types/common';
-import { FormDTO } from '../../../types/form';
 import TabQuestionValidationInput from './TabQuestionValidationInput';
+import { useEditFormState } from '../../../providers/formState';
 
 interface TabQuestionProps {
     question: QuestionDTO;
-    setFormContext: any;
 }
 
 const menuItemsArray: SelectItem[] = [
@@ -18,13 +17,15 @@ const menuItemsArray: SelectItem[] = [
   {value: 2, label: 'Nombre'},
 ];
 
-function TabQuestion({question, setFormContext}: TabQuestionProps) {
+function TabQuestion({question}: TabQuestionProps) {
+  const {setFormContext} = useEditFormState();
 
   const handleChangeRequired = (e: React.ChangeEvent<HTMLInputElement>, checked: boolean ) => {
-    setFormContext((formContext: FormDTO) => {
+    setFormContext((form) => {
+      if(!form) return;
       return {
-        ...formContext,
-        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [e.target.name]: checked}} : questionCtx)
+        ...form,
+        questions: form.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [e.target.name]: checked}} : questionCtx)
       }
     });
   };
@@ -58,13 +59,11 @@ function TabQuestion({question, setFormContext}: TabQuestionProps) {
           question={question}
           fieldName='textCharMin'
           fieldDescription='Caractères minimum'
-          setFormContext={setFormContext}
         />
         <TabQuestionValidationInput
           question={question}
           fieldName='textCharMax'
           fieldDescription='Caractères maximum'
-          setFormContext={setFormContext}
         />
       </Box>
     </Box>

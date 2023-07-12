@@ -1,43 +1,42 @@
-import { Grid, IconButton, List, ListItem, TextField, FormHelperText, Box } from '@mui/material';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import { List, TextField, Box } from '@mui/material';
 import React, { useEffect } from 'react';
-import { FormDTO } from '../../types/form';
 import { QuestionDTO } from '../../types/question';
 import AddListItem from '../common/AddListItem';
-import { ChoiceDTO } from '../../types/choice';
 import ChoiceInput from '../common/ChoiceInput';
-import { themeConstants } from '../../styles/theme.constants';
+import { useEditFormState } from '../../providers/formState';
 
 
 interface SelectQuestionPreviewProps {
     question: QuestionDTO; //? provient du FormContext
-    setFormContext: any;
 }
 
 //TODO créer mutation pour ajouter une question : relier appel dans handleAddChoice
 //TODO créer mutation pour supprimer une question : relier appel dans handleRemoveChoice
 
-const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreviewProps) => {
+const SelectQuestionPreview = ({question}: SelectQuestionPreviewProps) => {
     const [newChoiceValue, setNewChoiceValue] = React.useState<string>("");
+    const {setFormContext} = useEditFormState();
 
     useEffect(() => {
         setNewChoiceValue("");
     }, [question]);
     
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((form) => {
+            if(!form) return;
             return {
-                ...formContext,
-                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, title: event.target.value} : questionCtx)
+                ...form,
+                questions: form.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, title: event.target.value} : questionCtx)
             }
         });
     };
 
     const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormContext((formContext: FormDTO) => {
+        setFormContext((form) => {
+            if(!form) return;
             return {
-                ...formContext,
-                questions: formContext.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, description: event.target.value} : questionCtx)
+                ...form,
+                questions: form.questions.map((questionCtx) => questionCtx.questionId === question.questionId ? {...question, description: event.target.value} : questionCtx)
             }
         });
     };
@@ -85,7 +84,7 @@ const SelectQuestionPreview = ({question, setFormContext}: SelectQuestionPreview
                     question.choices 
                     && questionOrderedChoices
                         .map((choice) => {
-                        return <ChoiceInput choice={choice} question={question} handleRemoveChoice={handleRemoveChoice} setFormContext={setFormContext} />
+                        return <ChoiceInput choice={choice} question={question} handleRemoveChoice={handleRemoveChoice} />
                     })
                 }
                 {/*TODO complete the feature to add a choice */}

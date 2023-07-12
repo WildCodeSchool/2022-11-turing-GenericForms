@@ -4,36 +4,38 @@ import { Typography, Box, Switch, TextField } from '@mui/material';
 import { QuestionDTO } from '../../../types/question';
 import { themeConstants } from '../../../styles/theme.constants';
 import { ValidationDTOFields } from '../../../types/validation';
-import { FormDTO } from '../../../types/form';
 import { DEFAULT_TEXT_CHAR_MIN } from '../../../helpers/constants';
+import { useEditFormState } from '../../../providers/formState';
 
 interface TabQuestionValidationInputProps {
     question: QuestionDTO;
-    setFormContext: any;
     fieldName: ValidationDTOFields;
     fieldDescription: string;
 }
 
-function TabQuestionValidationInput({question, setFormContext, fieldName, fieldDescription}: TabQuestionValidationInputProps) {
+function TabQuestionValidationInput({question, fieldName, fieldDescription}: TabQuestionValidationInputProps) {
+  const {setFormContext} = useEditFormState();
 
   const handleChangeTextValidation = ({e, checked}: {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >,
     checked?: boolean | string,
   }) => {
     if(checked !== undefined) {
-    setFormContext((formContext: FormDTO) => {
+    setFormContext((form) => {
+      if(!form) return;
       return {
-        ...formContext,
-        questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [fieldName]: checked ? DEFAULT_TEXT_CHAR_MIN : null}} : questionCtx)
+        ...form,
+        questions: form.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [fieldName]: checked ? DEFAULT_TEXT_CHAR_MIN : null}} : questionCtx)
       }
     });
     } else {
-      setFormContext((formContext: FormDTO) => {
-            return {
-              ...formContext,
-              questions: formContext.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [fieldName]: Number(e.target.value)}} : questionCtx)
-            }
-          });
+      setFormContext((form) => {
+          if(!form) return;
+          return {
+            ...form,
+            questions: form.questions.map((questionCtx: QuestionDTO) => questionCtx.questionId === question.questionId ? {...question, validation: {...question.validation, [fieldName]: Number(e.target.value)}} : questionCtx)
+          }
+        });
     }
   };
 
