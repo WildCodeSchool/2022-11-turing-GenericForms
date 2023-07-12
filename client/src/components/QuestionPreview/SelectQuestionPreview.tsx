@@ -12,7 +12,7 @@ import { themeConstants } from '../../styles/theme.constants';
 interface SelectQuestionPreviewProps {
     question: QuestionDTO; //? provient du FormContext
     setFormContext: any;
-};
+}
 
 //TODO créer mutation pour ajouter une question : relier appel dans handleAddChoice
 //TODO créer mutation pour supprimer une question : relier appel dans handleRemoveChoice

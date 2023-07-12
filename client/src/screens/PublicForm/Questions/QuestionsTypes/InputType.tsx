@@ -7,7 +7,7 @@ import { FormContext } from '../Questions';
 
 interface Props {
     question: QuestionDTO;
-};
+}
 
 const InputType = ({question}: Props) => {
     const { setFormData, formData } = useContext(FormContext);

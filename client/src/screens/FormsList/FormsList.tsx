@@ -18,7 +18,7 @@ declare module "@mui/material/Typography" {
 
 interface FormsListProps {
     forms: FormDTO[] | undefined;
-};
+}
 
 const useCss = (theme: Theme) => ({
     centerTxt: {

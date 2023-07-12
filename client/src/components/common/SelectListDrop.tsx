@@ -11,7 +11,7 @@ interface SelectListDropProps {
     menuItems: SelectItem[];
     handleChange?: any;
     initialValue?: number;
-};
+}
 
 //! Possible to use only CSS to delkete this useStyles call ?
 const useStyles = makeStyles(styles);

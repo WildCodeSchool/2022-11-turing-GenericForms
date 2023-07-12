@@ -7,7 +7,7 @@ import PlusOneIcon from '@mui/icons-material/PlusOne';
 import { themeConstants } from '../../../styles/theme.constants';
 import { useEditFormState } from '../../../providers/formState';
 import { FormDTO } from '../../../types/form';
-
+eslint: lint whole folder
 
 interface EditFormSidebarLeftProps {
     questions?: QuestionDTO[];

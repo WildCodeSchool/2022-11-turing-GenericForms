@@ -11,7 +11,7 @@ interface ChoiceInputProps {
     handleRemoveChoice: () => void;
     setFormContext: any;
     question: QuestionDTO;
-};
+}
 
 const ChoiceInput = ({choice, handleRemoveChoice, setFormContext, question}: ChoiceInputProps) => {
     const [changeChoiceValue, setChangeChoiceValue] = React.useState<string>(choice.text);

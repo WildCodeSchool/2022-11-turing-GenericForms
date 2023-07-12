@@ -22,7 +22,7 @@ function Login() {
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
     onCompleted(data) {
       localStorage.setItem("token", data.login.token);
-      let decodedToken: JwtToken = jwt_decode(data.login.token);
+      const decodedToken: JwtToken = jwt_decode(data.login.token);
       console.log("DECODED TOKEN", decodedToken);
       localStorage.setItem("userId", `${decodedToken.userId}`);
       navigate("/dashboard");
@@ -35,7 +35,7 @@ function Login() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if(token) {
-      let decodedToken: JwtToken = jwt_decode(token);
+      const decodedToken: JwtToken = jwt_decode(token);
       decodedToken.exp > Date.now() / 1000 && navigate("/dashboard");
       console.log("token not expired")
     }

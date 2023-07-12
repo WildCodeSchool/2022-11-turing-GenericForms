@@ -6,7 +6,7 @@ import { FormContext } from '../Questions';
 
 interface Props {
     question: QuestionDTO;
-};
+}
 
 const SelectType = ({question}: Props) => {
     const { activeStepIndex } = useContext<any>(FormContext);
