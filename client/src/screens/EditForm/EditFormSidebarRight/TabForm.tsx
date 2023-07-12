@@ -24,7 +24,7 @@ function TabFormSettings() {
     }
   });
 
-  const [refetch, {data: dataTheme, loading: themeLoading, error: themeError}] = useLazyQuery<ReadThemeDTO>(READ_THEME, {
+  const [refetch] = useLazyQuery<ReadThemeDTO>(READ_THEME, {
     variables: { themeId: themeId},
   });
 
@@ -33,6 +33,8 @@ function TabFormSettings() {
     refetch({variables: {themeId: themeId}}).then((res) => {
       console.log('res', res);
       res.data && setTheme(res.data?.readOneTheme);
+    }).catch((error) => {
+      console.log('error', error);
     });
   }, [themeId])
 

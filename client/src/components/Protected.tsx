@@ -20,7 +20,7 @@ function Protected({ children }: any) {
   });
 
   useEffect(() => {
-    refetch();
+    refetch().catch((error) => console.log(error));
   }, []);
 
   return (

@@ -5,6 +5,7 @@ import { Grid, Button, Container } from "@mui/material";
 import LoginForm from "../../components/LoginForm";
 import { CHECK_TOKEN, LOGIN } from "../../services/auth.query";
 import jwt_decode from "jwt-decode";
+import { LoginResponse } from "../../types/auth";
 
 type JwtToken = {
   userId: number;
@@ -20,8 +21,8 @@ function Login() {
   });
 
   const [login, { loading, error }] = useLazyQuery(LOGIN, {
-    onCompleted(data) {
-      localStorage.setItem("token", data.login.token);
+    onCompleted(data: LoginResponse) {
+      localStorage.setItem("token", data.login.token );
       const decodedToken: JwtToken = jwt_decode(data.login.token);
       console.log("DECODED TOKEN", decodedToken);
       localStorage.setItem("userId", `${decodedToken.userId}`);
@@ -54,7 +55,7 @@ function Login() {
           password: form.password,
         },
       },
-    });
+    }).catch((error) => console.log(error));
   };
 
 

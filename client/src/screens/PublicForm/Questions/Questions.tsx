@@ -8,24 +8,25 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSchema } from '../../../utils/schema.utils';
+import { DefaultValues } from '../../../types/publicForm';
 
 interface Props {
     initialFormState: InitialFormState;
-    defaultValues: any;
+    defaultValues: DefaultValues;
 }
 
 export type FormContext = {
     activeStepIndex: number;
-    setActiveStepIndex: React.Dispatch<React.SetStateAction<number>>;
+    setActiveStepIndex: React.Dispatch<React.SetStateAction<number>> | undefined;
     formData: InitialFormState;
-    setFormData: React.Dispatch<React.SetStateAction<InitialFormState>>;
+    setFormData: React.Dispatch<React.SetStateAction<InitialFormState>> | undefined;
 };
 
 export const FormContext = createContext<FormContext>({
     activeStepIndex: 0,
-    setActiveStepIndex: () => {},
+    setActiveStepIndex: undefined,
     formData: [],
-    setFormData: () => {},
+    setFormData: undefined,
 });
 
 // const validationSchema = z.object({
@@ -40,7 +41,7 @@ export const FormContext = createContext<FormContext>({
 
 function Questions({initialFormState, defaultValues} : Props) {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
-    const [questionId, setQuestionId] = useState<number>(0);
+    const [questionId, setQuestionId] = React.useState<number>(0);
     const {formContext} = useEditFormState();
     const schema = createSchema(initialFormState);
     type ValidationSchema = z.infer<typeof schema>;

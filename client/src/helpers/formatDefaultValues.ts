@@ -1,6 +1,5 @@
 import { DefaultValues } from "../types/publicForm";
 import { QuestionDTO } from "../types/question";
-import { QuestionType } from "../types/questionEnum";
 
 
 // const originalArray: QuestionDTO[] = [

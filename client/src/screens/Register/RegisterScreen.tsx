@@ -35,7 +35,7 @@ function Register() {
           password: form.password,
         },
       },
-    });
+    }).catch((error) => console.log(error));
   };
 
   return (

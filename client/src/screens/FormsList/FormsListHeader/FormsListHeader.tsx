@@ -5,9 +5,7 @@ import { Grid  } from '@mui/material';
 import { Typography, Button } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
-interface FormsListHeaderProps {}
-
-function FormsListHeader({}: FormsListHeaderProps) {
+function FormsListHeader() {
 
     return (
         <>

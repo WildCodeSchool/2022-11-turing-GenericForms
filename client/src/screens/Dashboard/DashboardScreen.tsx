@@ -7,9 +7,7 @@ import { useQuery } from '@apollo/client';
 import { READ_USER } from '../../services/user.query';
 import { useUserState } from '../../providers/userState';
 
-interface DashboardScreenProps {}
-
-function DashboardScreen({}: DashboardScreenProps) {
+function DashboardScreen() {
   const userId = localStorage.getItem("userId");
   const [userContext, setUserContext] = useUserState();
 

@@ -22,7 +22,7 @@ const Stepper = ({questionNumber, questionId}: StepperProps) => {
 
   useEffect(() => {
     console.log('questionId', questionId)
-    fetchTrigger();
+    fetchTrigger().catch((error) => console.log(error));
   }, [watch(`${questionId}`)]);
 
   const handleNext = () => {

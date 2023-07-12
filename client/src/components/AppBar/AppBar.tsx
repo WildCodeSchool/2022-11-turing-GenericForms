@@ -54,7 +54,7 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
         <Box sx={{ p: 2, maxWidth: "40vw" }}>
             <Typography>Vous pouvez prévisualiser ce formulaire en cliquant sur ce lien :</Typography>
             <Typography>
-                <Link href={`http://localhost:3000/form/${form?.formId}?preview=true`} target="_blank">
+                <Link href={`http://localhost:3000/form/${form.formId ?? 0}?preview=true`} target="_blank">
                     Formulaire {form?.title}
                 </Link>
             </Typography>
