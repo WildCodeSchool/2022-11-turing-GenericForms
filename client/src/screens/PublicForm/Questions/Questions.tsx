@@ -17,16 +17,16 @@ interface Props {
 
 export type FormContext = {
     activeStepIndex: number;
-    setActiveStepIndex: React.Dispatch<React.SetStateAction<number>> | undefined;
+    setActiveStepIndex: React.Dispatch<React.SetStateAction<number>>;
     formData: InitialFormState;
-    setFormData: React.Dispatch<React.SetStateAction<InitialFormState>> | undefined;
+    setFormData: React.Dispatch<React.SetStateAction<InitialFormState>>;
 };
 
 export const FormContext = createContext<FormContext>({
     activeStepIndex: 0,
-    setActiveStepIndex: undefined,
+    setActiveStepIndex: () => {},
     formData: [],
-    setFormData: undefined,
+    setFormData: () => {},
 });
 
 // const validationSchema = z.object({
