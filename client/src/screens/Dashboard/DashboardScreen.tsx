@@ -9,7 +9,7 @@ import { useUserState } from '../../providers/userState';
 
 function DashboardScreen() {
   const userId = localStorage.getItem("userId");
-  const [userContext, setUserContext] = useUserState();
+  const {setUserContext} = useUserState();
 
   const {data: userData, loading, error} = useQuery<ReadOneUserDTO>(READ_USER, {
     variables: { readOneUserId: userId},

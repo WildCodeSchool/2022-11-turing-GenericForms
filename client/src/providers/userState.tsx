@@ -1,9 +1,11 @@
-import { useQuery } from "@apollo/client";
 import { createContext, useContext, useState } from "react";
-import { READ_FORMS } from "../services/forms.query";
-import { FormDTO, ReadFormsDTO } from "../types/form";
 
-export const UserStateContext = createContext<any>([]);
+interface UserContextProps {
+  userContext: UserDTO | undefined;
+  setUserContext: React.Dispatch<React.SetStateAction<UserDTO | undefined>>;
+}
+
+export const UserStateContext = createContext<UserContextProps>({} as UserContextProps);
 
 type UserProviderProps = {
     children: React.ReactNode;
@@ -11,7 +13,11 @@ type UserProviderProps = {
 
 export function UserProvider({ children }: UserProviderProps) {
     
-  const value = useState<FormDTO>();
+  const [userContext, setUserContext] = useState<UserDTO>();
+  const value: UserContextProps = {
+    userContext,
+    setUserContext,
+  };
   return (
     <UserStateContext.Provider value={value}>
       {children}

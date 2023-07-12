@@ -20,7 +20,7 @@ import { ValidationDTO } from '../../types/validation';
 function EditFormScreen() {
   const {formId} = useParams();
   const {formContext, setFormContext} = useEditFormState();
-  const [userContext, setUserContext] = useUserState();
+  const {userContext} = useUserState();
 
   const {data: form, loading: formLoading, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
