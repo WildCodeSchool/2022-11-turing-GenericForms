@@ -1,9 +1,12 @@
-import { useQuery } from "@apollo/client";
 import { createContext, useContext, useState } from "react";
-import { READ_FORMS } from "../services/forms.query";
-import { FormDTO, ReadFormsDTO } from "../types/form";
+import { FormDTO } from "../types/form";
 
-export const EditFormStateContext = createContext<any>([]);
+interface FormContextProps {
+  formContext: FormDTO | undefined;
+  setFormContext: React.Dispatch<React.SetStateAction<FormDTO | undefined>>;
+}
+
+export const EditFormStateContext = createContext<FormContextProps>({} as FormContextProps);
 
 type EditFormProviderProps = {
     children: React.ReactNode;
@@ -11,7 +14,13 @@ type EditFormProviderProps = {
 
 export function EditFormProvider({ children }: EditFormProviderProps) {
     
-  const value = useState<FormDTO>();
+  const [formContext, setFormContext] = useState<FormDTO | undefined>();
+
+  const value: FormContextProps = {
+    formContext,
+    setFormContext,
+  };
+
   return (
     <EditFormStateContext.Provider value={value}>
       {children}
