@@ -31,7 +31,6 @@ const questionPreview = (question: QuestionDTO) => {
 
 function EditFormMain({questionIndex, questions}: EditFormMainProps) {
   const navigate = useNavigate();
-  const {setFormContext} = useEditFormState();
 
   useEffect(()  => {
     const token = localStorage.getItem("token");
