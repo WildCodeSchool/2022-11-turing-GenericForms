@@ -16,14 +16,12 @@ import { useUserState } from '../../providers/userState';
 import { UPDATE_FORM } from '../../services/forms.mutation';
 import { UPDATE_VALIDATION } from '../../services/validation.mutation';
 import { ValidationDTO } from '../../types/validation';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toastSuccess } from '../../helpers/toasts';
 
 function EditFormScreen() {
   const {formId} = useParams();
   const {formContext, setFormContext} = useEditFormState();
   const {userContext} = useUserState();
-  const notify = (text: string) => toast.success(text);
 
   const {data: form, loading: formLoading, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
@@ -171,7 +169,7 @@ function EditFormScreen() {
     refetchQuestions().catch((error) => {
       console.log("refetchQuestions error: ", error);
     });
-    notify("Formulaire sauvegardé !");
+    toastSuccess("Formulaire sauvegardé !");
 
   };
 
@@ -187,7 +185,6 @@ function EditFormScreen() {
           <Grid container direction={'row'}>
             <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} />
             <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} />
-            <ToastContainer />
           </Grid>
         </Grid>
     )
