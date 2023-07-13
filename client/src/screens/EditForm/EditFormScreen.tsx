@@ -8,104 +8,56 @@ import { useParams } from 'react-router-dom';
 import { READ_FORM } from '../../services/forms.query';
 import { CREATE_QUESTION, DELETE_QUESTION, UPDATE_QUESTION } from '../../services/question.mutation';
 import { ReadOneFormDTO } from '../../types/form';
-import { CreateQuestionInput, DeleteQuestionResponse, QuestionDTO, UpdateQuestionInput } from '../../types/question';
+import { CreateQuestionInput, QuestionDTO, UpdateQuestionInput } from '../../types/question';
 import { useEditFormState } from '../../providers/formState';
 import { UPDATE_CHOICE } from '../../services/choice.mutation';
 import { UpdateChoiceInput } from '../../types/choice';
 import { useUserState } from '../../providers/userState';
 import { UPDATE_FORM } from '../../services/forms.mutation';
 import { UPDATE_VALIDATION } from '../../services/validation.mutation';
-import { ValidationDTO } from '../../types/validation';
-import { toastSuccess } from '../../helpers/toasts';
+import { toastError, toastSuccess } from '../../helpers/toasts';
 
 function EditFormScreen() {
   const {formId} = useParams();
   const {formContext, setFormContext} = useEditFormState();
   const {userContext} = useUserState();
 
-  const {data: form, loading: formLoading, refetch: refetchQuestions} = useQuery<ReadOneFormDTO>(READ_FORM, {
+  const {data: form, loading: formLoading, refetch: refetchForm} = useQuery<ReadOneFormDTO>(READ_FORM, {
     variables: { readOneFormId: formId},
     onError(error) {
         console.log(error);
+        toastError("Erreur lors du chargement du formulaire !");
     }
   });
+
   const [questionIndex, setQuestionIndex] = React.useState<number | undefined>();
 
-  const [updateQuestion, { data: updateQuestionResponse }] = useMutation(UPDATE_QUESTION, {
-    onCompleted() {
-        console.log("updateQuestion completed");
-    },
-    onError(error) {
-        console.log(error);
-    }
-  });
+  const [updateQuestion, {error: updateQuestionError }] = useMutation(UPDATE_QUESTION);
 
-  const [createQuestion] = useMutation(CREATE_QUESTION, {
-    onCompleted() {
-      console.log("createQuestion completed");
-    },
-    onError(error) {
-      console.log(error);
-    }
-   });
+  const [createQuestion, {error: createQuestionError}] = useMutation(CREATE_QUESTION);
 
-  const [updateChoice] = useMutation(UPDATE_CHOICE, {
-    onCompleted() {
-      console.log("updateQuestion completed");
-    },
-    onError(error) {
-      console.log(error);
-    }
-  });
+  const [updateChoice, {error: updateChoiceError}] = useMutation(UPDATE_CHOICE);
 
-  const [updateValidation] = useMutation(UPDATE_VALIDATION, {
-    onCompleted(data: ValidationDTO) {
-      console.log("updateValidation completed => ", data);
-    },
-    onError(error) {
-      console.log(error);
-    }
-  });
+  const [updateValidation, {error: updateValidationError}] = useMutation(UPDATE_VALIDATION);
 
-  const [updateForm] = useMutation(UPDATE_FORM, {
+  const [updateForm, {error: updateFormError}] = useMutation(UPDATE_FORM, {
     variables: { updateFormInput: {
       formId: formContext?.formId,
       title: formContext?.title,
       category: formContext?.category,
       themeId: formContext?.theme.themeId,
       visibility: formContext?.visibility,
-    }},
-    onCompleted() {
-      console.log("updateForm completed");
-    },
-    onError(error) {
-      console.log(error);
-    }
+    }}
   });
 
-  const [deleteQuestion] = useMutation(DELETE_QUESTION, {
-    onCompleted(data: DeleteQuestionResponse) {
-      console.log("deleteQuestion completed", data);
-    },
-    onError(error) {
-      console.log(error);
-    }
-  });
+  const [deleteQuestion, {error: deleteQuestionError}] = useMutation(DELETE_QUESTION);
 
   useEffect(() => {
     setFormContext(form?.readOneFormByFormId);
   }, [form]);
 
-  //? Is forEach the best solution ? What if one server call fails ? 
-  //? Should we use concept like a Promise.all() instead ?
-  const handleSave = () => {
-    // first update the form data
-    updateForm().catch((error) => {
-      console.log(error);
-    });
-
-    // then update each questions data using a loop
-    formContext?.questions.forEach((question: QuestionDTO) => {
+  const handleSave = () => {   
+    const questionsMutation = formContext?.questions.forEach((question: QuestionDTO) => {
       if(question.deleted) {
         deleteQuestion({variables: {questionId: question.questionId}}).catch((error) => {
           console.log(error);
@@ -162,14 +114,31 @@ function EditFormScreen() {
           });
         });
       }
+    });
 
-      //will send back a ResponseMessageDTO => should use to display a message to the user 
-      console.log("update question response: ", updateQuestionResponse);
+    Promise.all([
+        updateForm(),
+        questionsMutation,
+    ]).then((result) => {
+      if (
+          updateQuestionError ||
+          createQuestionError ||
+          updateChoiceError ||
+          updateValidationError ||
+          updateFormError ||
+          deleteQuestionError
+        ) {
+          throw new Error("Error in one of the mutation");
+        }
+      console.log("Promise.all result: ", result);
+      refetchForm().catch((error) => {
+        console.log("refetchQuestions error: ", error);
+      });
+      toastSuccess("Formulaire sauvegardé !");
+    }).catch((error) => {
+      console.log("Promise.all error: ", error);
+      toastError("Erreur lors de la sauvegarde du formulaire !");
     });
-    refetchQuestions().catch((error) => {
-      console.log("refetchQuestions error: ", error);
-    });
-    toastSuccess("Formulaire sauvegardé !");
 
   };
 
