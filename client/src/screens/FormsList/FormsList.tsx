@@ -1,14 +1,12 @@
 import React from 'react';
-import { Button, Grid, Theme, Typography  } from '@mui/material';
-import { useQuery } from '@apollo/client';
-import { READ_FORMS } from '../../services/forms.query';
+import { Button, Grid, Typography  } from '@mui/material';
 import theme from '../../styles/theme';
 import FormItem from '../../components/FormItem';
 import SelectListDrop from '../../components/common/SelectListDrop';
-import { FormDTO, ReadFormsDTO } from '../../types/form';
-import { useUserState } from '../../providers/userState';
+import { FormDTO } from '../../types/form';
 import { Error } from '@mui/icons-material';
 import { SelectItem } from '../../types/common';
+import FormsLoader from './FormsLoader';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -18,9 +16,10 @@ declare module "@mui/material/Typography" {
 
 interface FormsListProps {
     forms: FormDTO[] | undefined;
+    loading?: boolean;
 }
 
-const useCss = (theme: Theme) => ({
+const useCss = () => ({
     centerTxt: {
         textAlign: 'center',
     },
@@ -48,9 +47,12 @@ const menuItemsArray: SelectItem[] = [
     {value: 3, label: 'Actif'},
 ];
 
-function FormsList({forms}: FormsListProps) {
-    const css = useCss(theme);
+function FormsList({forms, loading}: FormsListProps) {
+    const css = useCss();
 
+    if(loading) {
+        return <FormsLoader />
+    }
     if(forms === undefined) {
         return <Error>Erreur lors du chargement des formulaires</Error>
     }

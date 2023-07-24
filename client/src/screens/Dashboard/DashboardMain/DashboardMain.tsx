@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography  } from '@mui/material';
+import { Grid } from '@mui/material';
 import FormsListHeader from '../../FormsList/FormsListHeader/FormsListHeader';
 import FormsList from '../../FormsList/FormsList';
 import { FormDTO } from '../../../types/form';
 
 interface DashboardMainProps {
   forms: FormDTO[] | undefined;
+  loading?: boolean;
 }
 
-function Dashboard({forms}: DashboardMainProps) {
+function Dashboard({forms, loading}: DashboardMainProps) {
   const navigate = useNavigate();
 
   useEffect(()  => {
@@ -23,7 +24,7 @@ function Dashboard({forms}: DashboardMainProps) {
     <Grid item xs={10}>
       <Grid container direction={'row'}>
         <FormsListHeader/>
-        <FormsList forms={forms} />
+        <FormsList forms={forms} loading={loading} />
       </Grid>
     </Grid>
   )
