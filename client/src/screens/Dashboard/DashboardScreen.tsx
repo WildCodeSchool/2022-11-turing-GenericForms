@@ -22,14 +22,13 @@ function DashboardScreen() {
     }
   });
 
-  loading && <Typography>Loading...</Typography>;
   error && <Typography>Error</Typography>;
   
     return (
         <Grid container>
           <AppBar user={userData?.readOneUser}/>
           <DashboardSidebar/>
-          <DashboardMain forms={userData?.readOneUser.forms} />
+          <DashboardMain forms={userData?.readOneUser.forms} loading={loading} />
         </Grid>
     )
 }
