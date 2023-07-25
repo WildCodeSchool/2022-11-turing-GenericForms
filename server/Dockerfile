@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY jest.config.js ./
-COPY .env ./
+# COPY .env ./
 
 RUN npm config set legacy-peer-deps true
 RUN npm i
