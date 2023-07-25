@@ -36,7 +36,7 @@ async function start(): Promise<void> {
     cache: "bounded",
     plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
     cors: {
-      origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+      origin: ["http://localhost:3000", "https://studio.apollographql.com", "https://turing4.wns.wilders.dev"],
       credentials: true, // true if you need cookies/authentication
       methods: ["GET", "POST", "OPTIONS"],
     },
