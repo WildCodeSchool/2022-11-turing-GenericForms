@@ -9,7 +9,9 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "localStart": "ts-node-dev src/index.ts --local",
     "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
-    "test": "jest --config ./jest.config.js --watchAll"
+    "test": "jest --config ./jest.config.js --watchAll",
+    "build": "tsc",
+    "prod": "node build/index.js"
   },
   "author": "kim",
   "license": "ISC",
