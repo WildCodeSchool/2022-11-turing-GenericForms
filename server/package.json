@@ -11,7 +11,7 @@
     "fixtures": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/lib/datasource.ts",
     "test": "jest --config ./jest.config.js --watchAll",
     "build": "tsc",
-    "prod": "node build/index.js"
+    "prod": "node build/src/index.js"
   },
   "author": "kim",
   "license": "ISC",
