@@ -15,7 +15,7 @@ import { setContext } from "@apollo/client/link/context";
 import theme from "./styles/theme";
 
 const httpLink = createHttpLink({
-  uri: 'https://151.80.7.184:4000/graphql'
+  uri: '/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
