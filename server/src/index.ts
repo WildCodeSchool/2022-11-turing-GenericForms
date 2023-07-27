@@ -51,6 +51,7 @@ async function start(): Promise<void> {
       }
       return { user };
     },
+    introspection: process.env.NODE_ENV !== "development",
   });
 
   await server.listen().then(async ({ url }) => {
