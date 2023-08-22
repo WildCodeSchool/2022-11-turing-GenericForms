@@ -8,6 +8,7 @@ import { FormDTO } from '../../types/form';
 import theme from '../../styles/theme';
 import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
 import { themeConstants } from '../../styles/theme.constants';
+import { getPlural } from '../../utils/text.utils';
 
 declare module "@mui/material/AppBar" {
     interface AppBarPropsColorOverrides{
@@ -77,7 +78,7 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                     </Button>
                     {!editForm &&
                     <Typography color='primary' sx={{ flexGrow: 1 }}>
-                        Hello {user?.firstName || ''} ! Vous avez 3 formulaires en cours             
+                        Hello {user?.firstName || ''} ! Vous avez {user?.forms.length || ''} {getPlural(user?.forms.length, 'formulaire')} en cours.             
                     </Typography>
                     }
                     {editForm ?
