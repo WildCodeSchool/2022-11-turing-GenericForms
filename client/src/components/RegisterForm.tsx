@@ -108,10 +108,10 @@ function RegisterForm({ setForm, handleSubmit }: RegisterFormProps) {
               sx={{ mt: 3, mb: 2 }}
               color="custom"
             >
-              S'inscrire'
+              S'inscrire
             </Button>
           </Box>
-          <Link to={"/auth/login"}>Déjà inscrit?</Link>
+          <Link to={"/login"}>Déjà inscrit?</Link>
         </Box>
       </Container>
     </div>
