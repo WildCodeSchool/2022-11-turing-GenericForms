@@ -40,11 +40,12 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     };
 
     const handleChangeVisibility = () => {
+        console.log(form?.visibility);
         setFormContext((formContext) => {
             if(formContext) {
             return {
                 ...formContext,
-                visibility: formContext?.visibility
+                visibility: !formContext?.visibility
             }
         }
         });
