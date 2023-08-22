@@ -9,6 +9,8 @@ import theme from '../../styles/theme';
 import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
 import { themeConstants } from '../../styles/theme.constants';
 import { getPlural } from '../../utils/text.utils';
+import {Check, Clear} from '@mui/icons-material';
+
 
 declare module "@mui/material/AppBar" {
     interface AppBarPropsColorOverrides{
@@ -29,6 +31,22 @@ const useCss = (theme: Theme) => ({
         textAlign: 'center',
     },
 });
+
+const DisabledToggleIcon = () => {
+    return (
+        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: themeConstants.colors.error, borderRadius: themeConstants.radius.full }} >
+            <Clear sx={{color: 'white'}} />
+        </Box>
+    )
+};
+
+const ActiveToggleIcon = () => {
+    return (
+        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: themeConstants.colors.success, borderRadius: themeConstants.radius.full }} >
+            <Check sx={{color: 'white'}} />
+        </Box>
+    )
+};
 
 const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     const css = useCss(theme);
@@ -87,14 +105,16 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                             {form?.visibility && (
                                 <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
                                 <Typography variant='body1'>
-                                        Lien du formulaire
+                                Lien du formulaire
                                 </Typography>
                                 </Link>
                                 )}
                                 <Switch 
-                                    color='info' 
+                                    color='success' 
                                     checked={form?.visibility}
                                     onChange={handleChangeVisibility}
+                                    icon={<DisabledToggleIcon />}
+                                    checkedIcon={<ActiveToggleIcon />}
                                 />
                             </Box>
                             <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
