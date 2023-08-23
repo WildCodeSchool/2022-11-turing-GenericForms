@@ -10,6 +10,7 @@ import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
 import { themeConstants } from '../../styles/theme.constants';
 import { getPlural } from '../../utils/text.utils';
 import {Check, Clear} from '@mui/icons-material';
+import { getFirstLetter } from '../../utils/string.utils';
 
 
 declare module "@mui/material/AppBar" {
@@ -85,14 +86,15 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
 
     return (
         <Grid item xs={12} className='appbar-container'>
-            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "paper.light", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
+            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
                 <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Button
                         variant="contained"
                         onClick={() => null}
-                        sx={{ mr: 2, minWidth: 20, minHeight: 40, borderRadius: 2 }}
+                        color='info'
+                        sx={{ mr: 2, minWidth: 20, minHeight: 40, borderRadius: themeConstants.radius.full }}
                     >
-                        <Typography variant='h4'>K</Typography>
+                        <Typography variant='h4'>{getFirstLetter(user?.firstName)}</Typography>
                     </Button>
                     {!editForm &&
                     <Typography color='primary' sx={{ flexGrow: 1 }}>
