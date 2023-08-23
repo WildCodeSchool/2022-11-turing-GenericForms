@@ -63,9 +63,6 @@ function FormsList({forms, loading}: FormsListProps) {
         <>
             <Grid container sx={css.row2} >
                 <Grid item xs={9} >
-                    {/* <Button variant='contained'>
-                        + Créer un formulaire
-                    </Button> */}
                     <ButtonCreateForm />
                 </Grid>
                 <Grid item xs={3} >

@@ -152,7 +152,7 @@ function EditFormScreen() {
         <Grid container sx={{minHeight: '50vh', flexGrow: 1}} alignContent={'flex-start'}>
           <AppBar user={userContext} form={formContext} editForm={true} handleSave={handleSave} />
           <Grid container direction={'row'}>
-            <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} />
+            <EditFormSidebarLeft questions={formContext?.questions} setQuestionIndex={setQuestionIndex} questionIndex={questionIndex} />
             <EditFormMain questions={formContext?.questions} questionIndex={questionIndex} />
           </Grid>
         </Grid>

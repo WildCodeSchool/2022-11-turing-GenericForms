@@ -4,6 +4,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    "react-app",
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -11,7 +12,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react'],
    rules: {
        '@typescript-eslint/no-misused-promises': "off",
        '@typescript-eslint/no-unsafe-assignment': 'off',

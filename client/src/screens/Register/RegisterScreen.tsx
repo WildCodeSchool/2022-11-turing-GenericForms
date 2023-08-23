@@ -15,14 +15,9 @@ function Register() {
   const navigate = useNavigate();
   const [register, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted(data) {
-      console.log("DATA", data);
       navigate("/");
     },
   });
-
-  useEffect(() => {
-    console.log("FORM", form);
-  }, [form]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

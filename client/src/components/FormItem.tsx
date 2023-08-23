@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, IconButton, Theme, Typography  } from '@mui/material';
+import { Grid, IconButton, Theme, Tooltip, Typography, Card } from '@mui/material';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {ModeEdit, ViewWeek} from '@mui/icons-material';
 import theme from '../styles/theme';
 import { useNavigate } from 'react-router-dom';
 import { FormDTO } from '../types/form';
@@ -13,6 +13,10 @@ interface FormItemProps {
 
 const useCss = (theme: Theme) => ({
     formsListContainer: {
+        width: '100%',
+        display: 'flex' ,
+        alignItems: 'center',
+
         border: themeConstants.border.base,
         height: '8vh',
         margin: '1vh 1vw',
@@ -31,24 +35,23 @@ const FormItem = ({form}: FormItemProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        console.log('click');
+        console.log(form);
         navigate(`/edit/${form.formId}`);
-
     };
 
     return (
-        <Grid container key={form.formId} sx={css.formsListContainer} alignContent="center" alignItems="center" >
-            <Grid item xs={2} display="flex" justifyContent="center">
-                <LocalPostOfficeIcon fontSize='large' color='secondary'/>
+        <Card sx={css.formsListContainer} >
+            <Grid item xs={1} display="flex" justifyContent="center">
+                <ViewWeek fontSize='large' color='action'/>
             </Grid>
-            <Grid item xs={2}>
-                <Typography variant="body1" sx={[css.centerTxt, css.title]}>{form.title}</Typography>
+            <Grid item xs={3}>
+                <Typography variant="body1" sx={[css.centerTxt]}>{form.title}</Typography>
             </Grid>
             <Grid item xs={2}>
                 <Typography variant="body1" sx={css.centerTxt}>{form.category}</Typography>
             </Grid>
             <Grid item xs={1}>
-                <Typography variant="body1" sx={css.centerTxt}>55</Typography>
+                <Typography variant="body1" sx={css.centerTxt}>{form.questions.length}</Typography>
             </Grid>
             <Grid item xs={1}>
                 <Typography variant="body1" sx={css.centerTxt}>55</Typography>
@@ -57,14 +60,16 @@ const FormItem = ({form}: FormItemProps) => {
                 <Typography variant="body1" sx={css.centerTxt}>{form.themeId}</Typography>
             </Grid>
             <Grid item xs={1}>
-                <Typography variant="body1" sx={css.centerTxt}>Oui</Typography>
+                <Typography variant="body1" sx={css.centerTxt}>{form.visibility ? 'Oui': 'Non'}</Typography>
             </Grid>
             <Grid item xs={1} display="flex" justifyContent="center">
-                <IconButton onClick={handleClick}>
-                    <MoreVertIcon fontSize='large' color='action' />
-                </IconButton>
+                <Tooltip title="Modifier" placement="top">
+                    <IconButton onClick={handleClick}>
+                        <ModeEdit fontSize='medium' color='primary' />
+                    </IconButton>
+                </Tooltip>
             </Grid>
-        </Grid>
+        </Card>
     )
 };
 

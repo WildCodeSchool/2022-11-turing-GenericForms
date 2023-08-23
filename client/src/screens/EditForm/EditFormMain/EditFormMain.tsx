@@ -47,7 +47,7 @@ function EditFormMain({questionIndex, questions}: EditFormMainProps) {
   if(question) {
     return (
       <>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Grid
           container
           direction={'column'}
@@ -69,13 +69,13 @@ function EditFormMain({questionIndex, questions}: EditFormMainProps) {
   }
 
   return (
-    <Grid item xs={10}>
+    <Grid item xs={9}>
     <Box
       sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%'}}
       marginTop={themeConstants.spacing.baseSm}
     >
-        <Typography variant="h4">
-          Aucune question sélectionnée !
+        <Typography variant="h5" color='darkgray'>
+          Sélectionner une question pour commencer
         </Typography>
       </Box>
     </Grid>

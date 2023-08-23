@@ -87,7 +87,11 @@ const PublicFormScreen = () => {
     formError && <Typography>Erreur lors du chargement du formulaire</Typography>;
 
     if(!formContext || !formId) {
-        return <Typography variant="h2">Ce questionnaire n'esxiste pas.</Typography>
+        return <Typography variant="h2">Ce questionnaire n'existe pas.</Typography>
+    }
+
+    if(formContext && formContext.visibility === false) {
+        return <Typography variant="h2">Ce questionnaire n'est pas disponible.</Typography>
     }
 
     if(!formLoading && formContext) {

@@ -1,13 +1,17 @@
 import React from 'react';
 import './AppBar.css';
-import { Toolbar, Typography, Box, Grid, Button, Switch, Theme, Link } from '@mui/material';
+import { Toolbar, Typography, Box, Grid, Button, Switch, Theme, Link, ToggleButton, IconButton } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 import { useEditFormState } from '../../providers/formState';
 import { FormDTO } from '../../types/form';
 import theme from '../../styles/theme';
-import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
+import Popover from '../common/Popover';
 import { themeConstants } from '../../styles/theme.constants';
+import { getPlural } from '../../utils/text.utils';
+import {Check, Save} from '@mui/icons-material';
+import { getFirstLetter } from '../../utils/string.utils';
+
 
 declare module "@mui/material/AppBar" {
     interface AppBarPropsColorOverrides{
@@ -40,11 +44,12 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     };
 
     const handleChangeVisibility = () => {
+        console.log(form?.visibility);
         setFormContext((formContext) => {
             if(formContext) {
             return {
                 ...formContext,
-                visibility: formContext?.visibility
+                visibility: !formContext?.visibility
             }
         }
         });
@@ -65,35 +70,40 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
 
     return (
         <Grid item xs={12} className='appbar-container'>
-            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "paper.light", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
+            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }} >
                 <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Button
                         variant="contained"
                         onClick={() => null}
-                        sx={{ mr: 2, minWidth: 20, minHeight: 40, borderRadius: 2 }}
+                        color='info'
+                        sx={{ mr: 2, minWidth: 20, minHeight: 40, borderRadius: themeConstants.radius.full }}
                     >
-                        <Typography variant='h4'>K</Typography>
+                        <Typography variant='h4'>{getFirstLetter(user?.firstName)}</Typography>
                     </Button>
                     {!editForm &&
                     <Typography color='primary' sx={{ flexGrow: 1 }}>
-                        Hello {user?.firstName || ''} ! Vous avez 3 formulaires en cours             
+                        Hello {user?.firstName || ''} ! Vous avez {user?.forms.length || ''} {getPlural(user?.forms.length, 'formulaire')} en cours.             
                     </Typography>
                     }
                     {editForm ?
                         (   <>
                             <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
-                            {form?.visibility && (
-                                <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
-                                <Typography variant='body1'>
-                                        Lien du formulaire
-                                </Typography>
-                                </Link>
-                                )}
-                                <Switch 
-                                    color='info' 
-                                    checked={form?.visibility}
+                                <ToggleButton
+                                    value="check"
+                                    color="success"
+                                    selected={form?.visibility}
                                     onChange={handleChangeVisibility}
-                                />
+                                    sx={{mr: 2}}
+                                >
+                                    <Check />
+                                </ToggleButton>
+                                {form?.visibility && (
+                                    <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
+                                        <Typography variant='body2'>
+                                        Lien du formulaire
+                                        </Typography>
+                                    </Link>
+                                )}
                             </Box>
                             <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
                                 <Typography variant='h6' color={themeConstants.colors.mediumGrey}>
@@ -101,13 +111,11 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
-                                <Button
-                                    variant='contained'
-                                    sx={{ mr: 2, minWidth: 15, minHeight: 35, borderRadius: 2 }}
+                                <IconButton
+                                    sx={{ mr: 2, maxWidth: 30, maxHeight: 30, borderRadius: 2, backgroundColor: themeConstants.colors.success, color: themeConstants.colors.white }}
                                     onClick={handleSave}
-                                >
-                                    Enregistrer
-                                </Button>
+                                    children={<Save />}
+                                />
                                 <Popover 
                                     btnTitle='Prévisualiser'
                                     children={popoverContent}

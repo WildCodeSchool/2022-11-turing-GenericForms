@@ -7,9 +7,10 @@ interface PopoverProps {
     btnTitle: string;
     btnColor?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     children?: React.ReactNode;
+    customStyle?: React.CSSProperties;
 }
 
-const Popover = ({btnTitle, children, btnColor = 'primary'}: PopoverProps) => {
+const Popover = ({btnTitle, children, btnColor = 'primary', customStyle}: PopoverProps) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +26,7 @@ const Popover = ({btnTitle, children, btnColor = 'primary'}: PopoverProps) => {
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick} color={btnColor}>
+      <Button aria-describedby={id} variant="contained" onClick={handleClick} color={btnColor} sx={customStyle}>
        {btnTitle}
       </Button>
       <MuiPopover
@@ -35,7 +36,7 @@ const Popover = ({btnTitle, children, btnColor = 'primary'}: PopoverProps) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
       >
         {children ? children : <Typography sx={{ p: 2 }}>Aucun élément défini pour le popover.</Typography> }

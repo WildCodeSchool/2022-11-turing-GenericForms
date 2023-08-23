@@ -11,12 +11,6 @@ interface TabQuestionProps {
     question: QuestionDTO;
 }
 
-const menuItemsArray: SelectItem[] = [
-  {value: 0, label: 'Texte'},
-  {value: 1, label: 'Choix multiples'},
-  {value: 2, label: 'Nombre'},
-];
-
 function TabQuestion({question}: TabQuestionProps) {
   const {setFormContext} = useEditFormState();
 
@@ -40,10 +34,6 @@ function TabQuestion({question}: TabQuestionProps) {
 
   return (
     <Box>
-      <Box sx={styles.tab}>
-        <Typography variant='h6' sx={styles.tabTitle}>Type</Typography>
-        <SelectListDrop menuItems={menuItemsArray} />
-      </Box>
       <Box sx={styles.tab}>
         <Typography variant='h6' sx={styles.tabTitle}>Paramètres</Typography>
         <Box sx={styles.tabContent} >

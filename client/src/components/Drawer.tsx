@@ -5,18 +5,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronLeft';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
-import ShortTextIcon from '@mui/icons-material/ShortText';
-import PlusOneIcon from '@mui/icons-material/PlusOne';
 import { menuItems } from '../types/commonComponents';
 import { QuestionDTO } from '../types/question';
-import { QuestionType } from '../types/questionEnum';
-
-//TODO Create a switch to choose icons based on question types (to insert around line 132 )
 
 interface DrawerProps {
   title?: string;
   menuItems?: menuItems;
-  questions?: QuestionDTO[];
   handleClick?: (questionId: number) => void;
   children?: React.ReactNode;
 }
@@ -67,7 +61,7 @@ const StyledMuiDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !=
   }),
 );
 
-const Drawer = ({title, menuItems, questions, handleClick, children}: DrawerProps) => {
+const Drawer = ({title, menuItems, children}: DrawerProps) => {
     const theme = useTheme();
     const [open, setOpen] = useState(true);
 
@@ -110,29 +104,6 @@ const Drawer = ({title, menuItems, questions, handleClick, children}: DrawerProp
                       }}
                     >
                       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={title} sx={{ opacity: open ? 1 : 0 }} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-               {questions && handleClick && questions.map(({title, type}, index) => (
-                <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? 'initial' : 'center',
-                      px: 2.5,
-                    }}
-                    onClick={() => handleClick(index)}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
                     </ListItemIcon>
                     <ListItemText primary={title} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>

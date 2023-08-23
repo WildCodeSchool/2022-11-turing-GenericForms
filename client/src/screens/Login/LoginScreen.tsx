@@ -64,7 +64,7 @@ function Login() {
     <Grid container maxWidth='sm'>
       <Grid item xs={8} />
       <Grid item xs={4} >
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={() => navigate("/register")}>
           S'inscrire
         </Button>
       </Grid>
