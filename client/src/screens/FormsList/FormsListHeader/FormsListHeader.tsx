@@ -4,6 +4,7 @@ import './FormsListHeader.css';
 import { Grid  } from '@mui/material';
 import { Typography, Button } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { themeConstants } from '../../../styles/theme.constants';
 
 function FormsListHeader() {
 
@@ -17,9 +18,9 @@ function FormsListHeader() {
                     variant="contained"
                     onClick={() => null}
                     startIcon={<PersonAddAlt1Icon fontSize="small" />}
-                    sx={{minWidth: 10, minHeight: 10 }}
+                    sx={{minWidth: 10, minHeight: 10, backgroundColor: themeConstants.colors.grey }}
                 />
-            </Grid>          
+            </Grid>
             <Grid item xs={9} className='' />
         </>
     )
