@@ -8,28 +8,46 @@ import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { CREATE_FORM } from '../../../services/forms.mutation';
 import { useMutation } from '@apollo/client';
+import { useContext } from 'react';
+import { UserStateContext } from '../../../providers/userState';
 
 interface ModalFormProps {
   open: boolean;
   onClose: () => void;
 }
 
+interface UserInfo {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  forms: [];
+}
+
+
 const ModalCreateForm = ({ open, onClose }: ModalFormProps) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [name, setName] = useState('');
   const [createFormMutation] = useMutation(CREATE_FORM);
+  const { userContext } = useContext(UserStateContext);
 
-  // Temp value for userId and themeId
+  const user = userContext as unknown as UserInfo;
+  // Temp value themeId
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log("userContext: ", userContext);
     console.log('Name: ', name)
     console.log('Selected Category: ', selectedOption)
+    console.log('userId: ', user['userId'])
     try {
       await createFormMutation({
         variables: {
           createFormInput: {
             title: name,
-            userId: 1,
+            userId: user.userId,
             themeId: 1,
             category: selectedOption,
             visibility: false,
