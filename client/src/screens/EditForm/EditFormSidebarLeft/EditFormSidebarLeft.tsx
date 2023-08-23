@@ -2,18 +2,50 @@ import { Typography, List, ListItem, ListItemText, IconButton, ListItemButton, G
 import { NewEmptyQuestion, QuestionDTO } from '../../../types/question';
 import {AddCircleRounded, Clear} from '@mui/icons-material';
 import { QuestionType } from '../../../types/questionEnum';
-import ShortTextIcon from '@mui/icons-material/ShortText';
-import PlusOneIcon from '@mui/icons-material/PlusOne';
+import {ShortText, Checklist} from '@mui/icons-material';
 import { themeConstants } from '../../../styles/theme.constants';
 import { useEditFormState } from '../../../providers/formState';
 import { FormDTO } from '../../../types/form';
+import { truncateTextWithDot } from '../../../utils/string.utils';
 
 interface EditFormSidebarLeftProps {
     questions?: QuestionDTO[];
     setQuestionIndex: (questionIndex: number) => void;
+    questionIndex: number | undefined;
 }
 
-const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftProps) => {
+const QuestionAvatarIcon = ({icon, index, color}: {icon: any, index: number, color: string }) => {
+    return (
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: themeConstants.spacing.minDemi,
+            p: themeConstants.spacing.minDemi,
+            backgroundColor: color,
+            borderRadius: '10%',
+        }}>
+            {icon}
+            <Typography variant='body1' >
+                {index +1}
+            </Typography>
+        </Box>
+    )
+};
+
+
+const displayAvatarItem = (type: QuestionType, index: number) => {
+    switch (type) {
+        case QuestionType.TEXT:
+            return <QuestionAvatarIcon icon={<ShortText />} index={index} color={themeConstants.colors.questionTypes.shortText} />;
+        case QuestionType.SELECT:
+            return <QuestionAvatarIcon icon={<Checklist />} index={index} color={themeConstants.colors.questionTypes.multipleChoice} />;
+        default:
+            return <QuestionAvatarIcon icon={<ShortText />} index={index} color={themeConstants.colors.questionTypes.shortText} />;
+    }
+};
+
+const EditFormSidebarLeft = ({questions, setQuestionIndex, questionIndex}: EditFormSidebarLeftProps) => {
     const {setFormContext} = useEditFormState();
     
     const handleClick = (questionIndex: number) => {
@@ -65,7 +97,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
     }
 
     return (
-        <Grid item xs={2} sx={{backgroundColor: themeConstants.colors.white, border: themeConstants.border.base}}>
+        <Grid item xs={3} sx={{backgroundColor: themeConstants.colors.white, border: themeConstants.border.base}}>
             <Box sx={{display: 'flex'}} my={themeConstants.spacing.quarterSm} >
                 <IconButton onClick={handleAddQuestion} sx={{margin: '0 auto'}}>
                     <AddCircleRounded />
@@ -77,7 +109,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                     !deleted &&
                     (<ListItem 
                         key={index} 
-                        disablePadding sx={{ display: 'block' }}
+                        disablePadding
                         secondaryAction={
                             <IconButton 
                                 edge="end" 
@@ -87,6 +119,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                               <Clear />
                             </IconButton>
                           }
+                        sx={{backgroundColor: questionIndex === index ? themeConstants.colors.semiLightGrey : themeConstants.colors.white}}
                     >
                         <ListItemButton
                         sx={{
@@ -103,9 +136,9 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex}: EditFormSidebarLeftP
                                 justifyContent: 'center',
                                 }}
                             >
-                                {type === QuestionType.TEXT ? <ShortTextIcon /> : <PlusOneIcon />}
+                                {displayAvatarItem(QuestionType.SELECT, index)}
                             </ListItemAvatar>
-                            <ListItemText primary={title} />
+                            <ListItemText primary={truncateTextWithDot(title)}/>                           
                         </ListItemButton>
                     </ListItem>)
                 ))}

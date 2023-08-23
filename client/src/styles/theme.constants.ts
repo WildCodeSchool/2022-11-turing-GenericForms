@@ -16,9 +16,15 @@ export const themeConstants = {
       lightGrey: '#9BA7B8' as const,
       error: '#B0154D' as const,
       success: '#16AF91' as const,
+      questionTypes: {
+        shortText: '#379cfb' as const,
+        multipleChoice: '#d65c99' as const,
+      },
     },
     spacing: {
       none: 0 as const,
+      minQuart: 0.25 as const,
+      minDemi: 0.5 as const,
       min: 1 as const,
       quarterSm: 2 as const,
       quarter: 4 as const,

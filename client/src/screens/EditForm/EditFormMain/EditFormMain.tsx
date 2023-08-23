@@ -47,7 +47,7 @@ function EditFormMain({questionIndex, questions}: EditFormMainProps) {
   if(question) {
     return (
       <>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Grid
           container
           direction={'column'}
