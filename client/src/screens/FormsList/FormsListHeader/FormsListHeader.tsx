@@ -18,7 +18,7 @@ function FormsListHeader() {
                     variant="contained"
                     onClick={() => null}
                     startIcon={<PersonAddAlt1Icon fontSize="small" />}
-                    sx={{minWidth: 10, minHeight: 10, backgroundColor: themeConstants.colors.grey }}
+                    sx={{minWidth: 10, minHeight: 10, backgroundColor: themeConstants.colors.mediumGrey }}
                 />
             </Grid>
             <Grid item xs={9} className='' />

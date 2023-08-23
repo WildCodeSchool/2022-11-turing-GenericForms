@@ -2,7 +2,7 @@ import { Typography, List, ListItem, ListItemText, IconButton, ListItemButton, G
 import { NewEmptyQuestion, QuestionDTO } from '../../../types/question';
 import {AddCircleRounded, Clear} from '@mui/icons-material';
 import { QuestionType } from '../../../types/questionEnum';
-import {ShortText, Checklist} from '@mui/icons-material';
+import {ShortText, Checklist, Add} from '@mui/icons-material';
 import { themeConstants } from '../../../styles/theme.constants';
 import { useEditFormState } from '../../../providers/formState';
 import { FormDTO } from '../../../types/form';
@@ -98,10 +98,13 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, questionIndex}: EditF
 
     return (
         <Grid item xs={3} sx={{backgroundColor: themeConstants.colors.white, border: themeConstants.border.base}}>
-            <Box sx={{display: 'flex'}} my={themeConstants.spacing.quarterSm} >
-                <IconButton onClick={handleAddQuestion} sx={{margin: '0 auto'}}>
-                    <AddCircleRounded />
-                </IconButton>
+            <Box sx={{display: 'flex', justifyContent: 'space-around', alignContent: 'center', alignItems: 'center'}} my={themeConstants.spacing.quarterSm} >
+                <Typography variant='body1' sx={{justifySelf: 'flex-start', fontSize: 16}}>Questions</Typography>
+                <Box sx={{backgroundColor: themeConstants.colors.grey, mr: 3, borderRadius: '20%'}}>
+                    <IconButton onClick={handleAddQuestion} sx={{color: themeConstants.colors.black}}>
+                        <Add />
+                    </IconButton>
+                </Box>
             </Box>
             <List>
                 {questions?.length === 0 && <Typography variant='body1' sx={{textAlign: 'center'}}>Vite, créer votre première question !</Typography>}
