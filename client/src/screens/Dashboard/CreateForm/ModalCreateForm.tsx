@@ -16,38 +16,25 @@ interface ModalFormProps {
   onClose: () => void;
 }
 
-interface UserInfo {
-  userId: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-  forms: [];
-}
-
-
 const ModalCreateForm = ({ open, onClose }: ModalFormProps) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [name, setName] = useState('');
   const [createFormMutation] = useMutation(CREATE_FORM);
   const { userContext } = useContext(UserStateContext);
 
-  const user = userContext as unknown as UserInfo;
   // Temp value themeId
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log("userContext: ", userContext);
+    console.log("userId", userContext?.userId);
     console.log('Name: ', name)
     console.log('Selected Category: ', selectedOption)
-    console.log('userId: ', user['userId'])
     try {
       await createFormMutation({
         variables: {
           createFormInput: {
             title: name,
-            userId: user.userId,
+            userId: userContext?.userId,
             themeId: 1,
             category: selectedOption,
             visibility: false,
