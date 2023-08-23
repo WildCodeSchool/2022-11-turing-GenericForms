@@ -1,6 +1,6 @@
 import React from 'react';
 import './AppBar.css';
-import { Toolbar, Typography, Box, Grid, Button, Switch, Theme, Link } from '@mui/material';
+import { Toolbar, Typography, Box, Grid, Button, Switch, Theme, Link, ToggleButton, IconButton } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 import { useEditFormState } from '../../providers/formState';
@@ -9,7 +9,7 @@ import theme from '../../styles/theme';
 import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
 import { themeConstants } from '../../styles/theme.constants';
 import { getPlural } from '../../utils/text.utils';
-import {Check, Clear} from '@mui/icons-material';
+import {Check, Save} from '@mui/icons-material';
 import { getFirstLetter } from '../../utils/string.utils';
 
 
@@ -32,22 +32,6 @@ const useCss = (theme: Theme) => ({
         textAlign: 'center',
     },
 });
-
-const DisabledToggleIcon = () => {
-    return (
-        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: themeConstants.colors.error, borderRadius: themeConstants.radius.full }} >
-            <Clear sx={{color: 'white'}} />
-        </Box>
-    )
-};
-
-const ActiveToggleIcon = () => {
-    return (
-        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: themeConstants.colors.success, borderRadius: themeConstants.radius.full }} >
-            <Check sx={{color: 'white'}} />
-        </Box>
-    )
-};
 
 const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
     const css = useCss(theme);
@@ -86,7 +70,7 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
 
     return (
         <Grid item xs={12} className='appbar-container'>
-            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }} title="Appbar" >
+            <MuiAppBar position="relative" elevation={1} sx={{bgcolor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }} >
                 <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Button
                         variant="contained"
@@ -104,20 +88,22 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                     {editForm ?
                         (   <>
                             <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
-                            {form?.visibility && (
-                                <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
-                                <Typography variant='body1'>
-                                Lien du formulaire
-                                </Typography>
-                                </Link>
-                                )}
-                                <Switch 
-                                    color='success' 
-                                    checked={form?.visibility}
+                                <ToggleButton
+                                    value="check"
+                                    color="success"
+                                    selected={form?.visibility}
                                     onChange={handleChangeVisibility}
-                                    icon={<DisabledToggleIcon />}
-                                    checkedIcon={<ActiveToggleIcon />}
-                                />
+                                    sx={{mr: 2}}
+                                >
+                                    <Check />
+                                </ToggleButton>
+                                {form?.visibility && (
+                                    <Link href={`http://localhost:3000/form/${form?.formId}`} target="_blank">
+                                        <Typography variant='body2'>
+                                        Lien du formulaire
+                                        </Typography>
+                                    </Link>
+                                )}
                             </Box>
                             <Box sx={{display: 'flex', flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
                                 <Typography variant='h6' color={themeConstants.colors.mediumGrey}>
@@ -125,13 +111,11 @@ const AppBar = ({user, form, editForm, handleSave}: AppBarProps) => {
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
-                                <Button
-                                    variant='contained'
-                                    sx={{ mr: 2, minWidth: 15, minHeight: 35, borderRadius: 2 }}
+                                <IconButton
+                                    sx={{ mr: 2, maxWidth: 30, maxHeight: 30, borderRadius: 2, backgroundColor: themeConstants.colors.success, color: themeConstants.colors.white }}
                                     onClick={handleSave}
-                                >
-                                    Enregistrer
-                                </Button>
+                                    children={<Save />}
+                                />
                                 <Popover 
                                     btnTitle='Prévisualiser'
                                     children={popoverContent}
