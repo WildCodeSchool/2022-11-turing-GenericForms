@@ -15,10 +15,9 @@ import { setContext } from "@apollo/client/link/context";
 import theme from "./styles/theme";
 
 let uri = "http://localhost:4000/graphql";
-if(process.env.HOST) {
-  uri = `http://${process.env.HOST}:4000/graphql`;
+if (process.env.NODE_ENV === "production") {
+  uri = '/graphql';
 }
-
 const httpLink = createHttpLink({
   uri,
 });
