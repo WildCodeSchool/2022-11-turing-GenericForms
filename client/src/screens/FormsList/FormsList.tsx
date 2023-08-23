@@ -7,6 +7,7 @@ import { FormDTO } from '../../types/form';
 import { Error } from '@mui/icons-material';
 import { SelectItem } from '../../types/common';
 import FormsLoader from './FormsLoader';
+import ButtonCreateForm from '../Dashboard/CreateForm/ButtonCreateForm';
 
 declare module "@mui/material/Typography" {
     interface TypographyPropsVariantOverrides{
@@ -62,9 +63,10 @@ function FormsList({forms, loading}: FormsListProps) {
         <>
             <Grid container sx={css.row2} >
                 <Grid item xs={9} >
-                    <Button variant='contained'>
+                    {/* <Button variant='contained'>
                         + Créer un formulaire
-                    </Button>
+                    </Button> */}
+                    <ButtonCreateForm />
                 </Grid>
                 <Grid item xs={3} >
                     <SelectListDrop menuItems={menuItemsArray} />

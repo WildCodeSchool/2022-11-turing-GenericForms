@@ -8,3 +8,15 @@ mutation UpdateForm($updateFormInput: UpdateFormInput!) {
     }
   }
 `);
+
+export const CREATE_FORM = gql(`
+mutation CreateForm($createFormInput: CreateFormInput!) {
+    createForm(createFormInput: $createFormInput) {
+      title
+      userId
+      themeId
+      category
+      visibility
+    }
+  }
+`);
