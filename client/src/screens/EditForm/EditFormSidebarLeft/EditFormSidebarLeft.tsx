@@ -7,6 +7,7 @@ import { themeConstants } from '../../../styles/theme.constants';
 import { useEditFormState } from '../../../providers/formState';
 import { FormDTO } from '../../../types/form';
 import { truncateTextWithDot } from '../../../utils/string.utils';
+import Popover from '../../../components/common/Popover';
 
 interface EditFormSidebarLeftProps {
     questions?: QuestionDTO[];
@@ -14,7 +15,7 @@ interface EditFormSidebarLeftProps {
     questionIndex: number | undefined;
 }
 
-const QuestionAvatarIcon = ({icon, index, color}: {icon: any, index: number, color: string }) => {
+const QuestionAvatarIcon = ({icon, index, color}: {icon: any, index?: number, color: string }) => {
     return (
         <Box sx={{
             display: 'flex',
@@ -26,9 +27,7 @@ const QuestionAvatarIcon = ({icon, index, color}: {icon: any, index: number, col
             borderRadius: '10%',
         }}>
             {icon}
-            <Typography variant='body1' >
-                {index +1}
-            </Typography>
+            {index !== undefined && <Typography variant='body1' sx={{fontSize: 16}}>{index +1}</Typography>}
         </Box>
     )
 };
@@ -52,15 +51,40 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, questionIndex}: EditF
         setQuestionIndex(questionIndex);
     };
 
+
+    const popoverContent = (
+        <Box sx={{ p: 1, maxWidth: "40vw" }}>
+            <List>
+                <ListItem disablePadding
+                onClick={() => handleAddQuestion(QuestionType.TEXT)}
+                >
+                    <ListItemButton>
+                        <QuestionAvatarIcon icon={<ShortText />} color={themeConstants.colors.questionTypes.shortText} />
+                        <Typography variant='body1' sx={{justifySelf: 'flex-start', fontSize: 16, ml: 1}}>Texte simple</Typography>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding
+                onClick={() => handleAddQuestion(QuestionType.SELECT)}
+                >
+                    <ListItemButton>
+                        <QuestionAvatarIcon icon={<Checklist />} color={themeConstants.colors.questionTypes.multipleChoice} />
+                        <Typography variant='body1' sx={{justifySelf: 'flex-start', fontSize: 16, ml: 1}}>Choix multiples</Typography>
+                    </ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+
+    );
+
     //TODO replace type by a variable type (depends on user selected type in a future dropdown select)
-    const handleAddQuestion = () => {
+    const handleAddQuestion = (type: QuestionType) => {
         setFormContext((form) => {
             if(!form) return;
             console.log("formContext ===> ", form);
             const createQuestionInput: NewEmptyQuestion = {
                 title: 'Nouvelle question',
                 description: '',
-                type: QuestionType.TEXT,
+                type,
                 formId: form.formId,
                 choices: [],
                 validation: {
@@ -101,9 +125,12 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, questionIndex}: EditF
             <Box sx={{display: 'flex', justifyContent: 'space-around', alignContent: 'center', alignItems: 'center'}} my={themeConstants.spacing.quarterSm} >
                 <Typography variant='body1' sx={{justifySelf: 'flex-start', fontSize: 16}}>Questions</Typography>
                 <Box sx={{backgroundColor: themeConstants.colors.grey, mr: 3, borderRadius: '20%'}}>
-                    <IconButton onClick={handleAddQuestion} sx={{color: themeConstants.colors.black}}>
-                        <Add />
-                    </IconButton>
+                    <Popover 
+                        btnTitle='+'
+                        children={popoverContent}
+                        btnColor='info'
+                        customStyle={{backgroundColor: themeConstants.colors.grey, color: themeConstants.colors.black, fontSize: 20}}
+                    />
                 </Box>
             </Box>
             <List>
@@ -139,7 +166,7 @@ const EditFormSidebarLeft = ({questions, setQuestionIndex, questionIndex}: EditF
                                 justifyContent: 'center',
                                 }}
                             >
-                                {displayAvatarItem(QuestionType.SELECT, index)}
+                                {displayAvatarItem(type, index)}
                             </ListItemAvatar>
                             <ListItemText primary={truncateTextWithDot(title)}/>                           
                         </ListItemButton>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEditFormState } from '../../providers/formState';
 import { FormDTO } from '../../types/form';
 import theme from '../../styles/theme';
-import Popover from '../../screens/EditForm/EditFormSidebarRight/Popover';
+import Popover from '../common/Popover';
 import { themeConstants } from '../../styles/theme.constants';
 import { getPlural } from '../../utils/text.utils';
 import {Check, Save} from '@mui/icons-material';
